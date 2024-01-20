@@ -2,7 +2,6 @@
 This is just a collection of tools that I have created using various resources and guidance from AI. I believe these tools can be helpful for someone facing challenges in converting or computing during development.
 
 ## Tools Links
-* [Home](https://khadkamhn.github.io/tools/)
 * [Date Conversion (AD/BS)](https://khadkamhn.github.io/tools/date.html)
 * [Slugify](https://khadkamhn.github.io/tools/slugify.html)
 * [Shadow](https://khadkamhn.github.io/tools/shadow.html)
