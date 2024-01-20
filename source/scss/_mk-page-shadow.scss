@@ -1,0 +1,118 @@
+.box-item {
+	width: 100px;
+	height: 100px;
+	margin: 1rem;
+	cursor: pointer;
+	overflow: hidden;
+	background: $white;
+	position: relative;
+	border-radius: 2px;
+	display: inline-block;
+	transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+	&.z0 {
+		border:1px solid #eee;
+	}
+	&.z1 {
+		box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+	}
+	&.z2 {
+		box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+	}
+	&.z3 {
+		box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+	}
+	&.z4 {
+		box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+	}
+	&.z5 {
+		box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+	}
+	&.ref2 {
+		&.z1 {
+			box-shadow: 0 2px 10px 0 rgba(0,0,0,.16), 0 2px 5px 0 rgba(0,0,0,.26);
+		}
+		&.z2 {
+			box-shadow: 0 6px 20px 0 rgba(0,0,0,.19), 0 8px 17px 0 rgba(0,0,0,.2);
+		}
+		&.z3 {
+			box-shadow: 0 17px 50px 0 rgba(0,0,0,.19), 0 12px 15px 0 rgba(0,0,0,.24);
+		}
+		&.z4 {
+			box-shadow: 0 25px 55px 0 rgba(0,0,0,.21), 0 16px 28px 0 rgba(0,0,0,.22);
+		}
+		&.z5 {
+			box-shadow: 0 40px 77px 0 rgba(0,0,0,.22), 0 27px 24px 0 rgba(0,0,0,.2);
+		}
+	}
+	&:after {
+		top: 50%;
+		left: 50%;
+		width: 24px;
+		height: 24px;
+		display: none;
+		content: '\e14d';
+		line-height: 1;
+		font-size: 24px;
+		color: $grey-800;
+		margin-top: -12px;
+		margin-left: -12px;
+		position: absolute;
+		border-radius: 50%;
+		font-family: 'Material Icons';
+		transition: all .3s ease-in-out 0s;
+	}
+	&:hover {
+		&:after {
+			display: block;
+			@include animate-prefixer(animation-duration, calc( #{$base-duration} ) );
+			@include animate-prefixer(animation-fill-mode, $base-fill-mode);
+			@include animate-prefixer(animation-name, flipInX);
+		}
+	}
+}
+.box-shadow {
+	width: 100px;
+	height: 100px;
+	margin: auto;
+	margin-top: 30px;
+	margin-bottom: 30px;
+	background-color: $primary;
+	transition: box-shadow 0.3s ease-in-out;
+	&-result {
+		padding: 15px;
+		white-space: pre;
+		position: relative;
+		padding-right: 45px;
+		background-color: $white;
+		.css-code {
+			white-space: nowrap;
+		}
+		.material-icons {
+			top: 50%;
+			right: 10px;
+			cursor: pointer;
+			margin-top: -12px;
+			position: absolute;
+		}
+	}
+}
+.box-tune {
+	display: flex;
+	padding: 10px;
+	margin: 5px 0;
+	.rangeSlider__vertical {
+		margin: auto;
+		height: 100px;
+	}
+	.tune-label {
+		width: 160px;
+		text-align: left;
+	}
+	.clr-field {
+		&, input {
+			width: 100%;
+		}
+		button {
+		}
+	}
+}

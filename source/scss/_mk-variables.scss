@@ -1,0 +1,43 @@
+//Paths
+$image-path: 'img';
+$font-path: 'fonts';
+
+// Fonts
+$font-roboto: 'Roboto', Helvetica, Arial, sans-serif;
+$font-open-sans: 'Open Sans', Helvetica, Arial, sans-serif;
+
+// Overwride
+$border-radius: 2px;
+
+$primary:       $blue-grey-900;
+$secondary:     $grey-600;
+$success:       $green-600;
+$info:          $cyan-600;
+$warning:       $yellow-600;
+$danger:        $red-600;
+$light:         $grey-100;
+$dark:          $grey-900;
+
+$grd-pri: $orange-500;
+$grd-sec: $red-500;
+
+$theme-colors: (
+	"primary":    $primary,
+	"secondary":  $secondary,
+	"success":    $success,
+	"info":       $info,
+	"warning":    $warning,
+	"danger":     $danger,
+	"light":      $light,
+	"dark":       $dark
+);
+
+// Animation
+$use-bounce: true;
+$use-zoom: true;
+$use-fade: true;
+$use-tada: true;
+$use-bounceIn: true;
+$use-wiggle: true;
+$use-pulse: true;
+$use-flipInX: true;

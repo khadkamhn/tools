@@ -1,0 +1,52 @@
+.date-convert {
+	.result {
+		margin-top: 30px;
+		position: relative;
+		&-item {
+			width: 200px;
+			margin: 15px 0;
+			font-size: 28px;
+			line-height: 28px;
+		}
+		&-left, &-right {
+			padding: 10px 0;
+		}
+		&-left {
+			padding-right: 10px;
+			border-right: 1px solid;
+		}
+		&-right {
+			padding-left: 10px;
+			border-left: 1px solid;
+		}
+		.date, .month, .alt-date, .alt-month {
+			font-weight: 300;
+			display: inline-block;
+		}
+		.year, .alt-year {
+			font-weight: 800;
+			margin-bottom: 10px;
+		}
+		.day, .alt-day {
+			margin-top: 10px;
+			font-weight: 500;
+		}
+		.btn-switch {
+			top: 50%;
+			padding: 0;
+			width: 40px;
+			height: 40px;
+			line-height: 0;
+			margin-top: -20px;
+			border-radius: 50%;
+			position: absolute;
+			text-align: center;
+			border: 2px solid;
+			&:hover span {
+				@include animate-prefixer(animation-duration, calc( #{$base-duration} ) );
+				@include animate-prefixer(animation-fill-mode, $base-fill-mode);
+				@include animate-prefixer(animation-name, bounceIn);
+			}
+		}
+	}
+}

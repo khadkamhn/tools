@@ -1,0 +1,12 @@
+.footer {
+	.heart {
+		margin: 0 2px;
+		font-size: 18px;
+		color: $red-400;
+		display: inline-block;
+		@include animate-prefixer(animation-duration, calc( #{$base-duration*0.15} ) );
+		@include animate-prefixer(animation-fill-mode, $base-fill-mode);
+		@include animate-prefixer(animation-name, pulse);
+		animation-iteration-count: $base-iteration-count;
+	}
+}

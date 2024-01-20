@@ -1,0 +1,18 @@
+.base64-font {
+	.css-code {
+		overflow-y: auto;
+		max-height: 250px;
+		white-space: pre-wrap;
+	}
+	.card-body {
+		position: relative;
+	}
+	[data-copy] {
+		top: 15px;
+		right: 40px;
+		padding: 2px;
+		border-radius: 2px;
+		position: absolute;
+		background-color: $white;
+	}
+}
