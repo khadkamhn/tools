@@ -1,19 +1,23 @@
 # About Tools
-This is just a collection of tools that I have created using various resources and guidance from AI. I believe these tools can be helpful for someone facing challenges in converting or computing during development.
+This is just a collection of tools that I have created for web development purposes. I believe these tools can be helpful and time savers for someone facing challenges during web development.
+
+```ssh
+bundle exec jekyll serve --baseurl ""
+```
 
 ## Tools Links
-* [Date Conversion (AD/BS)](https://khadkamhn.github.io/tools/date.html)
-* [Slugify](https://khadkamhn.github.io/tools/slugify.html)
-* [Shadow](https://khadkamhn.github.io/tools/shadow.html)
-* [Base64 PNG](https://khadkamhn.github.io/tools/base64-png.html)
-* [Base64 Font](https://khadkamhn.github.io/tools/base64-font.html)
-* [Password](https://khadkamhn.github.io/tools/password.html)
-* [Unicode](https://khadkamhn.github.io/tools/unicode.html)
-* [HTML Character](https://khadkamhn.github.io/tools/html-character.html)
-* [HTML Alphabet](https://khadkamhn.github.io/tools/html-alphabet.html)
-* [URL-encoder](https://khadkamhn.github.io/tools/url-encoder.html)
-* [WordPress](https://khadkamhn.github.io/tools/wordpress.html)
-* [Magento 2](https://khadkamhn.github.io/tools/magento.html)
+* [Date Coverter](https://khadkamhn.github.io/tools/date-converter/)
+* [Slugify](https://khadkamhn.github.io/tools/slugify/)
+* [Shadow Generator](https://khadkamhn.github.io/tools/shadow-generator/)
+* [Base64 PNG Generator](https://khadkamhn.github.io/tools/base64-png-generator/)
+* [Base64 Font Generator](https://khadkamhn.github.io/tools/base64-font-generator/)
+* [Password Generator](https://khadkamhn.github.io/tools/password-generator/)
+* [Unicode Nepali](https://khadkamhn.github.io/tools/unicode-nepali/)
+* [HTML Character](https://khadkamhn.github.io/tools/html-character/)
+* [HTML Alphabet](https://khadkamhn.github.io/tools/html-alphabet/)
+* [URL-encoder](https://khadkamhn.github.io/tools/url-encoder/)
+* [WordPress](https://khadkamhn.github.io/tools/wordpress/)
+* [Magento 2](https://khadkamhn.github.io/tools/magento/)
 
 > [!NOTE]
 > This project doesn't represent any specific plugin or code, but you can bookmark it as a useful tool.
@@ -24,5 +28,5 @@ I’m a frontend developer. My greatest strength is my good knowledge of web tec
 [mohankhadka.com.np](https://mohankhadka.com.np/)
 
 ***
-## Portfolio/Work
+## Portfolio
 Portfolio [@khadkamhn](https://codecanyon.net/user/khadkamhn)
