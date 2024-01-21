@@ -1,5 +1,5 @@
 url: "https://github.com/khadkamhn/tools/"
-baseurl: ""
+baseurl: "/tools"
 title: "Tools by Mohan Khadka"
 
 sass:
