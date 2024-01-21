@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	mk = {
 		init: function() {
 			this.form();
+			this.misc();
 		},
 		id: function (length) {
 			var txt = "";
@@ -57,6 +58,11 @@ document.addEventListener('DOMContentLoaded', function() {
 				if (alert == true) {
 					wrapperDiv.querySelector('.btn-cancel').remove();
 				}
+				if (loader == true) {
+					wrapperDiv.querySelector('.btn-okay').remove();
+					wrapperDiv.querySelector('.btn-cancel').remove();
+					wrapperDiv.querySelector('.mk-confirm').classList.add('mk-loader');
+				}
 
 				document.querySelector('.mk-confirm-wrap').appendChild(wrapperDiv.firstChild);
 				document.documentElement.style.overflow = 'hidden';
@@ -82,8 +88,15 @@ document.addEventListener('DOMContentLoaded', function() {
 				setTimeout(function () {
 					document.getElementById(id).querySelector('.modal-dialog').style.transform = 'scale(1)';
 					document.getElementById(id).querySelector('.modal-dialog').style.opacity = 1;
-					document.getElementById(id).querySelector('.btn-okay').focus();
+					if(document.getElementById(id).querySelector('.btn-okay').length) {
+						document.getElementById(id).querySelector('.btn-okay').focus();
+					}
 				}, 10);
+				document.querySelector('.mk-confirm .modal').addEventListener('click', function (e) {
+					if(!e.target.classList.contains('btn')) {
+						e.stopPropagation();
+					}
+				});
 
 				return false;
 
@@ -258,6 +271,14 @@ document.addEventListener('DOMContentLoaded', function() {
 				var loader = document.querySelector('.mk-loader');
 				if (loader) loader.remove();
 			}
+		},
+		misc: function() {
+			try {
+				let logoHref = document.querySelector('.logo a').href;
+				if(baseUrl=='' || logoHref=='') {
+					document.querySelector('.logo a').href = '/';
+				}
+			} catch (err) {}
 		},
 		copyToClipboard: function(text, success, error) {
 			if (navigator.clipboard) {

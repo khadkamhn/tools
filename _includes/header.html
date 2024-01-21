@@ -17,6 +17,7 @@
 {%- if page.scripts -%}
 	{%- for script in page.scripts -%}<script src="{{ script | relative_url }}" defer></script>{%- endfor -%}
 {%- endif -%}
+<script>var baseUrl = "{{ site.baseurl }}";</script>
 </head>
 <body>
 <body class="d-flex flex-column h-100 page-home">
