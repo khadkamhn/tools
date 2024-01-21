@@ -19,8 +19,8 @@
 {%- endif -%}
 <script>var baseUrl = "{{ site.baseurl }}";</script>
 </head>
-<body>
-<body class="d-flex flex-column h-100 page-home">
+{%- assign pageUrl = page.url | split: "/" | last | remove: ".html" -%}
+<body class="d-flex flex-column h-100 page-{% if pageUrl %}{{ pageUrl }}{% endif %}{% if page.title == nil %}home{% endif %}">
 <div class="header navbar sticky-top">
 	<div class="container">
 		<div class="logo text-center">
