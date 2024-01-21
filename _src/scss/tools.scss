@@ -1,18 +1,3 @@
-/*!
-Theme Name: MHN Flat UI
-Theme URI: http://underscores.me/
-Author: Mohan Khadka
-Author URI: http://mohankhadka.com.np
-Description: Web Designer From Nepal
-Version: 2.0.0
-License: GNU General Public License v2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Text Domain: mhn
-Tags:
-
-This theme, like WordPress, is licensed under the GPL.
-Use it to make something cool, have fun, and share what you've learned with others.
-*/
 // MK Variable
 @import "scss/mk-colors";
 @import "scss/mk-variables";
@@ -66,8 +51,6 @@ Use it to make something cool, have fun, and share what you've learned with othe
 //Animation
 @import "../node_modules/animate-sass/animate";
 
-// Icons
-@import "icons/mk-icons";
 
 // Range Slider
 @import "range-slider/range-slider";

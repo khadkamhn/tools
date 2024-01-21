@@ -57,13 +57,13 @@ $rangeSliderInActiveWidth: 4px;
 			top: 50%;
 			width: 100%;
 			height: $rangeSliderInActiveWidth;
-			margin-top: -$rangeSliderInActiveWidth/2;
+			margin-top: calc($rangeSliderInActiveWidth/-2);
 		}
 		.rangeSlider__fill {
 			&:after {
 				top: 50%;
 				width: 100%;
-				margin-top: -$rangeSliderActiveWidth/2;
+				margin-top: calc($rangeSliderActiveWidth/-2);
 			}
 		}
 	}
@@ -73,14 +73,14 @@ $rangeSliderInActiveWidth: 4px;
 			left: 50%;
 			height: 100%;
 			width: $rangeSliderInActiveWidth;
-			margin-left: -$rangeSliderInActiveWidth/2;
+			margin-left: calc($rangeSliderInActiveWidth/-2);
 		}
 		.rangeSlider__fill {
 			&:after {
 				left: 50%;
 				bottom: 0;
 				height: 100%;
-				margin-left: -$rangeSliderActiveWidth/2;
+				margin-left: calc($rangeSliderActiveWidth/-2);
 				width: $rangeSliderActiveWidth;
 			}
 		}

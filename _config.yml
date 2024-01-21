@@ -1,0 +1,10 @@
+url: "https://github.com/khadkamhn/tools/"
+baseurl: ""
+title: "Tools by Mohan Khadka"
+
+sass:
+  sass_dir: _src
+  style: compressed
+
+include:
+  - _pages

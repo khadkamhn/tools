@@ -1,38 +1,22 @@
 {
-	"name": "mhn-tools",
+	"name": "tools",
 	"version": "1.0.0",
 	"description": "",
-	"private": true,
-	"directories": {
-		"lib": "lib"
+	"scripts": {
+		"start": "webpack serve --mode development --open",
+		"build": "webpack --mode production",
+		"build:scss": "sass _src/tools.scss assets/css/tools.css"
 	},
-	"dependencies": {},
+	"keywords": [],
+	"author": "Mohan Khadka",
+	"license": "ISC",
 	"devDependencies": {
 		"animate-sass": "^0.8.2",
-		"autoprefixer": "^10.4.16",
-		"bootstrap": "^5.3.2",
-		"clean-css-cli": "^4.3.0",
-		"node-sass": "^8.0.0",
-		"postcss": "^8.4.31",
-		"postcss-cli": "^10.1.0",
-		"terser-webpack-plugin": "^5.3.6",
 		"webpack": "^5.89.0",
-		"webpack-cli": "^5.0.0"
+		"webpack-cli": "^5.1.4",
+		"webpack-dev-server": "^4.15.1"
 	},
-	"scripts": {
-		"js": "webpack --watch",
-		"css": "node-sass source/tools.scss ./tools.css --output-style=compressed",
-		"clean": "rimraf css",
-		"compile": "node-sass --output-style=compressed --source-map=true --error-bell source/tools.scss ./tools.css",
-		"prefix": "postcss ./tools.css --use=autoprefixer --map=false --output=./tools.css",
-		"minify": "cleancss --level=1 --source-map --source-map-inline-sources --output ./tools.min.css ./tools.css",
-		"dev": "npm run compile -- --watch",
-		"deploy": "npm run css && webpack --mode production",
-		"build": "npm run clean && npm run compile && npm run prefix && npm run minify"
-	},
-	"browserslist": [
-		"last 4 versions"
-	],
-	"author": "Mohan Khadka",
-	"license": "ISC"
+	"dependencies": {
+		"bootstrap": "^5.3.2"
+	}
 }
