@@ -80,14 +80,14 @@ title: null
 		<a href="{{ baseUrl | append: '/wordpress/' }}">
 			<span class="material-icons">text_snippet</span>
 			<span class="h3">WordPress</span>
-			<span class="h6">Generate a mysql command to save a settings at once.</span>
+			<span class="h6">Generate a mysql command to configure initial settings before development.</span>
 		</a>
 	</div>
 	<div class="link-item">
 		<a href="{{ baseUrl | append: '/magento/' }}">
 			<span class="material-icons">text_snippet</span>
 			<span class="h3">Magento <sup>v2</sup></span>
-			<span class="h6">Reference of command and easy to copy.</span>
+			<span class="h6">Reference of command list and some general information.</span>
 		</a>
 	</div>
 </div>
