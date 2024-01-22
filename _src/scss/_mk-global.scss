@@ -127,6 +127,6 @@ a {
 		display: flex;
 	}
 }
-[data-copy] {
+[data-copy], [data-action] {
 	cursor: pointer;
 }

@@ -22,13 +22,14 @@ input[type="range"]::-webkit-slider-thumb:hover {
 
 $rangeSliderActiveWidth: 6px;
 $rangeSliderInActiveWidth: 4px;
+$rangeSliderNegativeMargin: calc(#{$rangeSliderInActiveWidth} / -2);
 .rangeSlider {
 	box-shadow: none;
 	background-color: transparent;
 	&:after {
 		content: '';
 		position: absolute;
-		background-color: $grey-500;
+		background-color: $green-100;
 	}
 	&__fill {
 		box-shadow: none;
@@ -37,7 +38,7 @@ $rangeSliderInActiveWidth: 4px;
 			z-index: 1;
 			content: '';
 			position: absolute;
-			background-color: $success;
+			background-color: $green-500;
 			height: $rangeSliderActiveWidth;
 		}
 	}
@@ -45,7 +46,7 @@ $rangeSliderInActiveWidth: 4px;
 		width: 30px;
 		height: 30px;
 		&__horizontal {
-			top: -3px;
+			top: -4px;
 		}
 		&__vertical {
 			left: -5px;
@@ -57,13 +58,13 @@ $rangeSliderInActiveWidth: 4px;
 			top: 50%;
 			width: 100%;
 			height: $rangeSliderInActiveWidth;
-			margin-top: calc($rangeSliderInActiveWidth/-2);
+			margin-top: $rangeSliderNegativeMargin;
 		}
 		.rangeSlider__fill {
 			&:after {
 				top: 50%;
 				width: 100%;
-				margin-top: calc($rangeSliderActiveWidth/-2);
+				margin-top: $rangeSliderNegativeMargin;
 			}
 		}
 	}
@@ -73,14 +74,14 @@ $rangeSliderInActiveWidth: 4px;
 			left: 50%;
 			height: 100%;
 			width: $rangeSliderInActiveWidth;
-			margin-left: calc($rangeSliderInActiveWidth/-2);
+			margin-left: $rangeSliderNegativeMargin;
 		}
 		.rangeSlider__fill {
 			&:after {
 				left: 50%;
 				bottom: 0;
 				height: 100%;
-				margin-left: calc($rangeSliderActiveWidth/-2);
+				margin-left: $rangeSliderNegativeMargin;
 				width: $rangeSliderActiveWidth;
 			}
 		}
