@@ -9,6 +9,7 @@ inline_styles:
   }
   .result-wrap .result {
 	padding-right: 40px;
+	word-break: break-all;
   }
   .result-wrap .material-icons {
 	top: 15px;

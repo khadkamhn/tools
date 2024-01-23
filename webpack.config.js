@@ -23,15 +23,5 @@ module.exports = [
 		optimization: {
 		  minimize: false,
 		},
-	},
-	{
-		entry: ['./_src/nepalify.production.min.js'],
-		output: {
-			filename: 'nepalify.production.min.js',
-			path: path.resolve(__dirname, 'assets/js'),
-		},
-		optimization: {
-		  minimize: false,
-		},
-	},
+	}
 ];
