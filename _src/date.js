@@ -1,3 +1,8 @@
+/*!
+ * Copyright (c) 2024 Mohan Khadka
+ * Licensed under the MIT License (MIT)
+ * https://mohankhadka.com.np/
+ */
 export class NepaliCalendar {
 	constructor() {
 		// Example usage:

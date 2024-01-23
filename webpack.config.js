@@ -13,15 +13,5 @@ module.exports = [
 				extractComments: false,
 			})],
 		},
-	},
-	{
-		entry: ['./_src/fontkit.min.js'],
-		output: {
-			filename: 'fontkit.min.js',
-			path: path.resolve(__dirname, 'assets/js'),
-		},
-		optimization: {
-		  minimize: false,
-		},
 	}
 ];

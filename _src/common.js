@@ -1,3 +1,8 @@
+/*!
+ * Copyright (c) 2024 Mohan Khadka
+ * Licensed under the MIT License (MIT)
+ * https://mohankhadka.com.np/
+ */
 document.addEventListener('DOMContentLoaded', function() {
 	mk = {
 		init: function() {
