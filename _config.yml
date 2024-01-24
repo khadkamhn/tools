@@ -1,6 +1,19 @@
 url: "https://github.com/khadkamhn/tools/"
 baseurl: "/tools"
 title: "Tools by Mohan Khadka"
+logo: /assets/img/logo.svg
+description: "Revolutionize your frontend development process with a collection of tools that will unlock the power of creativity and efficiency"
+
+social:
+  name: Mohan Khadka
+  links:
+    - https://twitter.com/khadkamhn
+    - https://www.facebook.com/khadkamhn
+    - https://github.com/khadkamhn
+    - https://codepen.io/khadkamhn
+    - https://www.linkedin.com/in/khadkamhn/
+    - https://dribbble.com/khadkamhn
+    - https://unsplash.com/@khadkamhn
 
 sass:
   sass_dir: _src
