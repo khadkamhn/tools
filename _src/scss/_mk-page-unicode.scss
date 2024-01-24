@@ -45,6 +45,7 @@
 		font-size: 1em;
 		cursor: default;
 		line-height: 3em;
+		position: relative;
 		letter-spacing: 1px;
 		border-radius: 0.4em;
 		color: rgba(0,0,0,0.7);
@@ -78,6 +79,30 @@
 	}
 	.space {
 		width: 36em;
+		&:after {
+			content: 'space_bar';
+		}
+	}
+	.space, .back, .enter, .tab, .caps {
+		span {
+			display: none;
+		}
+		&:after {
+			font-size: 1em;
+			font-family: 'Material Icons';
+		}
+	}
+	.back:after {
+		content: 'backspace';
+	}
+	.enter:after {
+		content: 'keyboard_return';
+	}
+	.tab:after {
+		content: 'keyboard_tab';
+	}
+	.caps:after {
+		content: 'keyboard_capslock';
 	}
 
 	.pinky {
@@ -123,6 +148,20 @@
 		&.active {
 			border-color: $light-green-300;
 			background-color: $light-green-200;
+		}
+	}
+	.fill {
+		border-color: $grey-400;
+		background-color: $grey-300;
+		&.caps {
+			&:before {
+				top: 16px;
+				right: 16px;
+				content: '';
+				border-radius: 50%;
+				position: absolute;
+				border: 3px solid $lime-A400;
+			}
 		}
 	}
 	.active {

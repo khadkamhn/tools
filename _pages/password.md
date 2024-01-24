@@ -13,21 +13,21 @@ scripts: "/assets/js/range-slider.min.js"
 			<span class="material-icons" data-copy="password">content_copy</span>
 		</div>
 	</div>
-	<div class="strength mb-4">
+	<div class="strength my-5">
 		<div class="form-label d-flex justify-content-between">Strength <span class="label-value"></span></div>
 		<div class="progress" role="progressbar">
 			<div class="progress-bar" style="width: 50%"></div>
 		</div>
 	</div>
-	<div class="mb-4">
+	<div class="pt-3 mb-4">
 		<label class="form-label d-flex justify-content-between" for="length">Length <span class="label-value">12</span></label>
 		<input type="range" id="length" value="12" min="6" max="64" oninput="updateSliderValue(this)" data-range>
 	</div>
-	<div class="mb-4">
+	<div class="pt-3 mb-4">
 		<label class="form-label d-flex justify-content-between" for="digits">Digits <span class="label-value">4</span></label>
 		<input type="range" id="digits" value="4" min="0" max="10" oninput="updateSliderValue(this)" data-range>
 	</div>
-	<div class="mb-4">
+	<div class="pt-3 mb-4">
 		<label class="form-label d-flex justify-content-between" for="symbols">Symbols <span class="label-value">2</span></label>
 		<input type="range" id="symbols" value="2" min="0" max="10" oninput="updateSliderValue(this)" data-range>
 	</div>

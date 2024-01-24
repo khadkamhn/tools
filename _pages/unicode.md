@@ -5,8 +5,17 @@ permalink: /unicode-nepali/
 scripts: "/assets/js/nepalify.production.min.js"
 inline_styles:
   - ".unicode-typing {
-	font-size: 24px;
-  }"
+		font-size: 24px;
+	}
+	.input-wrap {
+		position: relative;
+	}
+	[data-copy] {
+		top: 6px;
+		right: 6px;
+		position: absolute;
+		background-color: #fff;
+	}"
 ---
 
 <form class="mt-3 px-2" action="#" method="post">
@@ -16,7 +25,8 @@ inline_styles:
 		<input id="traditional" type="radio" class="btn-check" name="layout" value="traditional" autocomplete="off">
 		<label class="btn" for="traditional">Traditional</label>
 	</div>
-	<div class="mb-3">
+	<div class="mb-3 input-wrap">
+		<span class="material-icons" data-copy="unicode">content_copy</span>
 		<textarea id="unicode" class="form-control unicode-typing" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" rows="6"></textarea>
 	</div>
 </form>
@@ -86,7 +96,7 @@ function keyboardLayout(layout=null) {
 			},
 			1: {
 				eng: [['Tab'],['','Q'],['','W'],['','E'],['','R'],['','T'],['','Y'],['','U'],['','I'],['','O'],['','P'],['{','['],['}',']'],['|','\\']],
-				nep: [['Tab'],['त्त','त्र'],['ड्ढ','ध'],['ऐ','भ'],['द्व','च'],['ट्ट','त'],['ठ्ठ','य'],['ऊ','ग'],['क्ष','ष'],['इ','य'],['ए','उ'],['ृ','र्'],['ै','े'],['ं','्']],
+				nep: [['Tab'],['त्त','त्र'],['ड्ढ','ध'],['ऐ','भ'],['द्व','च'],['ट्ट','त'],['ठ्ठ','थ'],['ऊ','ग'],['क्ष','ष'],['इ','य'],['ए','उ'],['ृ','र्'],['ै','े'],['ं','्']],
 				key: ['Tab','KeyQ','KeyW','KeyE','KeyR','KeyT','KeyY','KeyU','KeyI','KeyO','KeyP','BracketLeft','BracketRight','Backslash'],
 			},
 			2: {
@@ -105,7 +115,30 @@ function keyboardLayout(layout=null) {
 				key: [['ControlLeft'],['AltLeft'],['Space'],['AltRight'],['ControlRight']],
 			}
 		}
-		keyRef += '<div></div>';
+		keyRef += '<div class="ref-tbl d-sm-flex flex-nowrap justify-content-between align-items-center">';
+			keyRef += '<div class="col">';
+				keyRef += '<div class="ref">क + ् + ष = क्ष</div>';
+				keyRef += '<div class="ref">त + ् + र = त्र</div>';
+				keyRef += '<div class="ref">ज + ् + ञ = ज्ञ</div>';
+			keyRef += '</div>';
+			keyRef += '<div class="col">';
+				keyRef += '<div class="ref">त + ् + त = त्त</div>';
+				keyRef += '<div class="ref">द + ् + ध = द्ध</div>';
+				keyRef += '<div class="ref">द + ् + व = द्व</div>';
+			keyRef += '</div>';
+			keyRef += '<div class="col">';
+				keyRef += '<div class="ref">श + ् + र = श्र</div>';
+				keyRef += '<div class="ref">द + ् + य = द्य</div>';
+				keyRef += '<div class="ref">ट + ् + ट = ट्ट</div>';
+			keyRef += '</div>';
+			keyRef += '<div class="col">';
+				keyRef += '<div class="ref en">ZWNJ = Zero Width Non Joiner</div>';
+				keyRef += '<div class="ref">श्र+ी+म+ा+न+्+ZWNJ+क+ा+े  = श्रीमान्‌काे</div>';
+				keyRef += '<div class="ref en">ZWJ = Zero Width Joiner</div>';
+				keyRef += '<div class="ref">र+्+ZWJ+य+ा+ल =  र्‍याल</div>';
+			keyRef += '</div>';
+		keyRef += '</div>';
+		keyRef += '<div class="ref-ie p-3 text-center">उदाहरण :  " राष्ट्रिय " लेख्नुपरेमा  /fi\^\/lo लहरै दाब्नुपर्नेछ ।</div>';
 	}
 	let htm = '';
 	for (const arr in data) {
@@ -160,7 +193,7 @@ function keyboardLayout(layout=null) {
 						htm  += '<span class="en">'+key.en[0]+'<br>'+key.en[1]+'</span>';
 						htm  += '<span class="ne">'+key.ne[0]+'<br>'+key.ne[1]+'</span>';
 					} else {
-						htm  += key.en[0];
+						htm  += '<span>'+key.en[0]+'</span>';
 					}
 				htm += '</div>';
 			htm += '</div>';
@@ -203,13 +236,23 @@ document.addEventListener('DOMContentLoaded', function () {
 		if(key) {
 			key.classList.add('active');
 		}
+		var capsLockOn = event.getModifierState && event.getModifierState('CapsLock'), keyCaps = document.querySelector('.key.caps');
+		if (capsLockOn) {
+			keyCaps.classList.add('fill');
+		} else {
+			keyCaps.classList.remove('fill');
+		}
 	});
-	document.querySelectorAll('.btn-check').forEach(function(btn){
+	document.querySelectorAll('.btn-check').forEach(function(btn) {
 		btn.addEventListener('change',function(){
 			if(this.value) {
 				keyboardLayout(this.value);
 			}
 		});
+	});
+	document.querySelector('[data-copy="unicode"]').addEventListener('click',function() {
+		let text = document.querySelector('.unicode-typing').value;
+		mk.copyToClipboard(text);
 	});
 });
 </script>
