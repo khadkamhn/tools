@@ -20,38 +20,92 @@ inline_styles:
 		<textarea id="unicode" class="form-control unicode-typing" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" rows="6"></textarea>
 	</div>
 </form>
-<div class="overflow-x-auto">
-	<div class="keyboard d-flex flex-column align-items-center"></div>
-</div>
+<div class="keyboard d-flex flex-column align-items-center"></div>
+<div class="keyboard-ref"></div>
 <script>
-function generateCustomKeyboard() {
-	let keyboard = document.querySelector('.keyboard');
-	let data = {
-		0: {
-			eng: [['~','`'],['!','1'],['@','2'],['#','3'],['$','4'],['%','5'],['^','6'],['&','7'],['*','8'],['(','9'],[')','0'],['-','_'],['+','='],['Back']],
-			nep: [['़','ऽ'],['','१'],['','२'],['','३'],['','४'],['','५'],['','६'],['','७'],['','८'],['','९'],['','०'],['॒','-'],['ZWNJ','ZWJ'],['Back']],
-			key: ['Backquote','Digit1','Digit2','Digit3','Digit4','Digit5','Digit6','Digit7','Digit8','Digit9','Digit0','Minus','Equal','Backspace'],
-		},
-		1: {
-			eng: [['Tab'],['','Q'],['','W'],['','E'],['','R'],['','T'],['','Y'],['','U'],['','I'],['','O'],['','P'],['{','['],['}',']'],['|','\\']],
-			nep: [['Tab'],['ठ','ट'],['औ','ौ'],['ै','े'],['ृ','र'],['थ','त'],['ञ','य'],['ू','ु'],['ी','ि'],['ओ','ो'],['फ','प'],['ई','इ'],['ऐ','ए'],['ः','ॐ']],
-			key: ['Tab','KeyQ','KeyW','KeyE','KeyR','KeyT','KeyY','KeyU','KeyI','KeyO','KeyP','BracketLeft','BracketRight','Backslash'],
-		},
-		2: {
-			eng: [['Caps'],['','A'],['','S'],['','D'],['','F'],['','G'],['','H'],['','J'],['','K'],['','L'],[':',';'],['"','\''],['Enter']],
-			nep: [['Caps'],['आ','ा'],['श','स'],['ध','द'],['ऊ','उ'],['घ','ग'],['अ','ह'],['झ','ज'],['ख','क'],['ळ','ल'],[':',';'],['"','\''],['Enter']],
-			key: ['CapsLock','KeyA','KeyS','KeyD','KeyF','KeyG','KeyH','KeyJ','KeyK','KeyL','Semicolon','Quote','Enter'],
-		},
-		3: {
-			eng: [['Shift'],['','Z'],['','X'],['','C'],['','V'],['','B'],['','N'],['','M'],['<',','],['>','.'],['?','/'],['Shift']],
-			nep: [['Shift'],['ऋ','ष'],['ढ','ड'],['च','छ'],['ँ','व'],['भ','ब'],['ण','न'],['ं','म'],['ङ',','],['॥','।'],['?','्'],['Shift']],
-			key: ['ShiftLeft','KeyZ','KeyX','KeyC','KeyV','KeyB','KeyN','KeyM','Comma','Period','Slash','ShiftRight'],
-		},
-		4: {
-			eng: [['Ctrl'],['Alt'],['Space'],['Alt'],['Ctrl']],
-			nep: [['Ctrl'],['Alt'],['Space'],['Alt'],['Ctrl']],
-			key: [['ControlLeft'],['AltLeft'],['Space'],['AltRight'],['ControlRight']],
+function keyboardLayout(layout=null) {
+	let data, keyRef = '', keyboard = document.querySelector('.keyboard'), keyRefElm = document.querySelector('.keyboard-ref');
+	if(layout=='romanized' || layout===null || layout===undefined || layout==='') {
+		data = {
+			0: {
+				eng: [['~','`'],['!','1'],['@','2'],['#','3'],['$','4'],['%','5'],['^','6'],['&','7'],['*','8'],['(','9'],[')','0'],['-','_'],['+','='],['Back']],
+				nep: [['़','ऽ'],['','१'],['','२'],['','३'],['','४'],['','५'],['','६'],['','७'],['','८'],['','९'],['','०'],['॒','-'],['ZWNJ','ZWJ'],['Back']],
+				key: ['Backquote','Digit1','Digit2','Digit3','Digit4','Digit5','Digit6','Digit7','Digit8','Digit9','Digit0','Minus','Equal','Backspace'],
+			},
+			1: {
+				eng: [['Tab'],['','Q'],['','W'],['','E'],['','R'],['','T'],['','Y'],['','U'],['','I'],['','O'],['','P'],['{','['],['}',']'],['|','\\']],
+				nep: [['Tab'],['ठ','ट'],['औ','ौ'],['ै','े'],['ृ','र'],['थ','त'],['ञ','य'],['ू','ु'],['ी','ि'],['ओ','ो'],['फ','प'],['ई','इ'],['ऐ','ए'],['ः','ॐ']],
+				key: ['Tab','KeyQ','KeyW','KeyE','KeyR','KeyT','KeyY','KeyU','KeyI','KeyO','KeyP','BracketLeft','BracketRight','Backslash'],
+			},
+			2: {
+				eng: [['Caps'],['','A'],['','S'],['','D'],['','F'],['','G'],['','H'],['','J'],['','K'],['','L'],[':',';'],['"','\''],['Enter']],
+				nep: [['Caps'],['आ','ा'],['श','स'],['ध','द'],['ऊ','उ'],['घ','ग'],['अ','ह'],['झ','ज'],['ख','क'],['ळ','ल'],[':',';'],['"','\''],['Enter']],
+				key: ['CapsLock','KeyA','KeyS','KeyD','KeyF','KeyG','KeyH','KeyJ','KeyK','KeyL','Semicolon','Quote','Enter'],
+			},
+			3: {
+				eng: [['Shift'],['','Z'],['','X'],['','C'],['','V'],['','B'],['','N'],['','M'],['<',','],['>','.'],['?','/'],['Shift']],
+				nep: [['Shift'],['ऋ','ष'],['ढ','ड'],['च','छ'],['ँ','व'],['भ','ब'],['ण','न'],['ं','म'],['ङ',','],['॥','।'],['?','्'],['Shift']],
+				key: ['ShiftLeft','KeyZ','KeyX','KeyC','KeyV','KeyB','KeyN','KeyM','Comma','Period','Slash','ShiftRight'],
+			},
+			4: {
+				eng: [['Ctrl'],['Alt'],['Space'],['Alt'],['Ctrl']],
+				nep: [['Ctrl'],['Alt'],['Space'],['Alt'],['Ctrl']],
+				key: [['ControlLeft'],['AltLeft'],['Space'],['AltRight'],['ControlRight']],
+			}
 		}
+		keyRef += '<div class="ref-tbl d-sm-flex flex-nowrap justify-content-between align-items-center">';
+			keyRef += '<div class="col">';
+				keyRef += '<div class="ref">क + ् + ष = क्ष</div>';
+				keyRef += '<div class="ref">त + ् + र = त्र</div>';
+				keyRef += '<div class="ref">ज + ् + ञ = ज्ञ</div>';
+			keyRef += '</div>';
+			keyRef += '<div class="col">';
+				keyRef += '<div class="ref">त + ् + त = त्त</div>';
+				keyRef += '<div class="ref">द + ् + ध = द्ध</div>';
+				keyRef += '<div class="ref">द + ् + व = द्व</div>';
+			keyRef += '</div>';
+			keyRef += '<div class="col">';
+				keyRef += '<div class="ref">श + ् + र = श्र</div>';
+				keyRef += '<div class="ref">द + ् + य = द्य</div>';
+				keyRef += '<div class="ref">ट + ् + ट = ट्ट</div>';
+			keyRef += '</div>';
+			keyRef += '<div class="col">';
+				keyRef += '<div class="ref en">ZWNJ = Zero Width Non Joiner</div>';
+				keyRef += '<div class="ref">ढ+ु+ङ+्+ZWNJ+ग+ा  = ढुङ्गा</div>';
+				keyRef += '<div class="ref en">ZWJ = Zero Width Joiner</div>';
+				keyRef += '<div class="ref">म+र+्+ZWJ+य+ो =  मर्यो</div>';
+			keyRef += '</div>';
+		keyRef += '</div>';
+		keyRef += '<div class="ref-ie p-3 text-center">उदाहरण :  " किंकर्तव्यबिमुढ् " लेख्नुपरेमा  kiMkr/tv/ybimuX/ लहरै दाब्नुपर्नेछ ।</div>';
+	} else if(layout=='traditional') {
+		data = {
+			0: {
+				eng: [['~','`'],['!','1'],['@','2'],['#','3'],['$','4'],['%','5'],['^','6'],['&','7'],['*','8'],['(','9'],[')','0'],['-','_'],['+','='],['Back']],
+				nep: [['॥','ञ'],['ज्ञ','१'],['ई','२'],['घ','३'],['द्ध','४'],['छ','५'],['ट','६'],['ठ','७'],['ड','८'],['ढ','९'],['ण','०'],['ओ','औ'],['ZWNJ','ZWJ'],['Back']],
+				key: ['Backquote','Digit1','Digit2','Digit3','Digit4','Digit5','Digit6','Digit7','Digit8','Digit9','Digit0','Minus','Equal','Backspace'],
+			},
+			1: {
+				eng: [['Tab'],['','Q'],['','W'],['','E'],['','R'],['','T'],['','Y'],['','U'],['','I'],['','O'],['','P'],['{','['],['}',']'],['|','\\']],
+				nep: [['Tab'],['त्त','त्र'],['ड्ढ','ध'],['ऐ','भ'],['द्व','च'],['ट्ट','त'],['ठ्ठ','य'],['ऊ','ग'],['क्ष','ष'],['इ','य'],['ए','उ'],['ृ','र्'],['ै','े'],['ं','्']],
+				key: ['Tab','KeyQ','KeyW','KeyE','KeyR','KeyT','KeyY','KeyU','KeyI','KeyO','KeyP','BracketLeft','BracketRight','Backslash'],
+			},
+			2: {
+				eng: [['Caps'],['','A'],['','S'],['','D'],['','F'],['','G'],['','H'],['','J'],['','K'],['','L'],[':',';'],['"','\''],['Enter']],
+				nep: [['Caps'],['आ','ब'],['ङ्क','क'],['ङ्ग','म'],['ँ','ा'],['द्द','न'],['झ','ज'],['ो','व'],['फ','प'],['ी','ि'],['ट्ठ','स'],['ू','ु'],['Enter']],
+				key: ['CapsLock','KeyA','KeyS','KeyD','KeyF','KeyG','KeyH','KeyJ','KeyK','KeyL','Semicolon','Quote','Enter'],
+			},
+			3: {
+				eng: [['Shift'],['','Z'],['','X'],['','C'],['','V'],['','B'],['','N'],['','M'],['<',','],['>','.'],['?','/'],['Shift']],
+				nep: [['Shift'],['क्क','श'],['ह्य','ह'],['ऋ','अ'],['ॐ','ख'],['ौ','द'],['द्य','ल'],['ड्ड','ः'],['ङ','ऽ'],['श्र','।'],['रु','र'],['Shift']],
+				key: ['ShiftLeft','KeyZ','KeyX','KeyC','KeyV','KeyB','KeyN','KeyM','Comma','Period','Slash','ShiftRight'],
+			},
+			4: {
+				eng: [['Ctrl'],['Alt'],['Space'],['Alt'],['Ctrl']],
+				nep: [['Ctrl'],['Alt'],['Space'],['Alt'],['Ctrl']],
+				key: [['ControlLeft'],['AltLeft'],['Space'],['AltRight'],['ControlRight']],
+			}
+		}
+		keyRef += '<div></div>';
 	}
 	let htm = '';
 	for (const arr in data) {
@@ -111,9 +165,10 @@ function generateCustomKeyboard() {
 				htm += '</div>';
 			htm += '</div>';
 		}
-		htm += '</div>'
+		htm += '</div>';
 	}
 	keyboard.innerHTML = htm;
+	keyRefElm.innerHTML = keyRef;
 }
 document.addEventListener('DOMContentLoaded', function () {
 	try {
@@ -129,7 +184,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	} catch(err) {
 		console.error(err);
 	}
-	generateCustomKeyboard();
+	keyboardLayout();
 	document.addEventListener("keyup", event => {
 		const key = document.querySelector('[data-key="'+event.code+'"]');
 		if(key) {
@@ -143,10 +198,18 @@ document.addEventListener('DOMContentLoaded', function () {
 		});
 	});
 	document.addEventListener("keydown", event => {
+		document.querySelector('.unicode-typing').focus();
 		const key = document.querySelector('[data-key="'+event.code+'"]');
 		if(key) {
 			key.classList.add('active');
 		}
+	});
+	document.querySelectorAll('.btn-check').forEach(function(btn){
+		btn.addEventListener('change',function(){
+			if(this.value) {
+				keyboardLayout(this.value);
+			}
+		});
 	});
 });
 </script>

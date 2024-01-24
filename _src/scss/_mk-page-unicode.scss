@@ -3,6 +3,10 @@
 		width: 100%;
 		max-width: 1300px;
 	}
+	.ref-ie {
+		font-size: 18px;
+		background-color: $green-100;
+	}
 }
 .keyboard {
 	user-select: none;
@@ -121,15 +125,26 @@
 			background-color: $light-green-200;
 		}
 	}
-	.fill-out-key {
-		//slategrey
-		background-color: slategrey;
-		border: 2px solid slategrey;
-	}
 	.active {
 		//background-color: transparent;
 		-webkit-animation: vibrate-1 0.3s linear infinite both;
 		animation: vibrate-1 0.3s linear infinite both;
+	}
+	&-ref {
+		.ref-tbl {
+			background-color: $green-50;
+		}
+		.col {
+			padding: 10px 0;
+		}
+		.ref {
+			padding: 5px;
+			font-size: 16px;
+			text-align: center;
+			&.en {
+				font-size: 14px;
+			}
+		}
 	}
 }
 
