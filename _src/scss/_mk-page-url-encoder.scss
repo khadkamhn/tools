@@ -1,0 +1,32 @@
+.page-url-encoder {
+	.form-control, .svg-preview {
+		height: 150px;
+		font-size: 13px;
+		overflow-y: auto;
+	}
+	.clr-field {
+		width: 24px;
+		height: 24px;
+		overflow: hidden;
+		border-radius: 50%;
+		vertical-align: middle;
+		input {
+			width: 100%;
+			height: auto;
+		}
+	}
+	.svg-preview {
+		padding: .375rem .75rem;
+		.bg {
+			height: calc(150px - .375rem * 2);
+			background-repeat: no-repeat;
+		}
+	}
+	.dropdown {
+		svg {
+			width: 24px;
+			height: 24px;
+			margin-right: 10px;
+		}
+	}
+}
