@@ -71,8 +71,15 @@ title: null
 	<div class="link-item">
 		<a href="{{ baseUrl | append: '/url-encoder/' }}">
 			<span class="material-icons">source</span>
-			<span class="h3">URL-encoder</span>
+			<span class="h3">URL Encoder</span>
 			<span class="h6">Make any SVG code into URL readable or ready for CSS</span>
+		</a>
+	</div>
+	<div class="link-item">
+		<a href="{{ baseUrl | append: '/json-format/' }}">
+			<span class="material-icons">data_object</span>
+			<span class="h3">JSON Format</span>
+			<span class="h6">Make a align and format from any minified JSON</span>
 		</a>
 	</div>
 	<hr class="w-100">
@@ -86,7 +93,7 @@ title: null
 	<div class="link-item">
 		<a href="{{ baseUrl | append: '/magento/' }}">
 			<span class="material-icons">text_snippet</span>
-			<span class="h3">Magento <sup>v2</sup></span>
+			<span class="h3">Magento</span>
 			<span class="h6">Reference of command list and some general information.</span>
 		</a>
 	</div>

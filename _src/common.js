@@ -283,6 +283,17 @@ document.addEventListener('DOMContentLoaded', function() {
 				if(baseUrl=='' || logoHref=='') {
 					document.querySelector('.logo a').href = '/';
 				}
+				// Sticky
+				var stickyNav = function() {
+					var header = document.querySelector('.header');
+					var sticky = header.offsetTop;
+					if (window.pageYOffset >= sticky) {
+						header.classList.add('sticky')
+					} else {
+						header.classList.remove('sticky');
+					}
+				}
+				window.onscroll = function() {stickyNav()};
 			} catch (err) {}
 		},
 		copyToClipboard: function(text, success, error) {

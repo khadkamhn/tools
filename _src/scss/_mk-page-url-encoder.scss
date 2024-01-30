@@ -1,5 +1,6 @@
 .page-url-encoder {
 	.form-control, .svg-preview {
+		resize: none;
 		height: 150px;
 		font-size: 13px;
 		overflow-y: auto;
@@ -27,6 +28,11 @@
 			width: 24px;
 			height: 24px;
 			margin-right: 10px;
+		}
+		&-item {
+			font-size: 13px;
+			--bs-dropdown-item-padding-y: 5px;
+			--bs-dropdown-item-padding-x: 10px;
 		}
 	}
 }

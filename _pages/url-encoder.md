@@ -25,10 +25,7 @@ permalink: /url-encoder/
 					<span class="material-icons" data-copy="svg-source" title="Click to Clipboard">content_copy</span>
 				</div>
 				<div class="card-body p-0">
-					<textarea class="svg-source form-control border-0 font-monospace" rows="6" spellcheck="false"></textarea>
-				</div>
-				<div class="card-footer">
-					
+					<textarea class="svg-source form-control border-0 font-monospace" spellcheck="false"></textarea>
 				</div>
 			</div>
 		</div>
@@ -39,10 +36,7 @@ permalink: /url-encoder/
 					<span class="material-icons" data-copy="svg-encoded" title="Click to Clipboard">content_copy</span>
 				</div>
 				<div class="card-body p-0">
-					<textarea class="svg-encoded form-control border-0 font-monospace" rows="6" spellcheck="false"></textarea>
-				</div>
-				<div class="card-footer">
-					
+					<textarea class="svg-encoded form-control border-0 font-monospace" spellcheck="false"></textarea>
 				</div>
 			</div>
 		</div>
@@ -54,9 +48,6 @@ permalink: /url-encoder/
 				</div>
 				<div class="card-body p-0">
 					<div class="form-control border-0 font-monospace"><code class="svg-background"></code></div>
-				</div>
-				<div class="card-footer">
-					
 				</div>
 			</div>
 		</div>
@@ -70,9 +61,6 @@ permalink: /url-encoder/
 				</div>
 				<div class="card-body p-0">
 					<div class="svg-preview"><div class="bg"></div></div>
-				</div>
-				<div class="card-footer">
-					
 				</div>
 			</div>
 		</div>
@@ -121,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	for (const svgBg in svgSample) {
 		svgDropdown += '<li><a class="dropdown-item" href="javascript:void(0)" data-name="'+svgBg+'">'+svgSample[svgBg]+svgBg+'</a></li>';
 	};
-	svgDropdown += '<li><span class="dropdown-item text-wrap">SVG graphics provided by SVGBackgrounds.com</span></li>';
+	svgDropdown += '<li><span class="dropdown-attribution d-block p-2 pb-0 text-wrap small">Icons by <a href="https://www.svgbackgrounds.com/" target="_blank">SVGBackgrounds.com</a></span></li>';
 	svgDropdownMenu.innerHTML = svgDropdown;
 	svgDropdownMenu.addEventListener('click', function(e) {
 		e.preventDefault();
@@ -134,12 +122,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			}
 		}
 	});
-	svgDropdownMenu.addEventListener('click', function(event) {
-	// Check if the clicked element is a dropdown item
-	if (event.target.classList.contains('dropdown-item')) {
-	// Do something when a dropdown item is clicked
-	console.log('Clicked: ' + event.target.innerText);
-	}
+	svgDropdownMenu.querySelector('.dropdown-attribution').addEventListener('click', function(e) {
+		e.stopPropagation();
 	});
 
 	Coloris.setInstance('[name="background"]', {
@@ -214,7 +198,9 @@ document.addEventListener('DOMContentLoaded', function () {
 			}else if(card.querySelector('div.form-control')) {
 				text = card.querySelector('div.form-control').textContent;
 			}
-			mk.copyToClipboard(text);
+			if(text != '') {
+				mk.copyToClipboard(text);
+			}
 		});
 	});
 });

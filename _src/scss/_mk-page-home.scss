@@ -1,5 +1,7 @@
 .page-home {
-	background-color: $white;
+	&, .header {
+		background-color: $white;
+	}
 	.link-item {
 		a {
 			width: 100%;
@@ -8,7 +10,9 @@
 			height: 200px;
 			padding: 15px;
 			display: block;
+			overflow: hidden;
 			text-align: center;
+			position: relative;
 			vertical-align: top;
 			text-decoration: none;
 			border: 2px solid transparent;
@@ -16,8 +20,41 @@
 			flex-direction: column;
 			align-items: center;
 			justify-content: start;
+			transition: border .2s ease-in-out 0s;
+			&:after {
+				top: 50%;
+				left: 50%;
+				z-index: -1;
+				content: '';
+				width: 20rem;
+				height: 20rem;
+				position: absolute;
+				margin-top: -10rem;
+				margin-left: -10rem;
+				border-radius: 50%;
+				border: 0 solid $grey-50;
+				transition: all .3s ease-in-out 0s;
+			}
 			&:hover {
 				border-color: inherit;
+				&:after {
+					border-width: 10rem;
+				}
+				.material-icons {
+					@include animate-prefixer(animation-duration, calc( #{$base-duration} ) );
+					@include animate-prefixer(animation-fill-mode, $base-fill-mode);
+					@include animate-prefixer(animation-name, bounceIn);
+				}
+				.h3 {
+					@include animate-prefixer(animation-duration, calc( #{$base-duration} * 0.25 ) );
+					@include animate-prefixer(animation-fill-mode, $base-fill-mode);
+					@include animate-prefixer(animation-name, fadeInUp);
+				}
+				.h6 {
+					@include animate-prefixer(animation-duration, calc( #{$base-duration} * 0.5 ) );
+					@include animate-prefixer(animation-fill-mode, $base-fill-mode);
+					@include animate-prefixer(animation-name, fadeInUp);
+				}
 			}
 		}
 		.material-icons {
