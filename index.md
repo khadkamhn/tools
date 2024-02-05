@@ -2,7 +2,7 @@
 layout: default
 title: null
 ---
-{%- assign baseUrl = site.baseurl | absolute_url -%}
+{%- assign baseUrl = site.baseurl -%}
 <div class="container">
 <div class="d-flex flex-wrap align-item-center justify-content-center my-4">
 	<div class="link-item">
