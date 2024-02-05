@@ -1,0 +1,92 @@
+[
+	{
+		"name": "Date",
+		"icon": "calendar_month",
+		"slug": "/date-converter/",
+		"title": "A Nepali or English date conversion"
+	},
+	{
+		"name": "Slugify",
+		"icon": "link",
+		"slug": "/slugify/",
+		"title": "A slug from any text/sentence"
+	},
+	{
+		"name": "Shadow",
+		"icon": "highlight_alt",
+		"slug": "/shadow-generator/",
+		"title": "CSS box-shadow custom or pre-defined"
+	},
+	{
+		"name": "Base64 PNG",
+		"icon": "image",
+		"slug": "/base64-png-generator/",
+		"title": "A base64 png generator or blank png"
+	},
+	{
+		"name": "Base64 Font",
+		"icon": "font_download",
+		"slug": "/base64-font-generator/",
+		"title": "A base64 font generator from ttf or woff"
+	},
+	{
+		"name": "Password",
+		"icon": "password",
+		"slug": "/password-generator/",
+		"title": "A strong password generator to secure your account"
+	},
+	{
+		"name": "Unicode",
+		"icon": "keyboard_alt",
+		"slug": "/unicode-nepali/",
+		"title": "A tool to convert from english to devanagari unicode"
+	},
+	{
+		"name": "HTML Character",
+		"icon": "integration_instructions",
+		"slug": "/html-character/",
+		"title": "Convert special character to html entities"
+	},
+	{
+		"name": "HTML Alphabet",
+		"icon": "code",
+		"slug": "/html-alphabet/",
+		"title": "Convert special alphabet to html entities"
+	},
+	{
+		"name": "URL Encoder",
+		"icon": "source",
+		"slug": "/url-encoder/",
+		"title": "Make any SVG code into URL readable or ready for CSS"
+	},
+	{
+		"name": "JSON Format",
+		"icon": "data_object",
+		"slug": "/json-format/",
+		"title": "Make a align and format from any minified JSON"
+	},
+	{
+		"name": "hr",
+		"icon": "hr",
+		"slug": "hr",
+		"title": "Line break"
+	},
+	{
+		"name": "WordPress",
+		"icon": "text_snippet",
+		"slug": "/wordpress/",
+		"title": "Generate a mysql command to configure initial settings before development"
+	},
+	{
+		"name": "Magento",
+		"icon": "text_snippet",
+		"slug": "/magento/",
+		"title": "Reference of command list and some general information"
+	},
+	{
+		"name": "Shopify",
+		"icon": "text_snippet",
+		"slug": "/shopify/",
+		"title": "Reference of section, snippets and some useful information"
+	},
+]
