@@ -252,7 +252,11 @@ document.addEventListener('DOMContentLoaded', function () {
 	});
 	document.querySelector('[data-copy="unicode"]').addEventListener('click',function() {
 		let text = document.querySelector('.unicode-typing').value;
-		mk.copyToClipboard(text);
+		if(text) {
+			mk.copyToClipboard(text);
+		} else {
+			mk.toastr({head:{text:'Warning'},body:'There is no text available to copy!'},'warning');
+		}
 	});
 });
 </script>
