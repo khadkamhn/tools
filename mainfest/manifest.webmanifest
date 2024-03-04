@@ -2,8 +2,6 @@
     "theme_color": "#263238",
     "background_color": "#263238",
     "display": "browser",
-    "scope": "/",
-    "start_url": "/",
     "name": "A Tools by Mohan Khadka",
     "short_name": "MK Tools",
     "icons": [
