@@ -12,6 +12,7 @@ a {
 
 .btn:focus,
 .form-select,
+.form-select:focus,
 .form-control:focus {
 	box-shadow: none;
 }
@@ -86,21 +87,20 @@ a {
 			background-color: #da3838;
 		}
 	}
-	&-header {
-		padding: 10px;
-		border: none;
-		border-radius: 0;
-		background-color: $white;
-	}
-	&-body {
-		padding: 10px;
-		border: none;
-		border-radius: 0;
-	}
+	&-header,
+	&-body,
 	&-footer {
 		padding: 10px;
 		border: none;
 		border-radius: 0;
+	}
+	&-header {
+		background-color: $white;
+	}
+	&-body {
+		
+	}
+	&-footer {
 		background-color: $white;
 	}
 	&.show {

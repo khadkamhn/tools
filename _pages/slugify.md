@@ -6,10 +6,21 @@ permalink: /slugify/
 
 <div class="row g-3 justify-content-center">
 	<div class="col-md-8">
-		<input type="text" class="form-control input-text" placeholder="Enter a sentence line here">
+		<div class="mb-3">
+			<label class="form-label" for="text">Text</label>
+			<input id="text" type="text" class="form-control input-text" placeholder="Enter a sentence line here">
+		</div>
 	</div>
 	<div class="col-md-3">
-		<input type="text" class="form-control input-split" placeholder="Default separator is -">
+		<div class="mb-3">
+			<label class="form-label" for="separator">Separator</label>
+			<select id="separator" class="form-select input-split">
+				<option value="-">-</option>
+				<option value="--">--</option>
+				<option value="_">_</option>
+				<option value="__">__</option>
+			</select>
+		</div>
 	</div>
 	<div class="col-md-3">
 		<button class="btn w-100 btn-primary" type="button" data-action="slugify">Slugify</button>

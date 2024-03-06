@@ -12,10 +12,34 @@
 		"title": "A slug from any text/sentence"
 	},
 	{
+		"name": "Mainfest &amp; Icons ",
+		"icon": "description",
+		"slug": "/icons-and-mainfest/",
+		"title": "Generate a mainfest and icons files"
+	},
+	{
+		"name": "JSON Format",
+		"icon": "data_object",
+		"slug": "/json-format/",
+		"title": "Make a align and format from any minified JSON"
+	},
+	{
 		"name": "Shadow",
 		"icon": "highlight_alt",
 		"slug": "/shadow-generator/",
 		"title": "CSS box-shadow custom or pre-defined"
+	},
+	{
+		"name": "Password",
+		"icon": "password",
+		"slug": "/password-generator/",
+		"title": "A strong password generator to secure your account"
+	},
+	{
+		"name": "hr",
+		"icon": "hr",
+		"slug": "hr",
+		"title": "Line break"
 	},
 	{
 		"name": "Base64 PNG",
@@ -28,12 +52,6 @@
 		"icon": "font_download",
 		"slug": "/base64-font-generator/",
 		"title": "A base64 font generator from ttf or woff"
-	},
-	{
-		"name": "Password",
-		"icon": "password",
-		"slug": "/password-generator/",
-		"title": "A strong password generator to secure your account"
 	},
 	{
 		"name": "Unicode",
@@ -60,12 +78,6 @@
 		"title": "Make any SVG code into URL readable or ready for CSS"
 	},
 	{
-		"name": "JSON Format",
-		"icon": "data_object",
-		"slug": "/json-format/",
-		"title": "Make a align and format from any minified JSON"
-	},
-	{
 		"name": "hr",
 		"icon": "hr",
 		"slug": "hr",
@@ -75,7 +87,7 @@
 		"name": "WordPress",
 		"icon": "text_snippet",
 		"slug": "/wordpress/",
-		"title": "Generate a mysql command to configure initial settings before development"
+		"title": "Generate a mysql query to configure initial settings before development"
 	},
 	{
 		"name": "Magento",
