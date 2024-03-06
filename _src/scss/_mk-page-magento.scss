@@ -1,0 +1,33 @@
+.putty {
+    overflow: auto;
+	white-space: nowrap;
+	code {
+		display: block;
+		&:hover {
+			.php {
+				visibility: visible;
+			}
+		}
+	}
+	.php {
+		color: initial;
+		cursor: pointer;
+		font-size: 11px;
+		padding: 1px 2px;
+		visibility: hidden;
+		border-radius: 2px;
+		margin-right: 5px;
+		display: inline-block;
+		background-color: #0f0;
+		>i {
+			font-size: 10px;
+			letter-spacing: -4px;
+			vertical-align: middle;
+		}
+	}
+}
+.text-bg-dark {
+	.putty code {
+		color: #bbb;
+	}
+}

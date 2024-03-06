@@ -100,5 +100,11 @@
 		"icon": "text_snippet",
 		"slug": "/shopify/",
 		"title": "Reference of section, snippets and some useful information"
+	},
+	{
+		"name": "XAMPP",
+		"icon": "text_snippet",
+		"slug": "/xampp/",
+		"title": "Reference of virtual host, multi directory and different php version usage"
 	}
 ]
