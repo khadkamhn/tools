@@ -97,10 +97,12 @@ document.addEventListener('DOMContentLoaded', function () {
 				}
 			},function(error){
 				if(error) {
+					document.querySelector('.slug-text').closest('.alert').classList.add('d-none');
 					mk.toastr({head:{text:'Error'},body:'Unable to copy text to clipboard!'},'danger');
 				}
 			});
 		} else {
+			document.querySelector('.slug-text').closest('.alert').classList.add('d-none');
 			mk.toastr({head:{text:'Error'},body:'Enter a text that you want to make a slug!'},'danger');
 		}
 	});
