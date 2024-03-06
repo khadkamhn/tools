@@ -4,30 +4,42 @@ title: "Slugify"
 permalink: /slugify/
 ---
 
-<div class="row g-3 justify-content-center">
-	<div class="col-md-8">
-		<div class="mb-3">
-			<label class="form-label" for="text">Text</label>
-			<input id="text" type="text" class="form-control input-text" placeholder="Enter a sentence line here">
+<div class="mt-3">
+	<div class="row justify-content-center">
+		<div class="col-md-6">
+			<div class="mb-3">
+				<label class="form-label" for="text">Text</label>
+				<input id="text" type="text" class="form-control input-text" placeholder="Enter a sentence line here">
+			</div>
+		</div>
+		<div class="col-md-2">
+			<div class="mb-3">
+				<label class="form-label" for="separator">Separator</label>
+				<select id="separator" class="form-select input-split">
+					<option value="-">-</option>
+					<option value="--">--</option>
+					<option value="_">_</option>
+					<option value="__">__</option>
+				</select>
+			</div>
 		</div>
 	</div>
-	<div class="col-md-3">
-		<div class="mb-3">
-			<label class="form-label" for="separator">Separator</label>
-			<select id="separator" class="form-select input-split">
-				<option value="-">-</option>
-				<option value="--">--</option>
-				<option value="_">_</option>
-				<option value="__">__</option>
-			</select>
+	<div class="row justify-content-center mb-3">
+		<div class="col-md-3">
+			<div class="form-check form-switch">
+				<input class="form-check-input" type="checkbox" id="onPasteCopy" name="onPasteCopy">
+				<label class="form-check-label mt-1" for="onPasteCopy">Copy clibboard on <code>paste</code> or <code>input</code> the text.</label>
+			</div>
 		</div>
 	</div>
-	<div class="col-md-3">
-		<button class="btn w-100 btn-primary" type="button" data-action="slugify">Slugify</button>
+	<div class="row justify-content-center">
+		<div class="col-md-3">
+			<button class="btn w-100 btn-primary" type="button" data-action="slugify">Slugify</button>
+		</div>
 	</div>
-</div>
-<div class="text-center">
-	<div class="mt-3 alert d-inline-block text-bg-info text-white">You can generate and copy the slug by clicking the above button.</div>
+	<div class="text-center">
+		<div class="mt-4 alert alert-slug d-inline-block bg-white d-none"><code class="slug-text font-monospace"></code><span class="char-count text-white" title="Slug length"></span></div>
+	</div>
 </div>
 <script>
 function strToSlug(str = '', sep = '') {
@@ -67,11 +79,21 @@ document.addEventListener('DOMContentLoaded', function () {
 		var split = inputSplit.value;
 		var slug = strToSlug(val, split);
 
-
 		if (val) {
 			mk.copyToClipboard(slug,function(success) {
 				if(success) {
-					mk.alert('<p>The slug <code>'+slug+'</code> has been copied to the clipboard!</p>');
+					let slugText = document.querySelector('.slug-text'), slugCount = document.querySelector('.char-count');
+					slugText.closest('.alert').classList.remove('d-none');
+					slugText.textContent = slug;
+					slugCount.classList.remove('bg-warning','bg-success','bg-danger');
+					let bgClass = 'bg-success';
+					if(slug.length <= 5) {
+						bgClass = 'bg-warning';
+					}else if(slug.length > 20) {
+						bgClass = 'bg-danger';
+					}
+					slugCount.textContent = slug.length;
+					slugCount.classList.add(bgClass);
 				}
 			},function(error){
 				if(error) {
@@ -80,6 +102,20 @@ document.addEventListener('DOMContentLoaded', function () {
 			});
 		} else {
 			mk.toastr({head:{text:'Error'},body:'Enter a text that you want to make a slug!'},'danger');
+		}
+	});
+
+	var onPasteCopy = document.querySelector('[name="onPasteCopy"]');
+	window.onload = function() {
+		var isOnPasteCopy = mk.store.get('on_paste_copy');
+		onPasteCopy.checked = isOnPasteCopy=='yes'?true:false;
+	}
+	onPasteCopy.addEventListener('change', function () {
+		mk.store.set('on_paste_copy',this.checked?'yes':'no');
+	});
+	inputText.addEventListener('input', function () {
+		if(onPasteCopy.checked) {
+			slugifyButton.click();
 		}
 	});
 });

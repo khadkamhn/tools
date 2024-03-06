@@ -313,7 +313,7 @@ function compressAndDownload(path='') {
 	zip.generateAsync({ type: 'blob' }).then(function (blob) {
 		const a = document.createElement('a');
 		a.href = URL.createObjectURL(blob);
-		a.download = 'icons.zip';
+		a.download = 'mainfest-and-icons.zip';
 		document.body.appendChild(a);
 		a.click();
 		document.body.removeChild(a);

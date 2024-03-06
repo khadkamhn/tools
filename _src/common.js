@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
 				document.querySelector('.mk-confirm-wrap').appendChild(wrapperDiv.firstChild);
 				document.documentElement.style.overflow = 'hidden';
 
-				document.querySelector('.mk-confirm').addEventListener('click', function (e) {
+				/*document.querySelector('.mk-confirm').addEventListener('click', function (e) {
 					e.preventDefault();
 					if (e.target.classList.contains('btn-okay')) {
 						if(okay)okay(true);
@@ -88,6 +88,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
 					document.documentElement.style.overflow = '';
 					return false;
+				});*/
+				document.querySelectorAll('.mk-confirm').forEach((mk_confirm)=>{
+					mk_confirm.addEventListener('click', function (e) {
+						e.preventDefault();
+						if (e.target.classList.contains('btn-okay')) {
+							if(okay)okay(true);
+						} else {
+							if(cancel)cancel(true);
+						}
+
+						var dialog = e.target.closest('.mk-confirm').querySelector('.modal-dialog');
+						dialog.style.transform = 'scale(0.5)';
+						dialog.addEventListener('transitionend', function () {
+							e.target.closest('.mk-confirm').remove();
+						});
+
+						document.documentElement.style.overflow = '';
+						return false;
+					});
 				});
 
 				setTimeout(function () {
@@ -97,10 +116,17 @@ document.addEventListener('DOMContentLoaded', function() {
 						document.getElementById(id).querySelector('.btn-okay').focus();
 					}
 				}, 10);
-				document.querySelector('.mk-confirm .modal').addEventListener('click', function (e) {
+				/*document.querySelector('.mk-confirm .modal').addEventListener('click', function (e) {
 					if(!e.target.classList.contains('btn')) {
 						e.stopPropagation();
 					}
+				});*/
+				document.querySelectorAll('.mk-confirm .modal').forEach((mk_modal)=>{
+					mk_modal.addEventListener('click', function (e) {
+						if(!e.target.classList.contains('btn')) {
+							e.stopPropagation();
+						}
+					});
 				});
 
 				return false;
@@ -327,6 +353,22 @@ document.addEventListener('DOMContentLoaded', function() {
 				}
 
 				document.body.removeChild(textArea);
+			}
+		},
+		store: {
+			set: function(key, value) {
+				if(typeof Storage !== 'undefined') {
+					if(key && value) {
+						localStorage.setItem(key, value);
+					}
+				}
+			},
+			get: function(key) {
+				if(typeof Storage !== 'undefined') {
+					if(key) {
+						return localStorage.getItem(key);
+					}
+				}
 			}
 		}
 	};
