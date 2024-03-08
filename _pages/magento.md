@@ -212,6 +212,10 @@ php -d memory_limit=-1 -d opcache.enable_cli=0 bin/magento setup:install --base-
 Once the setup completed, you can able to access the store and admin of Magento but if you encounter with Two-Factor Authorization, you may need to run below command `php bin/magento module:disable Magento_TwoFactorAuth` to disable two factor authentication.
 
 <script>
+Node.prototype.addEventListeners = function(eventNames, eventFunction){
+	for (eventName of eventNames.split(' '))
+		this.addEventListener(eventName, eventFunction);
+}
 function serializeFormArray(formElement) {
 	var formData = new FormData(formElement);
 	var serializedArray = [];
@@ -278,6 +282,11 @@ document.addEventListener('DOMContentLoaded', function () {
 			}
 		}
 		document.querySelector('.result.pre').textContent = cli.join('');
+	});
+	document.querySelectorAll('.form .form-control, .form .form-select').forEach((input) => {
+		input.addEventListeners('input change', function(e) {
+			document.querySelector('[name="generate-cli"]').click();
+		});
 	});
 });
 </script>
