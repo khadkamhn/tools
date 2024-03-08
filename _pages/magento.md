@@ -276,7 +276,7 @@ document.addEventListener('DOMContentLoaded', function () {
 				break;
 			}
 		}
-		document.querySelector('.result.pre').textContent = cli.join();
+		document.querySelector('.result.pre').textContent = cli.join('');
 	});
 });
 </script>
