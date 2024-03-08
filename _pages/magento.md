@@ -244,8 +244,9 @@ document.addEventListener('DOMContentLoaded', function () {
 				code = this.closest('code').querySelector('[data-copy="cmd"]').textContent;
 				code = code.replace('php','/usr/local/bin/'+this.getAttribute('version'));
 			}
-			if(this.getAttribute('copy')=='cli') {
-				code = this.closest('.card').querySelector('.result').textContent;
+			if(this.getAttribute('data-copy')=='cli') {
+				let cli = this.closest('.card').querySelector('.result').textContent;
+				code = cli!='No command generated yet.'?cli:'';
 			}
 			if(code) {
 				mk.copyToClipboard(code);
