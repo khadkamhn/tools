@@ -10,32 +10,32 @@ permalink: /wordpress/
 		<div class="row">
 			<div class="col-sm-6 col-md-4 col-lg-3">
 				<div class="mb-3">
-					<label class="form-label">Table prefix of the database</label>
-					<input type="text" class="form-control" name="wp_prefix" placeholder="wp_">
+					<label class="form-label" for="prefix">Table prefix of the database</label>
+					<input id="prefix" type="text" class="form-control" name="wp_prefix" placeholder="wp_">
 				</div>
 			</div>
 			<div class="col-sm-6 col-md-4 col-lg-3">
 				<div class="mb-3">
-					<label class="form-label">Admin email address</label>
-					<input type="email" class="form-control" name="admin_email" placeholder="your.email@example.com">
+					<label class="form-label" for="email">Admin email address</label>
+					<input id="email" type="email" class="form-control" name="admin_email" placeholder="your.email@example.com">
 				</div>
 			</div>
 			<div class="col-sm-6 col-md-4 col-lg-3">
 				<div class="mb-3">
-					<label class="form-label">Tagline</label>
-					<input type="text" class="form-control" name="blogdescription" placeholder="In a few words, explain what this site is about.">
+					<label class="form-label" for="tag">Tagline</label>
+					<input id="tag" type="text" class="form-control" name="blogdescription" placeholder="In a few words, explain what this site is about.">
 				</div>
 			</div>
 			<div class="col-sm-6 col-md-4 col-lg-3">
 				<div class="mb-3">
-					<label class="form-label">Blog pages show at most</label>
-					<input type="number" class="form-control" name="posts_per_page" placeholder="10">
+					<label class="form-label" for="count">Blog pages show at most</label>
+					<input id="count" type="number" class="form-control" name="posts_per_page" placeholder="10">
 				</div>
 			</div>
 			<div class="col-sm-6 col-md-4 col-lg-3">
 				<div class="mb-3">
-					<label class="form-label">Week starts</label>
-					<select class="form-select" name="start_of_week">
+					<label class="form-label" for="week">Week starts</label>
+					<select id="week" class="form-select" name="start_of_week">
 						<option value="0" selected="selected">Sunday</option>
 						<option value="1">Monday</option>
 						<option value="2">Tuesday</option>
@@ -48,38 +48,38 @@ permalink: /wordpress/
 			</div>
 			<div class="col-sm-6 col-md-4 col-lg-3">
 				<div class="mb-3">
-					<label class="form-label">Timezone</label>
-					<select class="form-select" name="timezone_string">{%- include wp-timezones.html -%}</select>
+					<label class="form-label" for="zone">Timezone</label>
+					<select id="zone" class="form-select" name="timezone_string">{%- include wp-timezones.html -%}</select>
 				</div>
 			</div>
 			<div class="col-sm-6 col-md-4 col-lg-3">
 				<div class="mb-3">
-					<label class="form-label">Site Language</label>
-					<select class="form-select" name="WPLANG" id="locale">{%- include wp-languages.html -%}</select>
+					<label class="form-label" for="locale">Site Language</label>
+					<select id="locale" class="form-select" name="WPLANG">{%- include wp-languages.html -%}</select>
 				</div>
 			</div>
 			<div class="col-sm-6 col-md-4 col-lg-3">
 				<div class="mb-3">
-					<label class="form-label">Search Engine Visibility</label>
-					<select class="form-select" name="blog_public"><option value="0" selected>Development</option><option value="1">Production</option></select>
+					<label class="form-label" for="seo">Search Engine Visibility</label>
+					<select id="seo" class="form-select" name="blog_public"><option value="0" selected>Development</option><option value="1">Production</option></select>
 				</div>
 			</div>
 			<div class="col-sm-6 col-md-4 col-lg-3">
 				<div class="mb-3">
-					<label class="form-label" title="Allow people to post comments on new articles">Allow comments on new articles</label>
-					<select class="form-select" name="default_comment_status"><option value="open">Allow</option><option value="closed" selected>Not allowed</option></select>
+					<label class="form-label" for="comment" title="Allow people to post comments on new articles">Allow comments on new articles</label>
+					<select id="comment" class="form-select" name="default_comment_status"><option value="open">Allow</option><option value="closed" selected>Not allowed</option></select>
 				</div>
 			</div>
 			<div class="col-sm-6 col-md-4 col-lg-3">
 				<div class="mb-3">
-					<label class="form-label" title="Organize my uploads into month- and year-based folders">Organize my uploads</label>
-					<select class="form-select" name="uploads_use_yearmonth_folders"><option value="0" selected>In single directory</option><option value="1">Seperated month year directory</option></select>
+					<label class="form-label" for="media" title="Organize my uploads into month- and year-based folders">Organize my uploads</label>
+					<select id="media" class="form-select" name="uploads_use_yearmonth_folders"><option value="0" selected>In single directory</option><option value="1">Seperated month year directory</option></select>
 				</div>
 			</div>
 			<div class="col-sm-6 col-md-4 col-lg-3">
 				<div class="mb-3">
-					<label class="form-label">Permalink structure</label>
-					<select class="form-select" name="permalink_structure">
+					<label class="form-label" for="link">Permalink structure</label>
+					<select id="link" class="form-select" name="permalink_structure">
 						<option value="">Plain &nbsp;&nbsp; ?p=123</option>
 						<option value="/%year%/%monthnum%/%day%/%postname%/" selected>Day and name &nbsp;&nbsp; /%year%/%monthnum%/%day%/%postname%/</option>
 						<option value="/%year%/%monthnum%/%postname%/">Month and name &nbsp;&nbsp; /%year%/%monthnum%/%postname%/</option>

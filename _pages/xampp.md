@@ -48,10 +48,13 @@ permalink: /xampp/
 **Edit the `httpd-xampp.conf` file (Path: `C:\xampp\apache\conf\extra`)**
 
 First download the php zip from [https://windows.php.net/](https://windows.php.net/downloads/releases/archives/){:target="_blank"}
-Extract the file and add `C:\xampp\php811` path to the `Environment Variables`.
+
+Extract the file and add `C:\xampp\php811` path to the `Environment Variables` under `Path` location.
+
+Copy `C:\xampp\php811\php.exe` to `C:\xampp\php811\php811.exe` on the same location. After that you can run `cmd` and check `php811 --version` if works or not.
 
 Comment out the line `SetEnv PHPRC "\\xampp\\php"` from `<IfModule env_module>` section.
-It will be looks like:
+
 ```
 <IfModule env_module>
 	SetEnv MIBDIRS "C:/xampp/php/extras/mibs"
