@@ -32,84 +32,7 @@ scripts: ["/assets/js/sortable.min.js","/assets/js/popper.min.js","/assets/js/ti
 					<div class="mb-3">
 						<button class="btn btn-primary btn-sm" type="button" data-add="field" data-where="section">Add Setting Field</button>
 					</div>
-					<div class="settings">
-						<div class="item">
-							<div class="item-head">
-								<div><i class="material-icons">swap_vert</i> <span class="item-name">Padding Top</span></div>
-								<div class="item-action"><i class="material-icons">delete</i></div>
-							</div>
-							<div class="item-body">
-								<div class="row">
-									<div class="col-md-6 col-lg-4">
-										<div class="mb-2">
-											<label class="form-label" for="random_hash">Identifier</label>
-											<input id="random_hash" type="text" class="form-control form-control-sm" name="identifier" placeholder="Identifier" maxlength="100">
-											<div class="form-text">Specifies id of the field</div>
-										</div>
-									</div>
-									<div class="col-md-6 col-lg-4">
-										<div class="mb-2">
-											<label class="form-label" for="random_hash">Label</label>
-											<input id="random_hash" type="text" class="form-control form-control-sm" name="label" placeholder="Label" maxlength="50">
-											<div class="form-text">Specifies label of the field</div>
-										</div>
-									</div>
-									<div class="col-md-6 col-lg-4">
-										<div class="mb-2">
-											<label class="form-label" for="random_hash_2">Type</label>
-											<select id="random_hash_2" class="form-select form-select-sm" name="type">
-												<option value="checkbox">Checkbox</option>
-												<option value="number">Number</option>
-												<option value="radio">Radio</option>
-												<option value="range">Range</option>
-												<option value="select">Select</option>
-												<option value="text">Text</option>
-												<option value="textarea">Textarea</option>
-												<option value="article">Article</option>
-												<option value="blog">Blog</option>
-												<option value="collection">Collection</option>
-												<option value="collection_list">Collection List</option>
-												<option value="color">Color</option>
-												<option value="color_background">Color Background</option>
-												<option value="color_scheme_group">Color Scheme Group</option>
-												<option value="font_picker">Font Picker</option>
-												<option value="html">HTML</option>
-												<option value="image_picker">Image Picker</option>
-												<option value="inline_richtext">Inline Richtext</option>
-												<option value="link_list">Link List</option>
-												<option value="liquid">Liquid</option>
-												<option value="page">Page</option>
-												<option value="product">Product</option>
-												<option value="product_list">Product List</option>
-												<option value="richtext">Richtext</option>
-												<option value="text_alignment">Text Alignment</option>
-												<option value="url">URL</option>
-												<option value="video">Video</option>
-												<option value="video_url">Video URL</option>
-											</select>
-											<div class="form-text">Specifies type of the field</div>
-										</div>
-									</div>
-									<div class="col-md-6 col-lg-4">
-										<div class="mb-2">
-											<label class="form-label" for="random_hash">Default</label>
-											<input id="random_hash" type="text" class="form-control form-control-sm" name="label" placeholder="Default">
-											<div class="form-text">Default value of the field</div>
-										</div>
-									</div>
-									<div class="col-md-6 col-lg-8">
-										<div class="mb-2">
-											<label class="form-label" for="random_hash">Values</label>
-											<div data-tags-editor data-tags-placeholder="Enter or comma separate values..."></div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="item p-3"><span class="material-icons">open_with</span> B</div>
-						<div class="item p-3"><span class="material-icons">open_with</span> C</div>
-						<div class="item p-3"><span class="material-icons">open_with</span> D</div>
-					</div>
+					<div class="settings"></div>
 					<hr>
 					<button class="btn btn-primary btn-sm" type="button" data-add="block">Add Block</button>
 				</div>
@@ -201,36 +124,62 @@ function getField(type, which) {
 		+'</div>';
 		return htm;
 	}
-		htm +='<div class="item" data-type="'+type+'" data-which="'+which+'">'
-		+'<div class="item-head">'
-		+'<div><i class="material-icons">swap_vert</i> <span class="item-name">'+fieldTypes[type]+'</span></div><div class="item-action"><i class="material-icons" data-delete="item">delete</i></div>'
-		+'</div>'
-		+'<div class="item-body"><div class="row">'
+	htm +='<div class="item" data-type="'+type+'" data-which="'+which+'">'
+	+'<div class="item-head">'
+	+'<div><i class="material-icons">swap_vert</i> <span class="item-name">'+fieldTypes[type]+'</span></div><div class="item-action"><i class="material-icons" data-delete="item">delete</i></div>'
+	+'</div>'
+	+'<div class="item-body"><div class="row">'
 
-		+'<div class="col-md-6 col-lg-4"><div class="mb-2">'
-		+'<label class="form-label"">Label</label>'
-		+'<input type="text" class="form-control form-control-sm" name="label" placeholder="Label" maxlength="50">'
-		+'<div class="form-text">Specifies label of the field</div>'
+	+'<div class="col-md-6 col-lg-4"><div class="mb-2">'
+	+'<label class="form-label">Label</label>'
+	+'<input type="text" class="form-control form-control-sm" name="label" placeholder="Label" maxlength="50">'
+	+'<div class="form-text">Specifies label of the field</div>'
+	+'</div></div>'
+
+	+'<div class="col-md-6 col-lg-4"><div class="mb-2">'
+	+'<label class="form-label">Identifier</label>'
+	+'<input type="text" class="form-control form-control-sm" name="identifier" placeholder="Identifier" maxlength="100">'
+	+'<div class="form-text">Specifies id of the field</div>'
+	+'</div></div>'
+
+	if(type=='checkbox' || type=='number' || type=='text' || type=='textarea' || type=='color' || type=='color_background' || type=='html' || type=='inline_richtext' || type=='liquid' || type=='richtext' || type=='text_alignment') {
+		if(type=='textarea' || type=='html' || type=='inline_richtext' || type=='liquid' || type=='richtext') {
+			htm += '<div class="col-md-12 col-lg-12">'
+		}else {
+			htm += '<div class="col-md-6 col-lg-4">'
+		}
+		htm += '<div class="mb-2"><label class="form-label">Default</label>';
+		if(type=='checkbox') {
+			htm += '<select class="form-select form-select-sm" name="default"><option></option><option value="true">true</option><option value="false">false</option></select>'
+		}
+		if(type=='number') {
+			htm += '<input type="number" class="form-control form-control-sm" name="default" placeholder="Value">'
+		}
+		if(type=='text' || type=='color' || type=='color_background') {
+			htm += '<input type="text" class="form-control form-control-sm" name="default" placeholder="Value">'
+		}
+		if(type=='textarea' || type=='html' || type=='inline_richtext' || type=='liquid' || type=='richtext') {
+			htm += '<textarea class="form-control form-control-sm" name="default" placeholder="Value"></textarea>'
+		}
+		if(type=='text_alignment') {
+			htm += '<select class="form-select form-select-sm" name="default"><option value="left">Left</option><option value="center">Center</option><option value="right">Right</option></select>'
+		}
+		htm += '<div class="form-text">Specifies default value of the field</div>'
 		+'</div></div>'
+	}
 
-		+'<div class="col-md-6 col-lg-4"><div class="mb-2">'
-		+'<label class="form-label">Identifier</label>'
-		+'<input type="text" class="form-control form-control-sm" name="identifier" placeholder="Identifier" maxlength="100">'
-		+'<div class="form-text">Specifies id of the field</div>'
-		+'</div></div>'
-
-	if(type=='checkbox') {
+	if(type=='product_list' || type=='collection_list') {
 		htm += '<div class="col-md-6 col-lg-4"><div class="mb-2">'
-		+'<label class="form-label">Default</label>'
-		+'<select class="form-select form-select-sm" name="default"><option></option><option value="true">true</option><option value="false">false</option></select>'
-		+'<div class="form-text">Specifies default value of the field</div>'
+		+'<label class="form-label">Limit</label>'
+		+'<input type="number" class="form-control form-control-sm" name="limit" placeholder="Limit" maxlength="50">'
+		+'<div class="form-text">Specifies limit of the field</div>'
 		+'</div></div>'
 	}
 
 	if(type=='radio' || type=='select') {
 		htm += '<div class="col-md-6 col-lg-4"><div class="mb-2">'
 		+'<label class="form-label">Default</label>'
-		+'<select class="form-select form-select-sm" name="default"><option></option></select>'
+		+'<select class="form-select form-select-sm" name="default"></select>'
 		+'<div class="form-text">Specifies default value of the field</div>'
 		+'</div></div>'
 
@@ -240,8 +189,14 @@ function getField(type, which) {
 		+'</div></div>'
 	}
 
-		+'</div></div>'
-		+'</div>';
+	htm += '<div class="col-md-12 col-lg-12"><div class="mb-2">'
+	+'<label class="form-label">Info</label>'
+	+'<input type="text" class="form-control form-control-sm" name="info" placeholder="Info text" maxlength="500">'
+	+'<div class="form-text">Specifies info text of the field</div>'
+	+'</div></div>'
+
+	+'</div></div>'
+	+'</div>';
 	return htm;
 }
 document.addEventListener('DOMContentLoaded', function () {
@@ -271,8 +226,10 @@ document.addEventListener('DOMContentLoaded', function () {
 			tippy(title, {
 				arrow: false,
 				content: text,
+				offset: [5, 5],
 				theme: 'material',
 			});
+			title.removeAttribute('title');
 		});
 	}
 	initTippy();
@@ -305,7 +262,10 @@ document.addEventListener('DOMContentLoaded', function () {
 			}
 			if(e.target.getAttribute('data-add')=='option') {
 				let htm = getField('option');
-				e.target.closest('.item').querySelector('.field-options').insertAdjacentHTML('beforeend', htm); 
+				if(htm) {
+					e.target.closest('.item').querySelector('.field-options').insertAdjacentHTML('beforeend', htm);
+					initTippy();
+				}
 			}
 			if((e.target.closest('.input-group') && e.target.getAttribute('data-delete')=='option') || (e.target.closest('.btn') && e.target.closest('.btn').getAttribute('data-delete')=='option')) {
 				e.preventDefault();
@@ -328,12 +288,11 @@ document.addEventListener('DOMContentLoaded', function () {
 							if(optWrp) {
 								let opt = '';
 								optWrp.querySelectorAll('.input-group [name="option-value"]').forEach((input) => {
-									if(input.value) {
+									if(input.value && input.closest('.input-group').querySelector('[name="option-label"]').value) {
 										opt += '<option value="+input.value+">'+input.value+'</option>';
 									}
 								});
 								wrap.querySelector('[name="default"]').innerHTML = opt;
-								initTippy();
 							}
 						break;
 					}

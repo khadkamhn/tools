@@ -35,6 +35,9 @@
 		}
 	}
 	.field-options {
+		.input-group-text {
+			cursor: move;
+		}
 		.input-group .btn {
 			.material-icons {
 				font-size: 16px;
