@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Tags Editor</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<style>
+body {
+	font-family: sans-serif;
+}
+[data-tags-editor] {
+	height: 200px;
+}
+.tg-editor {
+  overflow: auto;
+}
+.tg-editor:focus {
+  outline: none;
+}
+.tg-editor .tg-input {
+  display: block;
+  width: 100%;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  appearance: none;
+}
+.tg-editor .tg-wrapper {
+  margin-top: 0.25rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  justify-content: flex-start;
+  align-items: center;
+}
+.tg-editor .tg-tag {
+  color: #fff;
+  display: flex;
+  font-size: 12px;
+  align-items: center;
+  margin-right: 5px;
+  border-radius: 3px;
+  padding: 5px 10px;
+  background-color: #607d8b;
+}
+.tg-editor .tg-tag i {
+  color: #fff;
+  opacity: 0.7;
+  cursor: default;
+  font-size: 16px;
+  margin-left: 5px;
+  border-radius: 50%;
+  background-color: #7b96a3;
+}
+.tg-editor .tg-tag i:hover {
+  opacity: 1;
+}
+/* SCSS */
+/*
+$primary: #607d8b;
+
+.tg-editor {
+	overflow: auto;
+	&:focus {
+		outline: none;
+	}
+	.tg-input {
+        display: block;
+        width: 100%;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        appearance: none;
+	}
+	.tg-wrapper {
+		margin-top: .25rem;
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		align-content: flex-start;
+		justify-content: flex-start;
+		align-items: center;
+	}
+	.tg-tag {
+		color: #fff;
+		display: flex;
+		font-size: 12px;
+		align-items: center;
+		margin-right: 5px;
+		border-radius: 3px;
+		padding: 5px 10px;
+		background-color: $primary;
+		i {
+			color: #fff;
+			opacity: 0.7;
+			cursor: default;
+			font-size: 16px;
+			margin-left: 5px;
+			border-radius: 50%;
+			background-color: lighten($primary,10%);
+			&:hover {
+				opacity: 1;
+			}
+		}
+	}
+}
+*/
+</style>
+</head>
+<body>
+	<h1>Tags Editor demo</h1>
+	<p class="tg-description">Insert labels by typing them in the text field and then pressing the comma or enter key.</p>
+	<div data-tags-editor data-tags-placeholder="t-shirt,white,outlet" data-tags-list="t-shirt,white,outlet">
+	</div>
+
+	<h3>Dynamically created</h3>
+	<button id="create-editor">Create editor</button>
+
+	<script src="tags-editor-remove-css.js"></script>
+
+	<script>
+		function createEditor(e) {
+			const button = e.currentTarget;
+			const div = document.createElement("div");
+
+			div.dataset["tagsEditor"] = "";
+			div.dataset["tagsPlaceholder"] = "another,editor";
+			div.dataset["tagsList"] = "created,dinamically";
+			button.after(div);
+			window.__tagsEditor.initializeEditor(div);
+			button.removeEventListener("click", createEditor);
+		}
+
+		(function () {
+			document.getElementById("create-editor").addEventListener("click", createEditor)
+		})();
+	</script>
+</body>
+</html>

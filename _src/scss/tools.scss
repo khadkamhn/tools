@@ -64,6 +64,9 @@
 // Coloris
 @import "coloris/coloris";
 
+// Mixins
+@import "scss/mk-mixins";
+
 // Base
 @import "scss/mk-global";
 @import "scss/mk-forms";
@@ -81,6 +84,7 @@
 @import "scss/mk-page-unicode";
 @import "scss/mk-page-url-encoder";
 @import "scss/mk-page-magento";
+@import "scss/mk-page-shopify";
 
 // Footer
 @import "scss/mk-footer";

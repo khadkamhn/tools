@@ -1,0 +1,45 @@
+.page-shopify {
+	.settings {
+		
+	}
+	.item {
+		margin-bottom: 10px;
+		border: 1px dashed transparent;
+		@include mk-shadow(z1);
+		&.ghost {
+			box-shadow: none;
+			border-color: $light-green-500;
+		}
+		&-head {
+			margin: -1px;
+			cursor: move;
+			color: $white;
+			@extend .d-flex;
+			padding: 6px 12px;
+			margin-bottom: 10px;
+			@extend .align-items-center;
+			background-color: $light-green-600;
+			@extend .justify-content-between;
+			.material-icons {
+				font-size: 20px;
+				vertical-align: middle;
+			}
+		}
+		&-action {
+			.material-icons {
+				cursor: pointer;
+			}
+		}
+		&-body {
+			padding: 12px;
+		}
+	}
+	.field-options {
+		.input-group .btn {
+			.material-icons {
+				font-size: 16px;
+				vertical-align: middle;
+			}
+		}
+	}
+}

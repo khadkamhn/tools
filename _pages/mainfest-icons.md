@@ -1,7 +1,7 @@
 ---
 layout: default
-title: "Icons and Mainfest Generator"
-permalink: /icons-and-mainfest/
+title: "Mainfest & Icons Generator"
+permalink: /mainfest-and-icons/
 scripts: "/assets/js/jszip.min.js"
 inline_styles:
   - ".modal-dialog {
@@ -18,7 +18,7 @@ inline_styles:
 	}"
 ---
 
-<form action="#" method="post">
+<form class="form" method="post">
 	<div class="row">
 		<div class="col-md-6">
 			<div class="card mt-3">
@@ -424,7 +424,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		mk.alert(info);
 	});
 	document.querySelectorAll('.form-select,.form-control').forEach((inp)=>{
-		inp.addEventListener(('input','change'), function() {
+		inp.addEventListener('input', function() {
 			generateCode();
 		});
 	});

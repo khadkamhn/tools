@@ -212,6 +212,7 @@ php -d memory_limit=-1 -d opcache.enable_cli=0 bin/magento setup:install --base-
 Once the setup completed, you can able to access the store and admin of Magento but if you encounter with Two-Factor Authorization, you may need to run below command `php bin/magento module:disable Magento_TwoFactorAuth` to disable two factor authentication.
 
 <script>
+// Usage: querySelector('.input').addEventListeners('input change keyup', function(e) {});
 Node.prototype.addEventListeners = function(eventNames, eventFunction){
 	for (eventName of eventNames.split(' '))
 		this.addEventListener(eventName, eventFunction);
@@ -273,18 +274,21 @@ document.addEventListener('DOMContentLoaded', function () {
 				case'password':
 					cli[2] = ' --admin-password="'+(value?value:novalue)+'"';
 				break;
+				case'email':
+					cli[3] = ' --admin-email="'+(value?value:novalue)+'"';
+				break;
 				case'fname':
-					cli[3] = ' --admin-firstname="'+(value?value:novalue)+'"';
+					cli[4] = ' --admin-firstname="'+(value?value:novalue)+'"';
 				break;
 				case'lname':
-					cli[4] = ' --admin-lastname="'+(value?value:novalue)+'"';
+					cli[5] = ' --admin-lastname="'+(value?value:novalue)+'"';
 				break;
 			}
 		}
 		document.querySelector('.result.pre').textContent = cli.join('');
 	});
 	document.querySelectorAll('.form .form-control, .form .form-select').forEach((input) => {
-		input.addEventListeners('input change', function(e) {
+		input.addEventListener('input', function(e) {
 			document.querySelector('[name="generate-cli"]').click();
 		});
 	});
