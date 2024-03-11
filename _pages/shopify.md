@@ -67,7 +67,7 @@ const fieldTypes = {
 	'collection_list': 'Collection List',
 	'color': 'Color',
 	'color_background': 'Color Background',
-	'color_scheme_group': 'Color Scheme Group',
+	//'color_scheme_group': 'Color Scheme Group',
 	'font_picker': 'Font Picker',
 	'html': 'HTML',
 	'image_picker': 'Image Picker',
@@ -142,17 +142,21 @@ function getField(type, which) {
 	+'<div class="form-text">Specifies id of the field</div>'
 	+'</div></div>'
 
-	if(type=='checkbox' || type=='number' || type=='text' || type=='textarea' || type=='color' || type=='color_background' || type=='html' || type=='inline_richtext' || type=='liquid' || type=='richtext' || type=='text_alignment') {
+	if(type=='checkbox' || type=='number' || type=='range' || type=='text' || type=='textarea' || type=='color' || type=='color_background' || type=='html' || type=='inline_richtext' || type=='liquid' || type=='richtext' || type=='text_alignment' || type=='video_url') {
 		if(type=='textarea' || type=='html' || type=='inline_richtext' || type=='liquid' || type=='richtext') {
 			htm += '<div class="col-md-12 col-lg-12">'
 		}else {
 			htm += '<div class="col-md-6 col-lg-4">'
 		}
-		htm += '<div class="mb-2"><label class="form-label">Default</label>';
+		if(type=='video_url') {
+			htm += '<div class="mb-2"><label class="form-label">Accept</label>'
+		}else {
+			htm += '<div class="mb-2"><label class="form-label">Default</label>'
+		}
 		if(type=='checkbox') {
 			htm += '<select class="form-select form-select-sm" name="default"><option></option><option value="true">true</option><option value="false">false</option></select>'
 		}
-		if(type=='number') {
+		if(type=='number' || type=='range') {
 			htm += '<input type="number" class="form-control form-control-sm" name="default" placeholder="Value">'
 		}
 		if(type=='text' || type=='color' || type=='color_background') {
@@ -164,8 +168,16 @@ function getField(type, which) {
 		if(type=='text_alignment') {
 			htm += '<select class="form-select form-select-sm" name="default"><option value="left">Left</option><option value="center">Center</option><option value="right">Right</option></select>'
 		}
-		htm += '<div class="form-text">Specifies default value of the field</div>'
-		+'</div></div>'
+		if(type=='video_url') {
+			htm += '<select class="form-select form-select-sm" name="accept"><option></option><option value="youtube">YouTube</option><option value="vimeo">Vimeo</option><option value="youtube+vimeo">YouTube & Vimeo</option></select>'
+		}
+		if(type=='video_url') {
+			htm += '<div class="form-text">Specifies accepts either youtube or vimeo</div>'
+		}else {
+			htm += '<div class="form-text">Specifies default value of the field</div>'
+		}
+		
+		htm += '</div></div>'
 	}
 
 	if(type=='product_list' || type=='collection_list') {
@@ -186,6 +198,32 @@ function getField(type, which) {
 		+'<div class="col-md-12 col-lg-12"><button class="btn btn-primary btn-sm" type="button" data-add="option">Add Option</button><div class="mt-2 mb-2">'
 		+'<div class="field-options"></div>'
 		+'<div class="form-text">Specifies option of the field</div>'
+		+'</div></div>'
+	}
+
+	if(type=='range') {
+		htm += '<div class="col-md-6 col-lg-3"><div class="mb-2">'
+		+'<label class="form-label">Min</label>'
+		+'<input type="number" class="form-control form-control-sm" name="min" placeholder="Min" maxlength="9999">'
+		+'<div class="form-text">Specifies minimum value</div>'
+		+'</div></div>'
+
+		+'<div class="col-md-6 col-lg-3"><div class="mb-2">'
+		+'<label class="form-label">Max</label>'
+		+'<input type="number" class="form-control form-control-sm" name="max" placeholder="Max" maxlength="9999">'
+		+'<div class="form-text">Specifies maximum value</div>'
+		+'</div></div>'
+
+		+'<div class="col-md-6 col-lg-3"><div class="mb-2">'
+		+'<label class="form-label">Step</label>'
+		+'<input type="number" class="form-control form-control-sm" name="max" placeholder="Step" maxlength="84">'
+		+'<div class="form-text">Specifies maximum value</div>'
+		+'</div></div>'
+
+		+'<div class="col-md-6 col-lg-3"><div class="mb-2">'
+		+'<label class="form-label">Unit</label>'
+		+'<input type="text" class="form-control form-control-sm" name="unit" placeholder="px" maxlength="3">'
+		+'<div class="form-text">Specifies unit of value</div>'
 		+'</div></div>'
 	}
 
