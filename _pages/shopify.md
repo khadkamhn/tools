@@ -17,24 +17,39 @@ scripts: ["/assets/js/sortable.min.js","/assets/js/popper.min.js","/assets/js/ti
 						<div class="col-md-6">
 							<div class="mb-3">
 								<label class="form-label" for="name">Name</label>
-								<input id="name" type="text" class="form-control" name="name" placeholder="Section name" maxlength="25">
-								<div class="form-text">Specifies the name of the section.</div>
+								<input id="name" type="text" class="form-control form-control-sm" name="name" placeholder="Section name" maxlength="25">
+								<div class="form-text">Specifies name of the section.</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="mb-3">
+								<label class="form-label" for="class">Class</label>
+								<input id="class" type="text" class="form-control form-control-sm" name="class" placeholder="Section class" maxlength="25">
+								<div class="form-text">Specifies class of the section.</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="mb-3">
+								<label class="form-label" for="tag">Tag</label>
+								<input id="tag" type="text" class="form-control form-control-sm" name="tag" placeholder="HTML tag" maxlength="25">
+								<div class="form-text">Specifies html tag of the section.</div>
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="mb-3">
 								<label class="form-label" for="preset">Preset</label>
-								<input id="preset" type="text" class="form-control" name="preset" placeholder="Section label" maxlength="100">
+								<input id="preset" type="text" class="form-control form-control-sm" name="preset" placeholder="Section label" maxlength="100">
 								<div class="form-text">Specifies the label appear on the customizer.</div>
 							</div>
 						</div>
 					</div>
 					<div class="mb-3">
-						<button class="btn btn-primary btn-sm" type="button" data-add="field" data-where="section">Add Setting Field</button>
+						<button class="btn btn-primary btn-sm" type="button" data-add="field" data-which="section">Add Setting Field</button>
 					</div>
-					<div class="settings"></div>
+					<div class="settings settings-section"></div>
 					<hr>
-					<button class="btn btn-primary btn-sm" type="button" data-add="block">Add Block</button>
+					<button class="btn btn-primary btn-sm" type="button" data-add="block" data-which="block">Add Block</button>
+					<div class="block-wrap"></div>
 				</div>
 			</div>
 		</div>
@@ -124,6 +139,29 @@ function getField(type, which) {
 		+'</div>';
 		return htm;
 	}
+	if(type=='block') {
+		htm += '<div class="card mt-2">'
+		+'<div class="card-header d-flex justify-content-between align-items-center"><div class="name">Block</div><div class="item-action"><i class="material-icons" data-delete="item">delete</i></div></div>'
+		+'<div class="card-body">'
+		+'<div class="row">'
+		+'<div class="col-md-6"><div class="mb-2">'
+		+'<label class="form-label">Name</label>'
+		+'<input type="text" class="form-control form-control-sm" name="block-name" placeholder="Name" title="Name">'
+		+'<div class="form-text">Specifies name of the block</div>'
+		+'</div></div>'
+		+'<div class="col-md-6"><div class="mb-2">'
+		+'<label class="form-label">Type</label>'
+		+'<input type="text" class="form-control form-control-sm" name="block-type" placeholder="Type" title="Type">'
+		+'<div class="form-text">Specifies type of the block</div>'
+		+'</div></div>'
+		+'</div>'
+		+'<div class="mb-3"><button class="btn btn-primary btn-sm" type="button" data-add="field" data-which="block">Add Block Field</button></div>'
+		+'<div class="settings settings-block"></div>'
+		+'</div>'
+		+'</div>';
+		return htm;
+	}
+
 	htm +='<div class="item" data-type="'+type+'" data-which="'+which+'">'
 	+'<div class="item-head">'
 	+'<div><i class="material-icons">swap_vert</i> <span class="item-name">'+fieldTypes[type]+'</span></div><div class="item-action"><i class="material-icons" data-delete="item">delete</i></div>'
@@ -142,7 +180,7 @@ function getField(type, which) {
 	+'<div class="form-text">Specifies id of the field</div>'
 	+'</div></div>'
 
-	if(type=='checkbox' || type=='number' || type=='range' || type=='text' || type=='textarea' || type=='color' || type=='color_background' || type=='html' || type=='inline_richtext' || type=='liquid' || type=='richtext' || type=='text_alignment' || type=='video_url') {
+	if(type=='checkbox' || type=='number' || type=='range' || type=='text' || type=='textarea' || type=='color' || type=='color_background' || type=='font_picker' || type=='html' || type=='inline_richtext' || type=='liquid' || type=='richtext' || type=='text_alignment' || type=='video_url') {
 		if(type=='textarea' || type=='html' || type=='inline_richtext' || type=='liquid' || type=='richtext') {
 			htm += '<div class="col-md-12 col-lg-12">'
 		}else {
@@ -159,7 +197,7 @@ function getField(type, which) {
 		if(type=='number' || type=='range') {
 			htm += '<input type="number" class="form-control form-control-sm" name="default" placeholder="Value">'
 		}
-		if(type=='text' || type=='color' || type=='color_background') {
+		if(type=='text' || type=='color' || type=='color_background' || type=='font_picker') {
 			htm += '<input type="text" class="form-control form-control-sm" name="default" placeholder="Value">'
 		}
 		if(type=='textarea' || type=='html' || type=='inline_richtext' || type=='liquid' || type=='richtext') {
@@ -256,6 +294,13 @@ document.addEventListener('DOMContentLoaded', function () {
 				handle: '.input-group-text',
 			});
 		});
+		document.querySelectorAll('.block-wrap').forEach((item) => {
+			new Sortable(item, {
+				animation: 120,
+				ghostClass: 'ghost',
+				handle: '.card-header',
+			});
+		});
 	};
 	makeSortable();
 	const initTippy = function() {
@@ -271,38 +316,46 @@ document.addEventListener('DOMContentLoaded', function () {
 		});
 	}
 	initTippy();
-	document.querySelectorAll('[data-add="field"]').forEach((btn) => {
-		btn.addEventListener('click', function(e) {
-			e.preventDefault();
-			let select = '<div><label class="form-label" for="field_type">Choose Field Type</label><select id="field_type" class="form-select form-select-sm" name="field_type">';
-			Object.keys(fieldTypes).forEach(function(key) {
-				select += '<option value="'+key+'" title="'+fieldTypes[key]+'">'+fieldTypes[key]+'</option>';
-			});
-			select += '</select></div>';
-			mk.confirm(select,function() {
-				let which = btn.getAttribute('data-which');
-				let field = document.querySelector('[name="field_type"]').value;
-				let htm = getField(field,which);
+	document.querySelectorAll('.form').forEach((form) => {
+		form.addEventListener('click', function(e) {
+			if(e.target.getAttribute('data-add') && e.target.getAttribute('data-add')=='field') {
+				e.preventDefault();
+				let btn = e.target;
+				let select = '<div><label class="form-label" for="field_type">Choose Field Type</label><select id="field_type" class="form-select form-select-sm" name="field_type">';
+				Object.keys(fieldTypes).forEach(function(key) {
+					select += '<option value="'+key+'" title="'+fieldTypes[key]+'">'+fieldTypes[key]+'</option>';
+				});
+				select += '</select></div>';
+				mk.confirm(select,function() {
+					let which = btn.getAttribute('data-which');
+					let field = document.querySelector('[name="field_type"]').value;
+					let htm = getField(field,which);
+					if(htm) {
+						btn.closest('.card-body').querySelector('.settings').insertAdjacentHTML('beforeend', htm);
+						makeSortable();
+					}
+				});
+			}
+			if(e.target.getAttribute('data-add') && e.target.getAttribute('data-add')=='block') {
+				e.preventDefault();
+				let btn = e.target;
+				let htm = getField('block','block');
 				if(htm) {
-					document.querySelector('.settings').insertAdjacentHTML('beforeend', htm);
+					btn.closest('.card-body').querySelector('.block-wrap').insertAdjacentHTML('beforeend', htm);
 					makeSortable();
 				}
-			});
-		});
-	});
-	document.querySelectorAll('.settings').forEach((settings) => {
-		settings.addEventListener('click', function(e) {
+			}
+
 			if(e.target.closest('.item-action') && e.target.getAttribute('data-delete')=='item') {
 				e.preventDefault();
 				mk.confirm('<h6>Are you sure want to delete?</h6><em class="small">Once you remove this, you won\'t able to recover.</em>',function() {
-					e.target.closest('.item').remove();
+					e.target.closest('.item,.card').remove();
 				});
 			}
 			if(e.target.getAttribute('data-add')=='option') {
 				let htm = getField('option');
 				if(htm) {
 					e.target.closest('.item').querySelector('.field-options').insertAdjacentHTML('beforeend', htm);
-					initTippy();
 				}
 			}
 			if((e.target.closest('.input-group') && e.target.getAttribute('data-delete')=='option') || (e.target.closest('.btn') && e.target.closest('.btn').getAttribute('data-delete')=='option')) {
@@ -311,8 +364,11 @@ document.addEventListener('DOMContentLoaded', function () {
 					e.target.closest('.input-group').remove();
 				});
 			}
+			if(e.target.getAttribute('data-add')) {
+				initTippy();
+			}
 		});
-		settings.addEventListener('input', function(e) {
+		form.addEventListener('input', function(e) {
 			if(e.target.classList.contains('form-control')) {
 				let name = e.target.getAttribute('name'), value = e.target.value, wrap = e.target.closest('.item');
 				if(value) {
