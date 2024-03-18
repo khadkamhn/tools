@@ -13,7 +13,7 @@ scripts: ["/assets/js/sortable.min.js","/assets/js/popper.min.js","/assets/js/ti
 					<span>Section</span>
 				</div>
 				<div class="card-body">
-					<div class="row">
+					<div class="row section-wrap">
 						<div class="col-md-6">
 							<div class="mb-3">
 								<label class="form-label" for="name">Name</label>
@@ -192,7 +192,7 @@ function getField(type, which) {
 			htm += '<div class="mb-2"><label class="form-label">Default</label>'
 		}
 		if(type=='checkbox') {
-			htm += '<select class="form-select form-select-sm" name="default"><option></option><option value="true">true</option><option value="false">false</option></select>'
+			htm += '<select class="form-select form-select-sm" name="default"><option value="true">true</option><option value="false">false</option></select>'
 		}
 		if(type=='number' || type=='range') {
 			htm += '<input type="number" class="form-control form-control-sm" name="default" placeholder="Value">'
@@ -275,6 +275,32 @@ function getField(type, which) {
 	+'</div>';
 	return htm;
 }
+function collectData() {
+	let json = {};
+	let sec = document.querySelector('.section-wrap'),
+		sec_name = sec.querySelector('[name="name"]').value,
+		sec_class = sec.querySelector('[name="class"]').value,
+		sec_tag = sec.querySelector('[name="tag"]').value,
+		sec_pre = sec.querySelector('[name="preset"]').value;
+	json.name = sec_name;
+	json.class = sec_class;
+	json.tag = sec_tag;
+	json.preset = [{'name':''+sec_pre+''}];
+	json.settings = [];
+	document.querySelectorAll('.settings-section .item').forEach((item) => {
+		let set_field = {};
+		let set_type = item.getAttribute('data-type'),
+			set_id = item.querySelector('[name="identifier"]').value,
+			set_label = item.querySelector('[name="label"]').value,
+			set_default = item.querySelector('[name="default"]').value,
+			set_info = item.querySelector('[name="info"]').value;
+			set_field.type = set_type;
+			set_field.id = set_id;
+			set_field.label = set_type;
+		json.settings.push(set_field);
+	});
+	console.log(json);
+}
 document.addEventListener('DOMContentLoaded', function () {
 	window.onload = function() {
 		mk.alert('<h6>Under construction!!</h6><em class="small">This page is still under developing. Please visit later...</em>');
@@ -292,6 +318,18 @@ document.addEventListener('DOMContentLoaded', function () {
 				animation: 120,
 				ghostClass: 'ghost',
 				handle: '.input-group-text',
+				onEnd: function(e) {
+					let optWrp = e.item.closest('.field-options');
+					if(optWrp) {
+						let opt = '', wrap = e.item.closest('.item');
+						optWrp.querySelectorAll('.input-group [name="option-value"]').forEach((input) => {
+							if(input.value && input.closest('.input-group').querySelector('[name="option-label"]').value) {
+								opt += '<option value="+input.value+">'+input.value+'</option>';
+							}
+						});
+						wrap.querySelector('[name="default"]').innerHTML = opt;
+					}
+				}
 			});
 		});
 		document.querySelectorAll('.block-wrap').forEach((item) => {
