@@ -68,6 +68,9 @@ scripts: ["/assets/js/sortable.min.js","/assets/js/popper.min.js","/assets/js/ti
 </form>
 
 <script>
+Node.prototype.addEventListeners = function(eventNames, eventFunction){
+	for (eventName of eventNames.split(' ')) this.addEventListener(eventName, eventFunction);
+}
 const fieldTypes = {
 	'checkbox': 'Checkbox',
 	'number': 'Number',
@@ -254,7 +257,7 @@ function getField(type, which) {
 
 		+'<div class="col-md-6 col-lg-3"><div class="mb-2">'
 		+'<label class="form-label">Step</label>'
-		+'<input type="number" class="form-control form-control-sm" name="max" placeholder="Step" maxlength="84">'
+		+'<input type="number" class="form-control form-control-sm" name="step" placeholder="Step" maxlength="84">'
 		+'<div class="form-text">Specifies maximum value</div>'
 		+'</div></div>'
 
@@ -275,7 +278,7 @@ function getField(type, which) {
 	+'</div>';
 	return htm;
 }
-function collectData() {
+function collectData(showInResult=false) {
 	let json = {};
 	let sec = document.querySelector('.section-wrap'),
 		sec_name = sec.querySelector('[name="name"]').value,
@@ -285,21 +288,126 @@ function collectData() {
 	json.name = sec_name;
 	json.class = sec_class;
 	json.tag = sec_tag;
-	json.preset = [{'name':''+sec_pre+''}];
 	json.settings = [];
 	document.querySelectorAll('.settings-section .item').forEach((item) => {
-		let set_field = {};
-		let set_type = item.getAttribute('data-type'),
+		let set_field = {},
+			set_type = item.getAttribute('data-type'),
 			set_id = item.querySelector('[name="identifier"]').value,
 			set_label = item.querySelector('[name="label"]').value,
 			set_default = item.querySelector('[name="default"]').value,
 			set_info = item.querySelector('[name="info"]').value;
+			set_opts = item.querySelector('.field-options');
 			set_field.type = set_type;
 			set_field.id = set_id;
-			set_field.label = set_type;
+			set_field.label = set_label;
+			if(set_type=='radio' || set_type=='select') {
+				if(set_opts) {
+					set_field.options = [];
+					set_opts.querySelectorAll('.input-group').forEach((item) => {
+						let opt_lbl = item.querySelector('[name="option-label"]').value, opt_val = item.querySelector('[name="option-value"]').value;
+						if(opt_lbl && opt_val) {
+							set_field.options.push({'value':opt_val,'label':opt_lbl});
+						}
+					});
+				}
+			}
+			if(set_type=='range') {
+				let set_min = item.querySelector('[name="min"]').value,
+					set_max = item.querySelector('[name="max"]').value,
+					set_step = item.querySelector('[name="step"]').value,
+					set_unit = item.querySelector('[name="unit"]').value;
+				set_field.min = parseFloat(set_min);
+				set_field.max = parseFloat(set_max);
+				set_field.step = parseFloat(set_step);
+				if(set_unit) {
+					set_field.unit = set_unit;
+				}
+			}
+			if(set_default) {
+				if(set_type=='checkbox') {
+					set_field.default = set_default=='true'?true:false;
+				}else if(set_type=='number'){
+					set_field.default = parseFloat(set_default);
+				}else{
+					set_field.default = set_default;
+				}
+			}
+			if(set_info) {
+				set_field.info = set_info;
+			}
 		json.settings.push(set_field);
 	});
-	console.log(json);
+	let blockCard = document.querySelectorAll('.block-wrap .card');
+	if(blockCard.length) {
+		json.blocks = [];
+		blockCard.forEach((card) => {
+			let set_block = {},
+				blk_name = card.querySelector('[name="block-name"]').value,
+				blk_type = card.querySelector('[name="block-type"]').value;
+			if(blk_name && blk_type) {
+				set_block.name = blk_name;
+				set_block.type = blk_type;
+			}
+			set_block.settings = [];
+			card.querySelectorAll('.settings-block .item').forEach((item) => {
+				let set_bfield = {},
+					set_btype = item.getAttribute('data-type'),
+					set_bid = item.querySelector('[name="identifier"]').value,
+					set_blabel = item.querySelector('[name="label"]').value,
+					set_bdefault = item.querySelector('[name="default"]').value,
+					set_binfo = item.querySelector('[name="info"]').value;
+					set_bopts = item.querySelector('.field-options');
+					set_bfield.type = set_btype;
+					set_bfield.id = set_bid;
+					set_bfield.label = set_blabel;
+					if(set_btype=='radio' || set_btype=='select') {
+						if(set_opts) {
+							set_bfield.options = [];
+							set_opts.querySelectorAll('.input-group').forEach((item) => {
+								let blk_lbl = item.querySelector('[name="option-label"]').value, blk_val = item.querySelector('[name="option-value"]').value;
+								if(blk_lbl && blk_val) {
+									set_bfield.options.push({'value':blk_val,'label':blk_lbl});
+								}
+							});
+						}
+					}
+					if(set_btype=='range') {
+						let set_bmin = item.querySelector('[name="min"]').value,
+							set_bmax = item.querySelector('[name="max"]').value,
+							set_bstep = item.querySelector('[name="step"]').value,
+							set_bunit = item.querySelector('[name="unit"]').value;
+						set_bfield.min = parseFloat(set_min);
+						set_bfield.max = parseFloat(set_max);
+						set_bfield.step = parseFloat(set_step);
+						if(set_bunit) {
+							set_bfield.unit = set_bunit;
+						}
+					}
+					if(set_bdefault) {
+						if(set_btype=='checkbox') {
+							set_bfield.default = set_bdefault=='true'?true:false;
+						}else if(set_btype=='number'){
+							set_bfield.default = parseFloat(set_bdefault);
+						}else {
+							set_bfield.default = set_bdefault;
+						}
+					}
+					if(set_binfo) {
+						set_bfield.info = set_binfo;
+					}
+					set_block.settings.push(set_bfield);
+			});
+			json.blocks.push(set_block);
+		});
+	}
+	json.preset = [{'name':sec_pre}];
+
+	if(showInResult) {
+		let resTxt = '{\% schema %\}\n'+JSON.stringify(json, null, '	')+'\n{\% endschema %\}';
+		document.querySelector('.json-formatted').value = resTxt;
+	}else{
+		return json;
+	}
 }
 document.addEventListener('DOMContentLoaded', function () {
 	window.onload = function() {
@@ -311,6 +419,9 @@ document.addEventListener('DOMContentLoaded', function () {
 				animation: 120,
 				ghostClass: 'ghost',
 				handle: '.item-head',
+				onEnd: function(e) {
+					collectData(true);
+				}
 			});
 		});
 		document.querySelectorAll('.field-options').forEach((item) => {
@@ -324,11 +435,12 @@ document.addEventListener('DOMContentLoaded', function () {
 						let opt = '', wrap = e.item.closest('.item');
 						optWrp.querySelectorAll('.input-group [name="option-value"]').forEach((input) => {
 							if(input.value && input.closest('.input-group').querySelector('[name="option-label"]').value) {
-								opt += '<option value="+input.value+">'+input.value+'</option>';
+								opt += '<option value="'+input.value+'">'+input.value+'</option>';
 							}
 						});
 						wrap.querySelector('[name="default"]').innerHTML = opt;
 					}
+					collectData(true);
 				}
 			});
 		});
@@ -339,6 +451,7 @@ document.addEventListener('DOMContentLoaded', function () {
 				handle: '.card-header',
 			});
 		});
+		collectData(true);
 	};
 	makeSortable();
 	const initTippy = function() {
@@ -388,18 +501,21 @@ document.addEventListener('DOMContentLoaded', function () {
 				e.preventDefault();
 				mk.confirm('<h6>Are you sure want to delete?</h6><em class="small">Once you remove this, you won\'t able to recover.</em>',function() {
 					e.target.closest('.item,.card').remove();
+					collectData(true);
 				});
 			}
 			if(e.target.getAttribute('data-add')=='option') {
 				let htm = getField('option');
 				if(htm) {
 					e.target.closest('.item').querySelector('.field-options').insertAdjacentHTML('beforeend', htm);
+					collectData(true);
 				}
 			}
 			if((e.target.closest('.input-group') && e.target.getAttribute('data-delete')=='option') || (e.target.closest('.btn') && e.target.closest('.btn').getAttribute('data-delete')=='option')) {
 				e.preventDefault();
 				mk.confirm('<h6>Are you sure want to delete?</h6><em class="small">Once you remove this, you won\'t able to recover.</em>',function() {
 					e.target.closest('.input-group').remove();
+					collectData(true);
 				});
 			}
 			if(e.target.getAttribute('data-add')) {
@@ -407,12 +523,22 @@ document.addEventListener('DOMContentLoaded', function () {
 			}
 		});
 		form.addEventListener('input', function(e) {
-			if(e.target.classList.contains('form-control')) {
+			if(e.target.classList.contains('form-control') || e.target.classList.contains('form-select')) {
 				let name = e.target.getAttribute('name'), value = e.target.value, wrap = e.target.closest('.item');
 				if(value) {
 					switch(name) {
 						case'label':
-							wrap.querySelector('[name="identifier"]').value = stringToSlug(value);
+							let id = wrap.querySelector('[name="identifier"]');
+							if(!id.value) {
+								id.setAttribute('lock',false);
+							}
+							if(id.getAttribute('lock')=='false') {
+								id.value = stringToSlug(value);
+							}
+						break;
+						case'identifier':
+							let iden = wrap.querySelector('[name="identifier"]');
+							iden.setAttribute('lock',iden.value?true:false);
 						break;
 						case'option-label':
 						case'option-value':
@@ -421,13 +547,14 @@ document.addEventListener('DOMContentLoaded', function () {
 								let opt = '';
 								optWrp.querySelectorAll('.input-group [name="option-value"]').forEach((input) => {
 									if(input.value && input.closest('.input-group').querySelector('[name="option-label"]').value) {
-										opt += '<option value="+input.value+">'+input.value+'</option>';
+										opt += '<option value="'+input.value+'">'+input.value+'</option>';
 									}
 								});
 								wrap.querySelector('[name="default"]').innerHTML = opt;
 							}
 						break;
 					}
+					collectData(true);
 				}
 			}
 		});
