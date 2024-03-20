@@ -615,7 +615,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		const a = document.createElement('a');
 		let name = document.querySelector('.section-wrap [name="name"]').value;
 		if(name) {
-			name = stringToSlug(name);
+			name = stringToSlug(name,'-');
 		}else{
 			name = 'unknown-section';
 		}
