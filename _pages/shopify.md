@@ -8,7 +8,7 @@ scripts: ["/assets/js/sortable.min.js","/assets/js/popper.min.js","/assets/js/ti
 <form class="form" method="post">
 	<div class="row">
 		<div class="col-md-6">
-			<div class="card mt-3">
+			<div class="card mt-3 card-section">
 				<div class="card-header d-flex justify-content-between align-items-center">
 					<span>Section</span>
 				</div>
@@ -38,7 +38,7 @@ scripts: ["/assets/js/sortable.min.js","/assets/js/popper.min.js","/assets/js/ti
 						<div class="col-md-6">
 							<div class="mb-3">
 								<label class="form-label" for="preset">Preset</label>
-								<input id="preset" type="text" class="form-control form-control-sm" name="preset" placeholder="Section label" maxlength="100">
+								<input id="preset" type="text" class="form-control form-control-sm" name="preset" placeholder="Preset label" maxlength="100">
 								<div class="form-text">Specifies the label appear on the customizer.</div>
 							</div>
 						</div>
@@ -57,7 +57,10 @@ scripts: ["/assets/js/sortable.min.js","/assets/js/popper.min.js","/assets/js/ti
 			<div class="card mt-3">
 				<div class="card-header d-flex justify-content-between align-items-center">
 					<span>Liquid</span>
-					<span class="material-icons" data-downlaod="liquid" title="Click to Download">download</span>
+					<span>
+						<span class="material-icons me-3" data-copy="json" title="Copy to clipboard">content_copy</span>
+						<span class="material-icons" data-action="download" title="Click to Download">download</span>
+					</span>
 				</div>
 				<div class="card-body p-0">
 					<textarea class="json-formatted form-control border-0 font-monospace" spellcheck="false" readonly></textarea>
@@ -147,15 +150,20 @@ function getField(type, which) {
 		+'<div class="card-header d-flex justify-content-between align-items-center"><div class="name">Block</div><div class="item-action"><i class="material-icons" data-delete="item">delete</i></div></div>'
 		+'<div class="card-body">'
 		+'<div class="row">'
-		+'<div class="col-md-6"><div class="mb-2">'
+		+'<div class="col-md-6 col-lg-4"><div class="mb-2">'
 		+'<label class="form-label">Name</label>'
 		+'<input type="text" class="form-control form-control-sm" name="block-name" placeholder="Name" title="Name">'
 		+'<div class="form-text">Specifies name of the block</div>'
 		+'</div></div>'
-		+'<div class="col-md-6"><div class="mb-2">'
+		+'<div class="col-md-6 col-lg-4"><div class="mb-2">'
 		+'<label class="form-label">Type</label>'
 		+'<input type="text" class="form-control form-control-sm" name="block-type" placeholder="Type" title="Type">'
 		+'<div class="form-text">Specifies type of the block</div>'
+		+'</div></div>'
+		+'<div class="col-md-6 col-lg-4"><div class="mb-2">'
+		+'<label class="form-label">Limit</label>'
+		+'<input type="number" class="form-control form-control-sm" name="block-limit" placeholder="Limit" title="Limit" min="1" max="16">'
+		+'<div class="form-text">Specifies limit of the block</div>'
 		+'</div></div>'
 		+'</div>'
 		+'<div class="mb-3"><button class="btn btn-primary btn-sm" type="button" data-add="field" data-which="block">Add Block Field</button></div>'
@@ -283,7 +291,7 @@ function collectData(showInResult=false) {
 	let sec = document.querySelector('.section-wrap'),
 		sec_name = sec.querySelector('[name="name"]').value,
 		sec_class = sec.querySelector('[name="class"]').value,
-		sec_tag = sec.querySelector('[name="tag"]').value,
+		sec_tag = sec.querySelector('[name="tag"]').value || 'section',
 		sec_pre = sec.querySelector('[name="preset"]').value;
 	json.name = sec_name;
 	json.class = sec_class;
@@ -294,7 +302,7 @@ function collectData(showInResult=false) {
 			set_type = item.getAttribute('data-type'),
 			set_id = item.querySelector('[name="identifier"]').value,
 			set_label = item.querySelector('[name="label"]').value,
-			set_default = item.querySelector('[name="default"]').value,
+			set_default = item.querySelector('[name="default"]')?item.querySelector('[name="default"]').value:'',
 			set_info = item.querySelector('[name="info"]').value;
 			set_opts = item.querySelector('.field-options');
 			set_field.type = set_type;
@@ -323,13 +331,24 @@ function collectData(showInResult=false) {
 					set_field.unit = set_unit;
 				}
 			}
+			if(set_type=='collection_list' || set_type=='product_list') {
+				let set_limit = item.querySelector('[name="limit"]').value;
+				if(set_limit) {
+					set_field.limit = parseInt(set_limit);
+				}
+			}
 			if(set_default) {
-				if(set_type=='checkbox') {
-					set_field.default = set_default=='true'?true:false;
-				}else if(set_type=='number'){
-					set_field.default = parseFloat(set_default);
-				}else{
-					set_field.default = set_default;
+				switch(set_type) {
+					case'checkbox':
+						set_field.default = set_default=='true'?true:false;
+					break;
+					case'range':
+					case'number':
+						set_field.default = parseFloat(set_default);
+					break;
+					default:
+						set_field.default = set_default;
+					break;
 				}
 			}
 			if(set_info) {
@@ -344,17 +363,21 @@ function collectData(showInResult=false) {
 			let set_block = {},
 				blk_name = card.querySelector('[name="block-name"]').value,
 				blk_type = card.querySelector('[name="block-type"]').value;
+				blk_limit = card.querySelector('[name="block-limit"]').value;
 			if(blk_name && blk_type) {
 				set_block.name = blk_name;
 				set_block.type = blk_type;
 			}
 			set_block.settings = [];
+			if(blk_limit) {
+				set_block.limit = parseInt(blk_limit);
+			}
 			card.querySelectorAll('.settings-block .item').forEach((item) => {
 				let set_bfield = {},
 					set_btype = item.getAttribute('data-type'),
 					set_bid = item.querySelector('[name="identifier"]').value,
 					set_blabel = item.querySelector('[name="label"]').value,
-					set_bdefault = item.querySelector('[name="default"]').value,
+					set_bdefault = item.querySelector('[name="default"]')?item.querySelector('[name="default"]').value:'',
 					set_binfo = item.querySelector('[name="info"]').value;
 					set_bopts = item.querySelector('.field-options');
 					set_bfield.type = set_btype;
@@ -383,13 +406,24 @@ function collectData(showInResult=false) {
 							set_bfield.unit = set_bunit;
 						}
 					}
+					if(set_btype=='collection_list' || set_btype=='product_list') {
+						let set_blimit = item.querySelector('[name="limit"]').value;
+						if(set_blimit) {
+							set_bfield.limit = parseInt(set_blimit);
+						}
+					}
 					if(set_bdefault) {
-						if(set_btype=='checkbox') {
-							set_bfield.default = set_bdefault=='true'?true:false;
-						}else if(set_btype=='number'){
-							set_bfield.default = parseFloat(set_bdefault);
-						}else {
-							set_bfield.default = set_bdefault;
+						switch(set_btype) {
+							case'checkbox':
+								set_bfield.default = set_bdefault=='true'?true:false;
+							break;
+							case'range':
+							case'number':
+								set_bfield.default = parseFloat(set_bdefault);
+							break;
+							default:
+								set_bfield.default = set_bdefault;
+							break;
 						}
 					}
 					if(set_binfo) {
@@ -400,7 +434,7 @@ function collectData(showInResult=false) {
 			json.blocks.push(set_block);
 		});
 	}
-	json.preset = [{'name':sec_pre}];
+	json.presets = [{'name':sec_pre}];
 
 	if(showInResult) {
 		let resTxt = '{\% schema %\}\n'+JSON.stringify(json, null, '	')+'\n{\% endschema %\}';
@@ -408,7 +442,24 @@ function collectData(showInResult=false) {
 	}else{
 		return json;
 	}
+	fixResize();
 }
+function fixResize() {
+	let leftElm = document.querySelector('.card-section'), rightElm = document.querySelector('.json-formatted');
+	if(window.outerWidth >=767) {
+		let cardBodyHeight = leftElm.closest('.form').querySelector('.card-section>.card-body').clientHeight;
+		let cardPaddingTop = window.getComputedStyle(leftElm).paddingTop, cardPaddingBottom = window.getComputedStyle(leftElm).paddingBottoml;
+		let totalHeight = parseInt(cardBodyHeight - parseInt(cardPaddingTop+cardPaddingBottom));
+		rightElm.style.height = totalHeight+'px';
+	}else{
+		rightElm.removeAttribute('style');
+	}
+}
+fixResize();
+window.addEventListener('resize', function(event) {
+	fixResize();
+});
+
 document.addEventListener('DOMContentLoaded', function () {
 	window.onload = function() {
 		mk.alert('<h6>Under construction!!</h6><em class="small">This page is still under developing. Please visit later...</em>');
@@ -556,6 +607,30 @@ document.addEventListener('DOMContentLoaded', function () {
 					}
 					collectData(true);
 				}
+			}
+		});
+	});
+	document.querySelector('[data-action]').addEventListener('click',function() {
+		const jsonData = document.querySelector('.json-formatted').value;
+		const a = document.createElement('a');
+		let name = document.querySelector('.section-wrap [name="name"]').value;
+		if(name) {
+			name = stringToSlug(name);
+		}else{
+			name = 'unknown-section';
+		}
+		let rawData = 'data:text/plain;charset=utf-8,' + encodeURIComponent(jsonData);
+		a.href = rawData;
+		a.download = name+'.liquid';
+		document.body.appendChild(a);
+		a.click();
+		document.body.removeChild(a);
+	});
+	document.querySelectorAll('[data-copy]').forEach(function(copy) {
+		copy.addEventListener('click',function() {
+			const codeCopy = this.closest('.card').querySelector('.json-formatted').value;
+			if(codeCopy) {
+				mk.copyToClipboard(codeCopy);
 			}
 		});
 	});
