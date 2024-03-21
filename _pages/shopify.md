@@ -481,7 +481,7 @@ function collectData(showInResult=false) {
 							case'select':
 							case'color':
 								if(field.id) {
-									vars += 'assign '+field.id+' =  block.settings.'+field.id+'\n\t\t';
+									vars += 'assign '+field.id+' =  block.settings.'+field.id+'\n\t\t\t';
 								}
 							break;
 							case'image_picker':
@@ -500,8 +500,8 @@ function collectData(showInResult=false) {
 						}
 					});
 					if(vars) {
-						if (vars.endsWith('\n\t\t')) {
-							vars = vars.slice(0, -3);
+						if (vars.endsWith('\n\t\t\t')) {
+							vars = vars.slice(0, -4);
 						}
 						resTxt += '\t\t{\%- liquid\n\t\t\t'+vars+'\n\t\t%\}\n';
 					}
