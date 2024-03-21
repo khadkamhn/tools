@@ -31,7 +31,14 @@ scripts: ["/assets/js/sortable.min.js","/assets/js/popper.min.js","/assets/js/ti
 						<div class="col-md-6">
 							<div class="mb-3">
 								<label class="form-label" for="tag">Tag</label>
-								<input id="tag" type="text" class="form-control form-control-sm" name="tag" placeholder="HTML tag" maxlength="25">
+								<select id="tag" class="form-select form-select-sm" name="tag">
+									<option value="article">&#60;article></option>
+									<option value="aside">&#60;aside></option>
+									<option value="div">&#60;div></option>
+									<option value="footer">&#60;footer></option>
+									<option value="header">&#60;header></option>
+									<option value="section" selected>&#60;section></option>
+								</select>
 								<div class="form-text">Specifies html tag of the section.</div>
 							</div>
 						</div>
@@ -64,6 +71,13 @@ scripts: ["/assets/js/sortable.min.js","/assets/js/popper.min.js","/assets/js/ti
 				</div>
 				<div class="card-body p-0">
 					<textarea class="json-formatted form-control border-0 font-monospace" spellcheck="false" readonly></textarea>
+				</div>
+				<div class="card-footer">
+					<div class="d-flex align-items-center">
+						<label class="form-check-label me-2" for="indent">Space</label>
+						<div class="form-check form-switch m-0"><input class="form-check-input" type="checkbox" id="indent" name="indent" checked></div>
+						<label class="form-check-label" for="indent">Tab</label>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -384,9 +398,9 @@ function collectData(showInResult=false) {
 					set_bfield.id = set_bid;
 					set_bfield.label = set_blabel;
 					if(set_btype=='radio' || set_btype=='select') {
-						if(set_opts) {
+						if(set_bopts) {
 							set_bfield.options = [];
-							set_opts.querySelectorAll('.input-group').forEach((item) => {
+							set_bopts.querySelectorAll('.input-group').forEach((item) => {
 								let blk_lbl = item.querySelector('[name="option-label"]').value, blk_val = item.querySelector('[name="option-value"]').value;
 								if(blk_lbl && blk_val) {
 									set_bfield.options.push({'value':blk_val,'label':blk_lbl});
@@ -437,7 +451,77 @@ function collectData(showInResult=false) {
 	json.presets = [{'name':sec_pre}];
 
 	if(showInResult) {
-		let resTxt = '{\% schema %\}\n'+JSON.stringify(json, null, '	')+'\n{\% endschema %\}';
+		let resTxt = '', indent = document.querySelector('[name="indent"]').checked;
+		if(json.settings) {
+			json.settings.forEach((field)=>{
+				if(field.type=='text') {
+					if(field.id.includes('title')) {
+						resTxt += '<div class="title">{\{ section.settings.'+field.id+' }\}</div>\n';
+					}else if(field.id.includes('heading')) {
+						resTxt += '<div class="heading">{\{ section.settings.'+field.id+' }\}</div>\n';
+					}
+				}
+			});
+		}
+		if(json.blocks) {
+			resTxt += '{\%- for block in section.blocks -%\}\n';
+			json.blocks.forEach((block)=>{
+				if(block.type) {
+					resTxt += '\t{\% if block.type == \''+block.type+'\' %\}\n';
+					resTxt += '\t<div class="block block-{\{ block.type | handleize }\}" {\{ block.shopify_attributes }\}>\n';
+				}
+				if(block.settings) {
+					let vars = '', echo = '';
+					block.settings.forEach((field)=>{
+						switch(field.type) {
+							case'checkbox':
+							case'number':
+							case'radio':
+							case'range':
+							case'select':
+							case'color':
+								if(field.id) {
+									vars += 'assign '+field.id+' =  block.settings.'+field.id+'\n\t\t';
+								}
+							break;
+							case'image_picker':
+								echo += '\t\t<div>{\{ block.settings.'+field.id+' | image_url: width: 400 | image_tag }\}</div>\n';
+							break;
+							case'text':
+							case'textarea':
+							case'html':
+							case'inline_richtext':
+							case'liquid':
+							case'richtext':
+								if(field.id) {
+									echo += '\t\t<div>{\{ block.settings.'+field.id+' }\}</div>\n';
+								}
+							break;
+						}
+					});
+					if(vars) {
+						if (vars.endsWith('\n\t\t')) {
+							vars = vars.slice(0, -3);
+						}
+						resTxt += '\t\t{\%- liquid\n\t\t\t'+vars+'\n\t\t%\}\n';
+					}
+					if(echo) {
+						resTxt += echo;
+					}
+				}
+				if(block.type) {
+					resTxt += '\t</div>\n';
+					resTxt += '\t{\% endif %\}\n';
+				}
+			});
+			resTxt += '{\%- endfor -%\}\n';
+		}
+
+		resTxt += '{\% schema %\}\n'+JSON.stringify(json, null, '	')+'\n{\% endschema %\}';
+	
+		if(indent==false) {
+			resTxt = resTxt.replace(/\t/g,'  ');
+		}
 		document.querySelector('.json-formatted').value = resTxt;
 	}else{
 		return json;
@@ -448,9 +532,10 @@ function fixResize() {
 	let leftElm = document.querySelector('.card-section'), rightElm = document.querySelector('.json-formatted');
 	if(window.outerWidth >=767) {
 		let cardBodyHeight = leftElm.closest('.form').querySelector('.card-section>.card-body').clientHeight;
-		let cardPaddingTop = window.getComputedStyle(leftElm).paddingTop, cardPaddingBottom = window.getComputedStyle(leftElm).paddingBottoml;
+		let cardPaddingTop = window.getComputedStyle(leftElm).paddingTop, cardPaddingBottom = window.getComputedStyle(leftElm).paddingBottom;
+		let cardFooter = rightElm.closest('.card').querySelector('.card-footer').clientHeight;
 		let totalHeight = parseInt(cardBodyHeight - parseInt(cardPaddingTop+cardPaddingBottom));
-		rightElm.style.height = totalHeight+'px';
+		rightElm.style.height = (totalHeight-cardFooter-4)+'px';
 	}else{
 		rightElm.removeAttribute('style');
 	}
@@ -462,7 +547,7 @@ window.addEventListener('resize', function(event) {
 
 document.addEventListener('DOMContentLoaded', function () {
 	window.onload = function() {
-		mk.alert('<h6>Under construction!!</h6><em class="small">This page is still under developing. Please visit later...</em>');
+		//mk.alert('<h6>Under construction!!</h6><em class="small">This page is still under developing. Please visit later...</em>');
 	}
 	const makeSortable = function() {
 		document.querySelectorAll('.settings').forEach((item) => {
@@ -604,6 +689,32 @@ document.addEventListener('DOMContentLoaded', function () {
 								wrap.querySelector('[name="default"]').innerHTML = opt;
 							}
 						break;
+						case'block-name':
+							let btyp = e.target.closest('.row').querySelector('[name="block-type"]');
+							if(!btyp.value) {
+								btyp.setAttribute('lock',false);
+							}
+							if(btyp.getAttribute('lock')=='false') {
+								btyp.value = stringToSlug(value);
+							}
+						break;
+						case'block-type':
+							let btype = e.target.closest('.row').querySelector('[name="block-type"]');
+							btype.setAttribute('lock',btype.value?true:false);
+						break;
+						case'name':
+							let styp = e.target.closest('.section-wrap').querySelector('[name="class"]');
+							if(!styp.value) {
+								styp.setAttribute('lock',false);
+							}
+							if(styp.getAttribute('lock')=='false') {
+								styp.value = stringToSlug(value);
+							}
+						break;
+						case'class':
+							let scls = e.target.closest('.section-wrap').querySelector('[name="class"]');
+							scls.setAttribute('lock',scls.value?true:false);
+						break;
 					}
 					collectData(true);
 				}
@@ -625,6 +736,10 @@ document.addEventListener('DOMContentLoaded', function () {
 		document.body.appendChild(a);
 		a.click();
 		document.body.removeChild(a);
+	});
+	document.querySelector('.card-footer [name="indent"]').addEventListeners('input change', function(e) {
+		e.preventDefault();
+		collectData(true);
 	});
 	document.querySelectorAll('[data-copy]').forEach(function(copy) {
 		copy.addEventListener('click',function() {
