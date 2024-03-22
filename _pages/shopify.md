@@ -413,9 +413,9 @@ function collectData(showInResult=false) {
 							set_bmax = item.querySelector('[name="max"]').value,
 							set_bstep = item.querySelector('[name="step"]').value,
 							set_bunit = item.querySelector('[name="unit"]').value;
-						set_bfield.min = parseFloat(set_min);
-						set_bfield.max = parseFloat(set_max);
-						set_bfield.step = parseFloat(set_step);
+						set_bfield.min = parseFloat(set_bmin);
+						set_bfield.max = parseFloat(set_bmax);
+						set_bfield.step = parseFloat(set_bstep);
 						if(set_bunit) {
 							set_bfield.unit = set_bunit;
 						}
