@@ -546,8 +546,12 @@ window.addEventListener('resize', function(event) {
 });
 
 document.addEventListener('DOMContentLoaded', function () {
+	var tabIndent = document.querySelector('[name="indent"]');
 	window.onload = function() {
 		//mk.alert('<h6>Under construction!!</h6><em class="small">This page is still under developing. Please visit later...</em>');
+		var tabIndentType = mk.store.get('tab_indent');
+		tabIndent.checked = tabIndentType=='tab'?true:false;
+		collectData(true);
 	}
 	const makeSortable = function() {
 		document.querySelectorAll('.settings').forEach((item) => {
@@ -739,6 +743,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	});
 	document.querySelector('.card-footer [name="indent"]').addEventListeners('input change', function(e) {
 		e.preventDefault();
+		mk.store.set('tab_indent',this.checked?'tab':'space');
 		collectData(true);
 	});
 	document.querySelectorAll('[data-copy]').forEach(function(copy) {
