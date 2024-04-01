@@ -50,13 +50,13 @@ scripts: ["/assets/js/sortable.min.js","/assets/js/popper.min.js","/assets/js/ti
 							</div>
 						</div>
 					</div>
-					<div class="mb-3">
-						<button class="btn btn-primary btn-sm" type="button" data-add="field" data-which="section">Add Setting Field</button>
-					</div>
 					<div class="settings settings-section"></div>
+					<div class="mb-3">
+						<button class="btn btn-primary btn-sm" type="button" data-add="field" data-which="section">Add Field</button>
+					</div>
 					<hr>
-					<button class="btn btn-primary btn-sm" type="button" data-add="block" data-which="block">Add Block</button>
 					<div class="block-wrap"></div>
+					<button class="btn btn-primary btn-sm" type="button" data-add="block" data-which="block">Add Block</button>
 				</div>
 			</div>
 		</div>
@@ -160,8 +160,8 @@ function getField(type, which) {
 		return htm;
 	}
 	if(type=='block') {
-		htm += '<div class="card mt-2">'
-		+'<div class="card-header d-flex justify-content-between align-items-center"><div class="name">Block</div><div class="item-action"><i class="material-icons" data-delete="item">delete</i></div></div>'
+		htm += '<div class="card mb-2 active">'
+		+'<div class="card-header d-flex justify-content-between align-items-center"><div class="name">Block <span class="card-label ms-1"></span></div><div class="item-action"><i class="material-icons me-2" data-collapse="card" title="Expand/Collapse">expand_less</i><i class="material-icons" data-delete="item" title="Delete">delete</i></div></div>'
 		+'<div class="card-body">'
 		+'<div class="row">'
 		+'<div class="col-md-6 col-lg-4"><div class="mb-2">'
@@ -180,16 +180,16 @@ function getField(type, which) {
 		+'<div class="form-text">Specifies limit of the block</div>'
 		+'</div></div>'
 		+'</div>'
-		+'<div class="mb-3"><button class="btn btn-primary btn-sm" type="button" data-add="field" data-which="block">Add Block Field</button></div>'
 		+'<div class="settings settings-block"></div>'
+		+'<div class="mt-0"><button class="btn btn-primary btn-sm" type="button" data-add="field" data-which="block">Add Field</button></div>'
 		+'</div>'
 		+'</div>';
 		return htm;
 	}
 
-	htm +='<div class="item" data-type="'+type+'" data-which="'+which+'">'
+	htm +='<div class="item active" data-type="'+type+'" data-which="'+which+'">'
 	+'<div class="item-head">'
-	+'<div><i class="material-icons">swap_vert</i> <span class="item-name">'+fieldTypes[type]+'</span></div><div class="item-action"><i class="material-icons" data-delete="item">delete</i></div>'
+	+'<div><span class="item-name">'+fieldTypes[type]+'</span><span class="item-label ms-1"></span></div><div class="item-action"><i class="material-icons me-2" data-collapse="item" title="Expand/Collapse">expand_less</i><i class="material-icons" data-delete="item" title="Delete">delete</i></div>'
 	+'</div>'
 	+'<div class="item-body"><div class="row">'
 
@@ -624,6 +624,7 @@ document.addEventListener('DOMContentLoaded', function () {
 					if(htm) {
 						btn.closest('.card-body').querySelector('.settings').insertAdjacentHTML('beforeend', htm);
 						makeSortable();
+						initTippy();
 					}
 				});
 			}
@@ -634,6 +635,7 @@ document.addEventListener('DOMContentLoaded', function () {
 				if(htm) {
 					btn.closest('.card-body').querySelector('.block-wrap').insertAdjacentHTML('beforeend', htm);
 					makeSortable();
+					initTippy();
 				}
 			}
 
@@ -658,6 +660,20 @@ document.addEventListener('DOMContentLoaded', function () {
 					collectData(true);
 				});
 			}
+			if(e.target.getAttribute('data-collapse')) {
+				e.preventDefault();
+				let itemType = e.target.getAttribute('data-collapse'), itemWrap = e.target.closest('.'+itemType);
+				if(itemWrap) {
+					if(itemWrap.classList.contains('active')) {
+						itemWrap.classList.remove('active');
+						e.target.textContent = 'expand_more';
+					}else{
+						itemWrap.classList.add('active');
+						e.target.textContent = 'expand_less';
+					}
+					fixResize();
+				}
+			}
 			if(e.target.getAttribute('data-add')) {
 				initTippy();
 			}
@@ -674,6 +690,10 @@ document.addEventListener('DOMContentLoaded', function () {
 							}
 							if(id.getAttribute('lock')=='false') {
 								id.value = stringToSlug(value);
+							}
+							var label = wrap.querySelector('[name="label"]');
+							if(label.value) {
+								wrap.querySelector('.item-head .item-label').innerHTML = label.value
 							}
 						break;
 						case'identifier':
@@ -700,6 +720,10 @@ document.addEventListener('DOMContentLoaded', function () {
 							}
 							if(btyp.getAttribute('lock')=='false') {
 								btyp.value = stringToSlug(value);
+							}
+							var card = e.target.closest('.card'), label = card.querySelector('[name="block-name"]');
+							if(label.value) {
+								card.querySelector('.card-header .card-label').innerHTML = label.value
 							}
 						break;
 						case'block-type':

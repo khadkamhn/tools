@@ -31,7 +31,16 @@
 			}
 		}
 		&-body {
+			display: none;
 			padding: 12px;
+		}
+		&:not(.active) .item-head {
+			margin-bottom: -1px;
+		}
+		&.active {
+			.item-body {
+				display: block;
+			}
 		}
 	}
 	.field-options {
@@ -45,9 +54,29 @@
 			}
 		}
 	}
-	.card-header {
-		.material-icons {
-			font-size: 16px;
+	.card {
+		&-header {
+			.material-icons {
+				font-size: 16px;
+			}
+		}
+	}
+	.block-wrap {
+		.card {
+			&-header {
+				cursor: move;
+			}
+			&-body {
+				display: none;
+			}
+			&:not(.active) .card-header {
+				margin-bottom: -1px;
+			}
+			&.active {
+				.card-body {
+					display: block;
+				}
+			}
 		}
 	}
 }
