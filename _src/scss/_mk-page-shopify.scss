@@ -8,7 +8,10 @@
 		@include mk-shadow(z1);
 		&.ghost {
 			box-shadow: none;
-			border-color: $light-green-500;
+			border-color: $blue-500;
+			.item-head {
+				background-color: $blue-500;
+			}
 		}
 		&-head {
 			margin: -1px;
@@ -58,6 +61,12 @@
 		&-header {
 			.material-icons {
 				font-size: 16px;
+			}
+		}
+		&.ghost {
+			.card-header {
+				color: $white;
+				background-color: $light-green-500;
 			}
 		}
 	}
