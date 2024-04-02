@@ -1,41 +1,34 @@
 .page-shopify {
-	.settings {
-		
+	.json-formatted {
+		resize: none;
 	}
 	.item {
-		margin-bottom: 10px;
-		border: 1px dashed transparent;
-		@include mk-shadow(z1);
-		&.ghost {
-			box-shadow: none;
-			border-color: $blue-500;
-			.item-head {
-				background-color: $blue-500;
-			}
-		}
+		@extend .card;
 		&-head {
-			margin: -1px;
 			cursor: move;
-			color: $white;
-			@extend .d-flex;
-			padding: 6px 12px;
-			margin-bottom: 10px;
-			@extend .align-items-center;
-			background-color: $light-green-600;
-			@extend .justify-content-between;
-			.material-icons {
-				font-size: 20px;
-				vertical-align: middle;
-			}
+			@extend .card-header;
+			padding: 5px 10px;
 		}
 		&-action {
 			.material-icons {
+				font-size: 16px;
 				cursor: pointer;
+				vertical-align: middle;
 			}
 		}
 		&-body {
 			display: none;
-			padding: 12px;
+			@extend .card-body;
+			padding: 10px;
+		}
+		&.ghost {
+			color: $white;
+			box-shadow: none;
+			border-style: dashed;
+			border-color: $blue-500;
+			.item-head {
+				background-color: $blue-500;
+			}
 		}
 		&:not(.active) .item-head {
 			margin-bottom: -1px;
@@ -61,12 +54,16 @@
 		&-header {
 			.material-icons {
 				font-size: 16px;
+				cursor: pointer;
+				vertical-align: middle;
 			}
 		}
 		&.ghost {
+			border-style: dashed;
+			border-color: $blue-500;
 			.card-header {
 				color: $white;
-				background-color: $light-green-500;
+				background-color: $blue-500;
 			}
 		}
 	}

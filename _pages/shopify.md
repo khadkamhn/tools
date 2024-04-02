@@ -11,6 +11,9 @@ scripts: ["/assets/js/sortable.min.js","/assets/js/popper.min.js","/assets/js/ti
 			<div class="card mt-3 card-section">
 				<div class="card-header d-flex justify-content-between align-items-center">
 					<span>Section</span>
+					<span>
+						<span class="material-icons" title="Predefined Sets">apps</span>
+					</span>
 				</div>
 				<div class="card-body">
 					<div class="row section-wrap">
@@ -23,12 +26,12 @@ scripts: ["/assets/js/sortable.min.js","/assets/js/popper.min.js","/assets/js/ti
 						</div>
 						<div class="col-md-6">
 							<div class="mb-3">
-								<label class="form-label" for="class">Class</label>
-								<input id="class" type="text" class="form-control form-control-sm" name="class" placeholder="Section class" maxlength="25">
-								<div class="form-text">Specifies class of the section.</div>
+								<label class="form-label" for="preset">Preset</label>
+								<input id="preset" type="text" class="form-control form-control-sm" name="preset" placeholder="Preset label" maxlength="100">
+								<div class="form-text">Specifies the label appear on the customizer.</div>
 							</div>
 						</div>
-						<div class="col-md-6">
+						<div class="col-md-4">
 							<div class="mb-3">
 								<label class="form-label" for="tag">Tag</label>
 								<select id="tag" class="form-select form-select-sm" name="tag">
@@ -42,17 +45,25 @@ scripts: ["/assets/js/sortable.min.js","/assets/js/popper.min.js","/assets/js/ti
 								<div class="form-text">Specifies html tag of the section.</div>
 							</div>
 						</div>
-						<div class="col-md-6">
+						<div class="col-md-4">
 							<div class="mb-3">
-								<label class="form-label" for="preset">Preset</label>
-								<input id="preset" type="text" class="form-control form-control-sm" name="preset" placeholder="Preset label" maxlength="100">
-								<div class="form-text">Specifies the label appear on the customizer.</div>
+								<label class="form-label" for="class">Class</label>
+								<input id="class" type="text" class="form-control form-control-sm" name="class" placeholder="Section class" maxlength="25">
+								<div class="form-text">Specifies class of the section.</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="mb-3">
+								<label class="form-label" for="limit">Limit</label>
+								<input id="limit" type="number" class="form-control form-control-sm" name="limit" placeholder="Section limit" min="1" max="25" maxlength="2">
+								<div class="form-text">Specifies class of the section.</div>
 							</div>
 						</div>
 					</div>
 					<div class="settings settings-section"></div>
 					<div class="mb-3">
 						<button class="btn btn-primary btn-sm" type="button" data-add="field" data-which="section">Add Field</button>
+						<button class="btn btn-secondary btn-sm" type="button" data-add="header" data-which="section">Add Header</button>
 					</div>
 					<hr>
 					<div class="block-wrap"></div>
@@ -75,7 +86,7 @@ scripts: ["/assets/js/sortable.min.js","/assets/js/popper.min.js","/assets/js/ti
 				<div class="card-footer">
 					<div class="d-flex align-items-center">
 						<label class="form-check-label me-2" for="indent">Space</label>
-						<div class="form-check form-switch m-0"><input class="form-check-input" type="checkbox" id="indent" name="indent" checked></div>
+						<div class="form-check form-switch m-0"><input class="form-check-input" type="checkbox" id="indent" name="indent"></div>
 						<label class="form-check-label" for="indent">Tab</label>
 					</div>
 				</div>
@@ -181,14 +192,36 @@ function getField(type, which) {
 		+'</div></div>'
 		+'</div>'
 		+'<div class="settings settings-block"></div>'
-		+'<div class="mt-0"><button class="btn btn-primary btn-sm" type="button" data-add="field" data-which="block">Add Field</button></div>'
+		+'<div class="mt-0"><button class="btn btn-primary btn-sm" type="button" data-add="field" data-which="block">Add Field</button> <button class="btn btn-secondary btn-sm" type="button" data-add="header" data-which="block">Add Header</button></div>'
 		+'</div>'
 		+'</div>';
 		return htm;
 	}
+	if(type=='header') {
+		htm +='<div class="item mb-2 active" data-type="'+type+'" data-which="'+which+'">'
+		+'<div class="item-head d-flex justify-content-between align-items-center">'
+		+'<div><span class="item-name">Header</span><span class="item-label ms-1"></span></div><div class="item-action"><i class="material-icons me-2" data-collapse="item" title="Expand/Collapse">expand_less</i><i class="material-icons" data-delete="item" title="Delete">delete</i></div>'
+		+'</div>'
+		+'<div class="item-body"><div class="row">'
 
-	htm +='<div class="item active" data-type="'+type+'" data-which="'+which+'">'
-	+'<div class="item-head">'
+		+'<div class="col-md-6 col-lg-3"><div class="mb-2">'
+		+'<label class="form-label">Type</label>'
+		+'<select class="form-select form-select-sm" name="type"><option value="header">&#60;header></option><option value="paragraph">&#60;paragraph></option></select>'
+		+'<div class="form-text">Specifies type of header settings</div>'
+		+'</div></div>'
+
+		+'<div class="col-md-6 col-lg-9"><div class="mb-2">'
+		+'<label class="form-label">Content</label>'
+		+'<input type="text" class="form-control form-control-sm" name="content" placeholder="Content" maxlength="50">'
+		+'<div class="form-text">Specifies group heading of the settings</div>'
+		+'</div></div>'
+
+		htm += '</div></div>';
+		return htm;
+	}
+
+	htm +='<div class="item mb-2 active" data-type="'+type+'" data-which="'+which+'">'
+	+'<div class="item-head d-flex justify-content-between align-items-center">'
 	+'<div><span class="item-name">'+fieldTypes[type]+'</span><span class="item-label ms-1"></span></div><div class="item-action"><i class="material-icons me-2" data-collapse="item" title="Expand/Collapse">expand_less</i><i class="material-icons" data-delete="item" title="Delete">delete</i></div>'
 	+'</div>'
 	+'<div class="item-body"><div class="row">'
@@ -290,7 +323,7 @@ function getField(type, which) {
 		+'</div></div>'
 	}
 
-	htm += '<div class="col-md-12 col-lg-12"><div class="mb-2">'
+	htm += '<div class="col-md-12 col-lg-12"><div class="mb-0">'
 	+'<label class="form-label">Info</label>'
 	+'<input type="text" class="form-control form-control-sm" name="info" placeholder="Info text" maxlength="500">'
 	+'<div class="form-text">Specifies info text of the field</div>'
@@ -303,25 +336,36 @@ function getField(type, which) {
 function collectData(showInResult=false) {
 	let json = {};
 	let sec = document.querySelector('.section-wrap'),
-		sec_name = sec.querySelector('[name="name"]').value,
-		sec_class = sec.querySelector('[name="class"]').value,
-		sec_tag = sec.querySelector('[name="tag"]').value || 'section',
-		sec_pre = sec.querySelector('[name="preset"]').value;
+		sec_name = sec.querySelector('[name="name"]')?sec.querySelector('[name="name"]').value:'',
+		sec_class = sec.querySelector('[name="class"]')?sec.querySelector('[name="class"]').value:'',
+		sec_tag = sec.querySelector('[name="tag"]')?sec.querySelector('[name="tag"]').value:'section',
+		sec_pre = sec.querySelector('[name="preset"]')?sec.querySelector('[name="preset"]').value:'';
+		sec_max = sec.querySelector('[name="limit"]')?sec.querySelector('[name="limit"]').value:'';
 	json.name = sec_name;
 	json.class = sec_class;
 	json.tag = sec_tag;
+	if(sec_max) {
+		json.limit = parseInt(sec_max);
+	}
 	json.settings = [];
 	document.querySelectorAll('.settings-section .item').forEach((item) => {
 		let set_field = {},
 			set_type = item.getAttribute('data-type'),
-			set_id = item.querySelector('[name="identifier"]').value,
-			set_label = item.querySelector('[name="label"]').value,
+			set_id = item.querySelector('[name="identifier"]')?item.querySelector('[name="identifier"]').value:'',
+			set_label = item.querySelector('[name="label"]')?item.querySelector('[name="label"]').value:'',
 			set_default = item.querySelector('[name="default"]')?item.querySelector('[name="default"]').value:'',
-			set_info = item.querySelector('[name="info"]').value;
+			set_info = item.querySelector('[name="info"]')?item.querySelector('[name="info"]').value:'';
+			set_cont = item.querySelector('[name="content"]')?item.querySelector('[name="content"]').value:'';
+			set_cont_type = item.querySelector('[name="type"]')?item.querySelector('[name="type"]').value:'';
 			set_opts = item.querySelector('.field-options');
-			set_field.type = set_type;
-			set_field.id = set_id;
-			set_field.label = set_label;
+			if(set_type != 'header') {
+				set_field.type = set_type;
+				set_field.id = set_id;
+				set_field.label = set_label;
+			}else{
+				set_field.type = set_cont_type;
+				set_field.content = set_cont;
+			}
 			if(set_type=='radio' || set_type=='select') {
 				if(set_opts) {
 					set_field.options = [];
@@ -389,14 +433,21 @@ function collectData(showInResult=false) {
 			card.querySelectorAll('.settings-block .item').forEach((item) => {
 				let set_bfield = {},
 					set_btype = item.getAttribute('data-type'),
-					set_bid = item.querySelector('[name="identifier"]').value,
-					set_blabel = item.querySelector('[name="label"]').value,
+					set_bid = item.querySelector('[name="identifier"]')?item.querySelector('[name="identifier"]').value:'',
+					set_blabel = item.querySelector('[name="label"]')?item.querySelector('[name="label"]').value:'',
 					set_bdefault = item.querySelector('[name="default"]')?item.querySelector('[name="default"]').value:'',
-					set_binfo = item.querySelector('[name="info"]').value;
+					set_binfo = item.querySelector('[name="info"]')?item.querySelector('[name="info"]').value:'';
+					set_bcont = item.querySelector('[name="content"]')?item.querySelector('[name="content"]').value:'';
+					set_bcont_type = item.querySelector('[name="type"]')?item.querySelector('[name="type"]').value:'';
 					set_bopts = item.querySelector('.field-options');
-					set_bfield.type = set_btype;
-					set_bfield.id = set_bid;
-					set_bfield.label = set_blabel;
+					if(set_btype != 'header') {
+						set_bfield.type = set_btype;
+						set_bfield.id = set_bid;
+						set_bfield.label = set_blabel;
+					}else{
+						set_bfield.type = set_bcont_type;
+						set_bfield.content = set_bcont;
+					}
 					if(set_btype=='radio' || set_btype=='select') {
 						if(set_bopts) {
 							set_bfield.options = [];
@@ -535,7 +586,7 @@ function fixResize() {
 		let cardPaddingTop = window.getComputedStyle(leftElm).paddingTop, cardPaddingBottom = window.getComputedStyle(leftElm).paddingBottom;
 		let cardFooter = rightElm.closest('.card').querySelector('.card-footer').clientHeight;
 		let totalHeight = parseInt(cardBodyHeight - parseInt(cardPaddingTop+cardPaddingBottom));
-		rightElm.style.height = (totalHeight-cardFooter-4)+'px';
+		rightElm.style.height = (totalHeight-cardFooter)+'px';
 	}else{
 		rightElm.removeAttribute('style');
 	}
@@ -634,6 +685,17 @@ document.addEventListener('DOMContentLoaded', function () {
 				let htm = getField('block','block');
 				if(htm) {
 					btn.closest('.card-body').querySelector('.block-wrap').insertAdjacentHTML('beforeend', htm);
+					makeSortable();
+					initTippy();
+				}
+			}
+			if(e.target.getAttribute('data-add') && e.target.getAttribute('data-add')=='header') {
+				e.preventDefault();
+				let btn = e.target;
+				let whichData = e.target.getAttribute('data-which');
+				let htm = getField('header',whichData);
+				if(htm) {
+					btn.closest('.card-body').querySelector('.settings-'+whichData).insertAdjacentHTML('beforeend', htm);
 					makeSortable();
 					initTippy();
 				}
@@ -738,6 +800,7 @@ document.addEventListener('DOMContentLoaded', function () {
 							if(styp.getAttribute('lock')=='false') {
 								styp.value = stringToSlug(value);
 							}
+							e.target.closest('.section-wrap').querySelector('[name="preset"]').value = value;
 						break;
 						case'class':
 							let scls = e.target.closest('.section-wrap').querySelector('[name="class"]');
