@@ -93,9 +93,9 @@ document.addEventListener('DOMContentLoaded', function() {
 					mk_confirm.addEventListener('click', function (e) {
 						e.preventDefault();
 						if (e.target.classList.contains('btn-okay')) {
-							if(okay)okay(true);
+							if(okay)okay(mk_confirm);
 						} else {
-							if(cancel)cancel(true);
+							if(cancel)cancel(mk_confirm);
 						}
 
 						var dialog = e.target.closest('.mk-confirm').querySelector('.modal-dialog');
@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		},
 		alert: function (text, okay) {
 			mk.confirm(text, function (action) {
-				if (action && okay) okay(true);
+				if (action && okay) okay(action);
 			}, false, true);
 		},
 		toastr: function (text, type, duration, single) {

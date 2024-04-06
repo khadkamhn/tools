@@ -1,6 +1,7 @@
 .page-shopify {
 	.json-formatted {
 		resize: none;
+		white-space: pre;
 	}
 	.item {
 		@extend .card;

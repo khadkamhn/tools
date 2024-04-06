@@ -11,9 +11,7 @@ scripts: ["/assets/js/sortable.min.js","/assets/js/popper.min.js","/assets/js/ti
 			<div class="card mt-3 card-section">
 				<div class="card-header d-flex justify-content-between align-items-center">
 					<span>Section</span>
-					<span>
-						<span class="material-icons" title="Predefined Sets">apps</span>
-					</span>
+					<span class="material-icons" data-show="preset" title="Predefined Sets">apps</span>
 				</div>
 				<div class="card-body">
 					<div class="row section-wrap">
@@ -55,7 +53,7 @@ scripts: ["/assets/js/sortable.min.js","/assets/js/popper.min.js","/assets/js/ti
 						<div class="col-md-4">
 							<div class="mb-3">
 								<label class="form-label" for="limit">Limit</label>
-								<input id="limit" type="number" class="form-control form-control-sm" name="limit" placeholder="Section limit" min="1" max="25" maxlength="2">
+								<input id="limit" type="number" class="form-control form-control-sm" name="limit" placeholder="Section limit" min="1" max="25">
 								<div class="form-text">Specifies class of the section.</div>
 							</div>
 						</div>
@@ -503,23 +501,48 @@ function collectData(showInResult=false) {
 
 	if(showInResult) {
 		let resTxt = '', indent = document.querySelector('[name="indent"]').checked;
+		var hasPadding = hasContainer = hasClass = false;
 		if(json.settings) {
-			json.settings.forEach((field)=>{
+			hasPadding = json.settings.some(function(field) { return field.id == 'padding_top' || field.id == 'padding_bottom' });
+			hasContainer = json.settings.some(function(field) { return field.id == 'container' });
+			hasClass = json.settings.some(function(field) { return field.id == 'extra_class' });
+			resTxt += '<div class="section-wrap'+(hasPadding?' sec-{\{ section.id }\}-pad':'')+(hasClass?'\{\% if section.settings.extra_class != blank %\} \{\{ section.settings.extra_class | handleize }\}\{\% endif %\}':'')+'">\n';
+			if(hasContainer) {
+				resTxt += '\t<div class="\{\{ section.settings.container \}\}">\n';
+			}
+			json.settings.forEach((field, index)=>{
+				//if(index === 0) { }
+				//if(index === json.settings.length - 1) { }
 				if(field.type=='text') {
 					if(field.id.includes('title')) {
-						resTxt += '<div class="title">{\{ section.settings.'+field.id+' }\}</div>\n';
+						if(hasContainer) {
+							resTxt += '\t';
+						}
+						resTxt += '\t\{\% if section.settings.'+field.id+' != blank %\}<div class="title">{\{ section.settings.'+field.id+' }\}</div>\{\% endif %\}\n';
 					}else if(field.id.includes('heading')) {
-						resTxt += '<div class="heading">{\{ section.settings.'+field.id+' }\}</div>\n';
+						if(hasContainer) {
+							resTxt += '\t';
+						}
+						resTxt += '\t\{\% if section.settings.'+field.id+' != blank %\}<div class="heading">{\{ section.settings.'+field.id+' }\}</div>\{\% endif %\}\n';
 					}
 				}
 			});
 		}
 		if(json.blocks) {
-			resTxt += '{\%- for block in section.blocks -%\}\n';
+			if(hasContainer) {
+				resTxt += '\t';
+			}
+			resTxt += '\{\%- for block in section.blocks -%\}\n';
 			json.blocks.forEach((block)=>{
 				if(block.type) {
-					resTxt += '\t{\% if block.type == \''+block.type+'\' %\}\n';
-					resTxt += '\t<div class="block block-{\{ block.type | handleize }\}" {\{ block.shopify_attributes }\}>\n';
+					if(hasContainer) {
+						resTxt += '\t';
+					}
+					resTxt += '\t\{\% if block.type == \''+block.type+'\' %\}\n';
+					if(hasContainer) {
+						resTxt += '\t';
+					}
+					resTxt += '\t<div class="block block-\{\{ block.type | handleize \}\}" \{\{ block.shopify_attributes \}\}>\n';
 				}
 				if(block.settings) {
 					let vars = '', echo = '';
@@ -532,11 +555,14 @@ function collectData(showInResult=false) {
 							case'select':
 							case'color':
 								if(field.id) {
+									if(hasContainer) {
+										echo += '\t';
+									}
 									vars += 'assign '+field.id+' =  block.settings.'+field.id+'\n\t\t\t';
 								}
 							break;
 							case'image_picker':
-								echo += '\t\t<div>{\{ block.settings.'+field.id+' | image_url: width: 400 | image_tag }\}</div>\n';
+								echo += '\t\t\{\% if block.settings.'+field.id+' != blank %\}<div>\{\{ block.settings.'+field.id+' | image_url: width: 400 | image_tag \}\}</div>\{\% endif %\}\n';
 							break;
 							case'text':
 							case'textarea':
@@ -545,7 +571,7 @@ function collectData(showInResult=false) {
 							case'liquid':
 							case'richtext':
 								if(field.id) {
-									echo += '\t\t<div>{\{ block.settings.'+field.id+' }\}</div>\n';
+									echo += '\t\t\{\% if block.settings.'+field.id+' != blank %\}<div>\{\{ block.settings.'+field.id+' \}\}</div>\{\% endif %\}\n';
 								}
 							break;
 						}
@@ -554,21 +580,47 @@ function collectData(showInResult=false) {
 						if (vars.endsWith('\n\t\t\t')) {
 							vars = vars.slice(0, -4);
 						}
-						resTxt += '\t\t{\%- liquid\n\t\t\t'+vars+'\n\t\t%\}\n';
+						resTxt += '\t\t\{\%- liquid\n\t\t\t'+vars+'\n\t\t%\}\n';
 					}
 					if(echo) {
 						resTxt += echo;
 					}
 				}
 				if(block.type) {
+					if(hasContainer) {
+						resTxt += '\t';
+					}
 					resTxt += '\t</div>\n';
-					resTxt += '\t{\% endif %\}\n';
+					if(hasContainer) {
+						resTxt += '\t';
+					}
+					resTxt += '\t\{\% endif %\}\n';
 				}
 			});
-			resTxt += '{\%- endfor -%\}\n';
+			resTxt += '\{\%- endfor -%\}\n';
+		}
+		if(json.settings) {
+			if(hasContainer) {
+				resTxt += '\t</div>\n';
+			}
+			resTxt += '</div>\n';
+			if(hasPadding) {
+				resTxt += '\{\% style %\}\n';
+				resTxt += '.sec-\{\{ section.id \}\}-pad \{\n';
+				resTxt += '\tpadding-top: \{\{ section.settings.padding_top | times: 0.5 | round: 0 \}\}px;\n';
+				resTxt += '\tpadding-bottom: \{\{ section.settings.padding_bottom | times: 0.5 | round: 0 \}\}px;\n';
+				resTxt += '\}\n';
+				resTxt += '@media screen and (min-width: 768px) {\n';
+				resTxt += '\t.sec-\{\{ section.id \}\}-pad {\n';
+				resTxt += '\t\tpadding-top: \{\{ section.settings.padding_top \}\}px;\n';
+				resTxt += '\t\tpadding-bottom: \{\{ section.settings.padding_bottom \}\}px;\n';
+				resTxt += '\t}\n';
+				resTxt += '}\n';
+				resTxt += '\{\% endstyle %\}\n';
+			}
 		}
 
-		resTxt += '{\% schema %\}\n'+JSON.stringify(json, null, '	')+'\n{\% endschema %\}';
+		resTxt += '\{\% schema %\}\n'+JSON.stringify(json, null, '	')+'\n\{\% endschema %\}';
 	
 		if(indent==false) {
 			resTxt = resTxt.replace(/\t/g,'  ');
@@ -668,9 +720,9 @@ document.addEventListener('DOMContentLoaded', function () {
 					select += '<option value="'+key+'" title="'+fieldTypes[key]+'">'+fieldTypes[key]+'</option>';
 				});
 				select += '</select></div>';
-				mk.confirm(select,function() {
+				mk.confirm(select,function(dialog) {
 					let which = btn.getAttribute('data-which');
-					let field = document.querySelector('[name="field_type"]').value;
+					let field = dialog.querySelector('[name="field_type"]').value;
 					let htm = getField(field,which);
 					if(htm) {
 						btn.closest('.card-body').querySelector('.settings').insertAdjacentHTML('beforeend', htm);
@@ -812,7 +864,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			}
 		});
 	});
-	document.querySelector('[data-action]').addEventListener('click',function() {
+	document.querySelector('[data-action="download"]').addEventListener('click',function() {
 		const jsonData = document.querySelector('.json-formatted').value;
 		const a = document.createElement('a');
 		let name = document.querySelector('.section-wrap [name="name"]').value;
@@ -839,6 +891,102 @@ document.addEventListener('DOMContentLoaded', function () {
 			if(codeCopy) {
 				mk.copyToClipboard(codeCopy);
 			}
+		});
+	});
+	document.querySelector('[data-show="preset"]').addEventListener('click',function(e) {
+		e.preventDefault();
+		const presetList = {
+			'layout': 'Basic Layout',
+			'padding': 'Padding',
+			'class': 'Extra Class',
+			'container': 'Container',
+		}
+		var htm = '<h6>Section settings presets</h6>', opt;
+		Object.keys(presetList).forEach(function(key) {
+			opt += '<option value="'+key+'" title="'+presetList[key]+'">'+presetList[key]+'</option>';
+		});
+		htm += '<div><select class="form-select form-select-sm" name="section-preset">'+opt+'</select></div>';
+		mk.confirm(htm, function(elm){
+			var type = elm.querySelector('[name="section-preset"]').value, wrp = document.querySelector('.settings-section');
+			if(wrp.getAttribute('data-preset')) {
+				if(wrp.getAttribute('data-preset').includes('layout') || wrp.getAttribute('data-preset').includes(type)) {
+					mk.alert('<h6>Opps :/</h6><p class="mb-0 mt-2">It seems like you have already added <strong>'+type+'</strong> preset</p>');
+					return false;
+				}
+			}
+			wrp.setAttribute('data-preset',type);
+			
+			if(type=='layout') {
+				wrp.querySelectorAll('[data-preset]').forEach(itm => itm.remove());
+				var hd = document.createElement('div');
+				hd.innerHTML = getField('header','section');
+				hd.querySelector('.item').classList.remove('active');
+				hd.querySelector('[data-collapse="item"]').innerHTML = 'expand_more';
+				hd.querySelector('[name="content"]').setAttribute('value','Layout');
+				wrp.insertAdjacentHTML('beforeend', hd.innerHTML);
+			}
+			if(type=='layout' || type=='class') {
+				var cl = document.createElement('div');
+				cl.innerHTML = getField('text','section');
+				cl.querySelector('.item').classList.remove('active');
+				cl.querySelector('.item').setAttribute('data-preset',true);
+				cl.querySelector('[data-collapse="item"]').innerHTML = 'expand_more';
+				cl.querySelector('[name="label"]').setAttribute('value','Extra Class');
+				cl.querySelector('[name="identifier"]').setAttribute('value','extra_class');
+				cl.querySelector('[name="identifier"]').setAttribute('lock','true');
+				wrp.insertAdjacentHTML('beforeend', cl.innerHTML);
+			}
+			if(type=='layout' || type=='container') {
+				var cn = document.createElement('div'), ca = document.createElement('div'), cb = document.createElement('div');
+				ca.innerHTML = getField('option','section');
+				cb.innerHTML = getField('option','section');
+				ca.querySelector('[name="option-label"]').setAttribute('value','Page Width');
+				ca.querySelector('[name="option-value"]').setAttribute('value','page-width');
+				cb.querySelector('[name="option-label"]').setAttribute('value','Page Full');
+				cb.querySelector('[name="option-value"]').setAttribute('value','page-full');
+				cn.innerHTML = getField('select','section');
+				cn.querySelector('.item').classList.remove('active');
+				cn.querySelector('.item').setAttribute('data-preset',true);
+				cn.querySelector('[data-collapse="item"]').innerHTML = 'expand_more';
+				cn.querySelector('[name="label"]').setAttribute('value','Container');
+				cn.querySelector('[name="identifier"]').setAttribute('value','container');
+				cn.querySelector('[name="identifier"]').setAttribute('lock','true');
+				cn.querySelector('.field-options').insertAdjacentHTML('beforeend', ca.innerHTML + cb.innerHTML);
+				cn.querySelector('[name="default"]').innerHTML = '<option value="page-width">Page Width</option><option value="page-full">Page Full</option>';
+				wrp.insertAdjacentHTML('beforeend', cn.innerHTML);
+			}
+			if(type=='layout' || type=='padding') {
+				var pt = document.createElement('div');
+				pt.innerHTML = getField('range','section');
+				pt.querySelector('.item').classList.remove('active');
+				pt.querySelector('.item').setAttribute('data-preset',true);
+				pt.querySelector('[data-collapse="item"]').innerHTML = 'expand_more';
+				pt.querySelector('[name="label"]').setAttribute('value','Padding Top');
+				pt.querySelector('[name="identifier"]').setAttribute('value','padding_top')
+				pt.querySelector('[name="identifier"]').setAttribute('lock','true');
+				pt.querySelector('[name="default"]').setAttribute('value',30);
+				pt.querySelector('[name="min"]').setAttribute('value',1);
+				pt.querySelector('[name="max"]').setAttribute('value',100);
+				pt.querySelector('[name="step"]').setAttribute('value',1);
+				pt.querySelector('[name="unit"]').setAttribute('value','px');
+				wrp.insertAdjacentHTML('beforeend', pt.innerHTML);
+				var pb = document.createElement('div');
+				pb.innerHTML = getField('range','section');
+				pb.querySelector('.item').classList.remove('active');
+				pb.querySelector('.item').setAttribute('data-preset',true);
+				pb.querySelector('[data-collapse="item"]').innerHTML = 'expand_more';
+				pb.querySelector('[name="label"]').setAttribute('value','Padding Bottom');
+				pb.querySelector('[name="identifier"]').setAttribute('value','padding_bottom')
+				pb.querySelector('[name="identifier"]').setAttribute('lock','true');
+				pb.querySelector('[name="default"]').setAttribute('value',30);
+				pb.querySelector('[name="min"]').setAttribute('value',1);
+				pb.querySelector('[name="max"]').setAttribute('value',100);
+				pb.querySelector('[name="step"]').setAttribute('value',1);
+				pb.querySelector('[name="unit"]').setAttribute('value','px');
+				wrp.insertAdjacentHTML('beforeend', pb.innerHTML);
+			}
+			makeSortable();
+			initTippy();
 		});
 	});
 });

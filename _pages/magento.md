@@ -5,7 +5,8 @@ permalink: /magento/
 ---
 
 <div class="alert text-bg-dark">
-	<div class="putty pre"><code>$ <span data-copy="cmd">php -d memory_limit=-1 -d opcache.enable_cli=0 ~/composer.phar install</span> <span class="php-list"></span></code>
+	<div class="putty pre"><code>$ <span data-copy="cmd">php -d memory_limit=-1 -d opcache.enable_cli=0 bin/magento maintenance:enable</span> <span class="php-list"></span></code>
+		<code>$ <span data-copy="cmd">php -d memory_limit=-1 -d opcache.enable_cli=0 ~/composer.phar install</span> <span class="php-list"></span></code>
 		<code>$ <span data-copy="cmd">php -d memory_limit=-1 -d opcache.enable_cli=0 bin/magento setup:upgrade</span> <span class="php-list"></span></code>
 		<code>$ <em title="Optional" data-copy="cmd">php -d memory_limit=-1 -d opcache.enable_cli=0 bin/magento setup:di:compile</em> <span class="php-list"></span></code>
 		<code>$ <span data-copy="cmd">rm -rf pub/static/frontend</span></code>
@@ -13,6 +14,7 @@ permalink: /magento/
 		<code>$ <span data-copy="cmd">php -d memory_limit=-1 -d opcache.enable_cli=0 bin/magento setup:static-content:deploy</span> <span class="php-list"></span></code>
 		<code>$ <span data-copy="cmd">php -d memory_limit=-1 -d opcache.enable_cli=0 bin/magento indexer:reindex</span> <span class="php-list"></span></code>
 		<code>$ <span data-copy="cmd">php -d memory_limit=-1 -d opcache.enable_cli=0 bin/magento cache:clean</span> <span class="php-list"></span></code>
+		<code>$ <span data-copy="cmd">php -d memory_limit=-1 -d opcache.enable_cli=0 bin/magento maintenance:disable</span> <span class="php-list"></span></code>
 	</div>
 </div>
 
