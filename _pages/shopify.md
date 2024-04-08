@@ -506,43 +506,78 @@ function collectData(showInResult=false) {
 			hasPadding = json.settings.some(function(field) { return field.id == 'padding_top' || field.id == 'padding_bottom' });
 			hasContainer = json.settings.some(function(field) { return field.id == 'container' });
 			hasClass = json.settings.some(function(field) { return field.id == 'extra_class' });
-			resTxt += '<div class="section-wrap'+(hasPadding?' sec-{\{ section.id }\}-pad':'')+(hasClass?'\{\% if section.settings.extra_class != blank %\} \{\{ section.settings.extra_class | handleize }\}\{\% endif %\}':'')+'">\n';
+			resTxt += '<div class="section-wrap'+(hasPadding?' sec-\{\{ section.id }\}-pad':'')+(hasClass?'\{\% if section.settings.extra_class != blank %\} \{\{ section.settings.extra_class | handleize }\}\{\% endif %\}':'')+'">\n';
 			if(hasContainer) {
 				resTxt += '\t<div class="\{\{ section.settings.container \}\}">\n';
 			}
+			let vars_s = '', echo_s = '';
 			json.settings.forEach((field, index)=>{
 				//if(index === 0) { }
 				//if(index === json.settings.length - 1) { }
-				if(field.type=='text') {
-					if(field.id.includes('title')) {
-						if(hasContainer) {
-							resTxt += '\t';
+				switch(field.type) {
+					case'checkbox':
+					case'number':
+					case'radio':
+					case'range':
+					case'select':
+					case'color':
+						if(field.id && field.id != 'container' && field.id != 'padding_top' && field.id != 'padding_bottom') {
+							if(hasContainer) {
+								vars_s += '\t';
+							}
+							vars_s += '\tassign '+field.id+' =  section.settings.'+field.id+'\n\t';
 						}
-						resTxt += '\t\{\% if section.settings.'+field.id+' != blank %\}<div class="title">{\{ section.settings.'+field.id+' }\}</div>\{\% endif %\}\n';
-					}else if(field.id.includes('heading')) {
+					break;
+					case'image_picker':
 						if(hasContainer) {
-							resTxt += '\t';
+							echo_s += '\t';
 						}
-						resTxt += '\t\{\% if section.settings.'+field.id+' != blank %\}<div class="heading">{\{ section.settings.'+field.id+' }\}</div>\{\% endif %\}\n';
-					}
+						echo_s += '\t\{\% if section.settings.'+field.id+' != blank %\}<div>\{\{ section.settings.'+field.id+' | image_url: width: 400 | image_tag \}\}</div>\{\% endif %\}\n';
+					break;
+					case'text':
+					case'textarea':
+					case'html':
+					case'inline_richtext':
+					case'liquid':
+					case'richtext':
+						if(field.id && field.id != 'extra_class') {
+							if(hasContainer) {
+								echo_s += '\t';
+							}
+							echo_s += '\t\{\% if section.settings.'+field.id+' != blank %\}<div>\{\{ section.settings.'+field.id+' \}\}</div>\{\% endif %\}\n';
+						}
+					break;
 				}
 			});
+			if(vars_s) {
+				if (vars_s.endsWith('\n\t')) {
+					vars_s = vars_s.slice(0, -2);
+				}
+				if(hasContainer) {
+					resTxt += '\t\t\{\%- liquid\n\t'+vars_s+'\n\t\t%\}\n';
+				}else{
+					resTxt += '\t\{\%- liquid\n\t'+vars_s+'\n\t%\}\n';
+				}
+			}
+			if(echo_s) {
+				resTxt += echo_s;
+			}
 		}
 		if(json.blocks) {
 			if(hasContainer) {
 				resTxt += '\t';
 			}
-			resTxt += '\{\%- for block in section.blocks -%\}\n';
+			resTxt += '\t\{\%- for block in section.blocks -%\}\n';
 			json.blocks.forEach((block)=>{
 				if(block.type) {
 					if(hasContainer) {
 						resTxt += '\t';
 					}
-					resTxt += '\t\{\% if block.type == \''+block.type+'\' %\}\n';
+					resTxt += '\t\t\{\% if block.type == \''+block.type+'\' %\}\n';
 					if(hasContainer) {
 						resTxt += '\t';
 					}
-					resTxt += '\t<div class="block block-\{\{ block.type | handleize \}\}" \{\{ block.shopify_attributes \}\}>\n';
+					resTxt += '\t\t\t<div class="block block-\{\{ block.type | handleize \}\}" \{\{ block.shopify_attributes \}\}>\n';
 				}
 				if(block.settings) {
 					let vars = '', echo = '';
@@ -556,12 +591,15 @@ function collectData(showInResult=false) {
 							case'color':
 								if(field.id) {
 									if(hasContainer) {
-										echo += '\t';
+										vars += '\t';
 									}
-									vars += 'assign '+field.id+' =  block.settings.'+field.id+'\n\t\t\t';
+									vars += '\tassign '+field.id+' =  block.settings.'+field.id+'\n\t\t\t';
 								}
 							break;
 							case'image_picker':
+								if(hasContainer) {
+									echo += '\t';
+								}
 								echo += '\t\t\{\% if block.settings.'+field.id+' != blank %\}<div>\{\{ block.settings.'+field.id+' | image_url: width: 400 | image_tag \}\}</div>\{\% endif %\}\n';
 							break;
 							case'text':
@@ -571,7 +609,10 @@ function collectData(showInResult=false) {
 							case'liquid':
 							case'richtext':
 								if(field.id) {
-									echo += '\t\t\{\% if block.settings.'+field.id+' != blank %\}<div>\{\{ block.settings.'+field.id+' \}\}</div>\{\% endif %\}\n';
+									if(hasContainer) {
+										echo += '\t';
+									}
+									echo += '\t\t\t\t\{\% if block.settings.'+field.id+' != blank %\}<div>\{\{ block.settings.'+field.id+' \}\}</div>\{\% endif %\}\n';
 								}
 							break;
 						}
@@ -580,7 +621,10 @@ function collectData(showInResult=false) {
 						if (vars.endsWith('\n\t\t\t')) {
 							vars = vars.slice(0, -4);
 						}
-						resTxt += '\t\t\{\%- liquid\n\t\t\t'+vars+'\n\t\t%\}\n';
+						if(hasContainer) {
+							resTxt += '\t';
+						}
+						resTxt += '\t\t\t\{\%- liquid\n\t\t\t'+vars+'\n\t\t\t%\}\n';
 					}
 					if(echo) {
 						resTxt += echo;
@@ -590,14 +634,17 @@ function collectData(showInResult=false) {
 					if(hasContainer) {
 						resTxt += '\t';
 					}
-					resTxt += '\t</div>\n';
+					resTxt += '\t\t\t</div>\n';
 					if(hasContainer) {
 						resTxt += '\t';
 					}
-					resTxt += '\t\{\% endif %\}\n';
+					resTxt += '\t\t\{\% endif %\}\n';
 				}
 			});
-			resTxt += '\{\%- endfor -%\}\n';
+			if(hasContainer) {
+				resTxt += '\t';
+			}
+			resTxt += '\t\{\%- endfor -%\}\n';
 		}
 		if(json.settings) {
 			if(hasContainer) {
