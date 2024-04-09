@@ -510,7 +510,7 @@ function collectData(showInResult=false) {
 			if(hasContainer) {
 				resTxt += '\t<div class="\{\{ section.settings.container \}\}">\n';
 			}
-			let vars_s = '', echo_s = '';
+			let vars_s = echo_s = '';
 			json.settings.forEach((field, index)=>{
 				//if(index === 0) { }
 				//if(index === json.settings.length - 1) { }
@@ -541,10 +541,24 @@ function collectData(showInResult=false) {
 					case'liquid':
 					case'richtext':
 						if(field.id && field.id != 'extra_class') {
+							let elo = elc = 'div';
 							if(hasContainer) {
 								echo_s += '\t';
 							}
-							echo_s += '\t\{\% if section.settings.'+field.id+' != blank %\}<div>\{\{ section.settings.'+field.id+' \}\}</div>\{\% endif %\}\n';
+							switch(field.id) {
+								case'heading':
+									elo = 'h2 class="h2 heading"';
+									elc = 'h2';
+								break;
+								case'subheading':
+									elo = 'h4 class="h4 subheading"';
+									elc = 'h4';
+								break;
+								case'description':
+									elo = 'div class="description"';
+								break;
+							}
+							echo_s += '\t\{\% if section.settings.'+field.id+' != blank %\}<'+elo+'>\{\{ section.settings.'+field.id+' \}\}</'+elc+'>\{\% endif %\}\n';
 						}
 					break;
 				}
@@ -577,7 +591,7 @@ function collectData(showInResult=false) {
 					if(hasContainer) {
 						resTxt += '\t';
 					}
-					resTxt += '\t\t\t<div class="block block-\{\{ block.type | handleize \}\}" \{\{ block.shopify_attributes \}\}>\n';
+					resTxt += '\t\t\t<div class="block block-\{\{ block.type \}\}" \{\{ block.shopify_attributes \}\}>\n';
 				}
 				if(block.settings) {
 					let vars = '', echo = '';
@@ -654,10 +668,16 @@ function collectData(showInResult=false) {
 			if(hasPadding) {
 				resTxt += '\{\% style %\}\n';
 				resTxt += '.sec-\{\{ section.id \}\}-pad \{\n';
-				resTxt += '\tpadding-top: \{\{ section.settings.padding_top | times: 0.5 | round: 0 \}\}px;\n';
-				resTxt += '\tpadding-bottom: \{\{ section.settings.padding_bottom | times: 0.5 | round: 0 \}\}px;\n';
+				resTxt += '\tpadding-top: \{\{ section.settings.padding_top | times: 0.25 | round: 0 \}\}px;\n';
+				resTxt += '\tpadding-bottom: \{\{ section.settings.padding_bottom | times: 0.25 | round: 0 \}\}px;\n';
 				resTxt += '\}\n';
 				resTxt += '@media screen and (min-width: 768px) {\n';
+				resTxt += '\t.sec-\{\{ section.id \}\}-pad {\n';
+				resTxt += '\t\tpadding-top: \{\{ section.settings.padding_top | times: 0.5 | round: 0 \}\}px;\n';
+				resTxt += '\t\tpadding-bottom: \{\{ section.settings.padding_bottom | times: 0.5 | round: 0 \}\}px;\n';
+				resTxt += '\t}\n';
+				resTxt += '}\n';
+				resTxt += '@media screen and (min-width: 1024px) {\n';
 				resTxt += '\t.sec-\{\{ section.id \}\}-pad {\n';
 				resTxt += '\t\tpadding-top: \{\{ section.settings.padding_top \}\}px;\n';
 				resTxt += '\t\tpadding-bottom: \{\{ section.settings.padding_bottom \}\}px;\n';
@@ -944,8 +964,11 @@ document.addEventListener('DOMContentLoaded', function () {
 		e.preventDefault();
 		const presetList = {
 			'layout': 'Basic Layout',
-			'padding': 'Padding',
+			'heading': 'Heading',
+			'subheading': 'Sub Heading',
+			'description': 'Description',
 			'class': 'Extra Class',
+			'padding': 'Padding',
 			'container': 'Container',
 		}
 		var htm = '<h6>Section settings presets</h6>', opt;
@@ -965,6 +988,47 @@ document.addEventListener('DOMContentLoaded', function () {
 			
 			if(type=='layout') {
 				wrp.querySelectorAll('[data-preset]').forEach(itm => itm.remove());
+				var ct = document.createElement('div');
+				ct.innerHTML = getField('header','section');
+				ct.querySelector('.item').classList.remove('active');
+				ct.querySelector('[data-collapse="item"]').innerHTML = 'expand_more';
+				ct.querySelector('[name="content"]').setAttribute('value','Content');
+				wrp.insertAdjacentHTML('beforeend', ct.innerHTML);
+			}
+			if(type=='layout' || type=='heading') {
+				var hg = document.createElement('div');
+				hg.innerHTML = getField('text','section');
+				hg.querySelector('.item').classList.remove('active');
+				hg.querySelector('.item').setAttribute('data-preset',true);
+				hg.querySelector('[data-collapse="item"]').innerHTML = 'expand_more';
+				hg.querySelector('[name="label"]').setAttribute('value','Heading');
+				hg.querySelector('[name="identifier"]').setAttribute('value','heading');
+				hg.querySelector('[name="identifier"]').setAttribute('lock','true');
+				wrp.insertAdjacentHTML('beforeend', hg.innerHTML);
+			}
+			if(type=='layout' || type=='subheading') {
+				var sg = document.createElement('div');
+				sg.innerHTML = getField('text','section');
+				sg.querySelector('.item').classList.remove('active');
+				sg.querySelector('.item').setAttribute('data-preset',true);
+				sg.querySelector('[data-collapse="item"]').innerHTML = 'expand_more';
+				sg.querySelector('[name="label"]').setAttribute('value','Sub Heading');
+				sg.querySelector('[name="identifier"]').setAttribute('value','subheading');
+				sg.querySelector('[name="identifier"]').setAttribute('lock','true');
+				wrp.insertAdjacentHTML('beforeend', sg.innerHTML);
+			}
+			if(type=='layout' || type=='description') {
+				var dn = document.createElement('div');
+				dn.innerHTML = getField('textarea','section');
+				dn.querySelector('.item').classList.remove('active');
+				dn.querySelector('.item').setAttribute('data-preset',true);
+				dn.querySelector('[data-collapse="item"]').innerHTML = 'expand_more';
+				dn.querySelector('[name="label"]').setAttribute('value','Description');
+				dn.querySelector('[name="identifier"]').setAttribute('value','description');
+				dn.querySelector('[name="identifier"]').setAttribute('lock','true');
+				wrp.insertAdjacentHTML('beforeend', dn.innerHTML);
+			}
+			if(type=='layout') {
 				var hd = document.createElement('div');
 				hd.innerHTML = getField('header','section');
 				hd.querySelector('.item').classList.remove('active');
