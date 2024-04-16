@@ -1,7 +1,7 @@
 body{
 	padding-top: 82px;
 	margin-bottom: 50px;
-	background-color: $grey-100;
+	//background-color: $grey-100;
 	font:400 14px/18px Roboto, sans-serif;
 }
 a {
@@ -34,7 +34,7 @@ a {
 	z-index: 100;
 	padding: 10px;
 	position: fixed;
-	background-color: $grey-100;
+	//background-color: $grey-100;
 	.logo {
 		margin: auto;
 		display: block;
@@ -76,15 +76,15 @@ a {
 		opacity: 1;
 		text-shadow: none;
 		>i {
-			color: #fff;
 			width: 24px;
 			height: 24px;
+			color: $white;
 			font-size: 12px;
 			text-align: center;
 			line-height: 24px;
 			vertical-align: top;
 			display: inline-block;
-			background-color: #da3838;
+			background-color: var(--bs-body-bg);
 		}
 	}
 	&-header,
@@ -94,14 +94,11 @@ a {
 		border: none;
 		border-radius: 0;
 	}
-	&-header {
-		background-color: $white;
+	&-header, &-footer {
+		background-color: var(--bs-modal-bg);
 	}
 	&-body {
 		
-	}
-	&-footer {
-		background-color: $white;
 	}
 	&.show {
 		.modal-dialog {

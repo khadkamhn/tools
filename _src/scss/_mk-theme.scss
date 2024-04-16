@@ -1,0 +1,22 @@
+@media (prefers-color-scheme: dark) {
+	.page-home {
+		.link-item {
+			a {
+				&:after {
+					border-color: var(--bs-secondary-bg);
+				}
+			}
+		}
+	}
+	.text-bg-light {
+		color: var(--bs-body-color)!important;
+	}
+	.base64-font [data-copy],
+	.bg-white, .text-bg-light,
+	.keyboard-ref .ref-tbl {
+		background-color: var(--bs-secondary-bg)!important;
+	}
+	.page-unicode-nepali .ref-ie {
+		background-color: var(--bs-dark);
+	}
+}
