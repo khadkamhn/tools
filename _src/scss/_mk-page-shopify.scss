@@ -35,7 +35,7 @@
 			margin-bottom: -1px;
 		}
 		&.active {
-			.item-body {
+			&>.item-body {
 				display: block;
 			}
 		}
@@ -80,7 +80,7 @@
 				margin-bottom: -1px;
 			}
 			&.active {
-				.card-body {
+				&>.card-body {
 					display: block;
 				}
 			}
