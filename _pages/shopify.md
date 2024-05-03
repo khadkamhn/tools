@@ -214,7 +214,8 @@ function getField(type, which) {
 		+'<div class="form-text">Specifies group heading of the settings</div>'
 		+'</div></div>'
 
-		htm += '</div></div>';
+		htm += '</div></div>'
+		htm += '</div>';
 		return htm;
 	}
 
@@ -237,15 +238,18 @@ function getField(type, which) {
 	+'</div></div>'
 
 	if(type=='checkbox' || type=='number' || type=='range' || type=='text' || type=='textarea' || type=='color' || type=='color_background' || type=='font_picker' || type=='html' || type=='inline_richtext' || type=='liquid' || type=='richtext' || type=='text_alignment' || type=='video_url') {
+		let fieldClass = '';
 		if(type=='textarea' || type=='html' || type=='inline_richtext' || type=='liquid' || type=='richtext') {
-			htm += '<div class="col-md-12 col-lg-12">'
+			fieldClass = 'col-md-12';
 		}else {
-			htm += '<div class="col-md-6 col-lg-4">'
+			fieldClass = 'col-md-6 col-lg-4';
 		}
+		htm += '<div class="'+fieldClass+'">'
+		htm += '<div class="mb-2">'
 		if(type=='video_url') {
-			htm += '<div class="mb-2"><label class="form-label">Accept</label>'
+			htm += '<label class="form-label">Accept</label>'
 		}else {
-			htm += '<div class="mb-2"><label class="form-label">Default</label>'
+			htm += '<label class="form-label">Default</label>'
 		}
 		if(type=='checkbox') {
 			htm += '<select class="form-select form-select-sm" name="default"><option value="true">true</option><option value="false">false</option></select>'

@@ -107,6 +107,17 @@ a {
 	}
 }
 
+.mk-confirm {
+	.btn {
+		&, &:hover, &:focus {
+			border: 1px solid var(--bs-border-color);
+		}
+		&:active, &:focus {
+			border-color: $input-focus-border-color;
+		}
+	}
+}
+
 .mk-modal {
 	top: 0;
 	left: 0;

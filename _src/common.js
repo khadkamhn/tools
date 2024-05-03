@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
 					button.style.width = '100%';
 					button.style.margin = 0;
 					button.style.borderRadius = 0;
-					button.style.border = '1px solid #ccc';
+					//button.style.border = '1px solid #ccc';
 					button.style.padding = '12px';
 				});
 
@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', function() {
 				setTimeout(function () {
 					document.getElementById(id).querySelector('.modal-dialog').style.transform = 'scale(1)';
 					document.getElementById(id).querySelector('.modal-dialog').style.opacity = 1;
-					if(document.getElementById(id).querySelector('.btn-okay').length) {
+					if(document.getElementById(id).querySelector('.btn-okay')) {
 						document.getElementById(id).querySelector('.btn-okay').focus();
 					}
 				}, 10);

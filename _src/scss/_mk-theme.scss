@@ -11,12 +11,35 @@
 	.text-bg-light {
 		color: var(--bs-body-color)!important;
 	}
+	.box-item {
+		&.z0 {
+			border-color: transparent;
+		}
+		&:hover {
+			&:after {
+				color: $white;
+			}
+		}
+	}
+	.box-item,
+	blockquote,
 	[data-copy],
+	.box-shadow-result,
 	.bg-white, .text-bg-light,
 	.keyboard-ref .ref-tbl {
 		background-color: var(--bs-secondary-bg)!important;
 	}
-	.page-unicode-nepali .ref-ie {
-		background-color: var(--bs-dark);
+	.page-unicode-nepali {
+		.ref-ie {
+			background-color: var(--bs-dark);
+		}
+		[data-copy] {
+			background-color: var(--bs-body-bg)!important;
+		}
+	}
+	.card-header {
+		[data-copy] {
+			background-color: transparent!important;
+		}
 	}
 }
