@@ -510,10 +510,9 @@ function collectData(showInResult=false) {
 			hasPadding = json.settings.some(function(field) { return field.id == 'padding_top' || field.id == 'padding_bottom' });
 			hasContainer = json.settings.some(function(field) { return field.id == 'container' });
 			hasClass = json.settings.some(function(field) { return field.id == 'extra_class' });
-			resTxt += '<div class="section-wrap'+(hasPadding?' sec-\{\{ section.id }\}-pad':'')+(hasClass?'\{\% if section.settings.extra_class != blank %\} \{\{ section.settings.extra_class | handleize }\}\{\% endif %\}':'')+'">\n';
-			if(hasContainer) {
-				resTxt += '\t<div class="\{\{ section.settings.container \}\}">\n';
-			}
+			hasBg = json.settings.some(function(field) { return field.id == 'bg' });
+			hasBackground = json.settings.some(function(field) { return field.id == 'background' });
+
 			let vars_s = echo_s = '';
 			json.settings.forEach((field, index)=>{
 				//if(index === 0) { }
@@ -526,17 +525,20 @@ function collectData(showInResult=false) {
 					case'select':
 					case'color':
 						if(field.id && field.id != 'container' && field.id != 'padding_top' && field.id != 'padding_bottom') {
-							if(hasContainer) {
-								vars_s += '\t';
-							}
-							vars_s += '\tassign '+field.id+' =  section.settings.'+field.id+'\n\t';
+							vars_s += '\tassign '+field.id+' = section.settings.'+field.id+'\n';
 						}
 					break;
 					case'image_picker':
-						if(hasContainer) {
-							echo_s += '\t';
+						if (field.id) {
+							if(field.id == 'background' || field.id == 'bg') {
+								vars_s += '\tassign '+field.id+' = section.settings.'+field.id+'\n';
+							} else {
+								if(hasContainer) {
+									echo_s += '\t';
+								}
+								echo_s += '\t\{\% if section.settings.'+field.id+' != blank %\}<div>\{\{ section.settings.'+field.id+' | image_url: width: 400 | image_tag \}\}</div>\{\% endif %\}\n';
+							}
 						}
-						echo_s += '\t\{\% if section.settings.'+field.id+' != blank %\}<div>\{\{ section.settings.'+field.id+' | image_url: width: 400 | image_tag \}\}</div>\{\% endif %\}\n';
 					break;
 					case'text':
 					case'textarea':
@@ -544,6 +546,9 @@ function collectData(showInResult=false) {
 					case'inline_richtext':
 					case'liquid':
 					case'richtext':
+						if(field.id && field.id == 'extra_class') {
+							vars_s += '\tassign classes = section.settings.'+field.id+' | split: \' \'\n';
+						}
 						if(field.id && field.id != 'extra_class') {
 							let elo = elc = 'div';
 							if(hasContainer) {
@@ -562,20 +567,34 @@ function collectData(showInResult=false) {
 									elo = 'div class="description"';
 								break;
 							}
-							echo_s += '\t\{\% if section.settings.'+field.id+' != blank %\}<'+elo+'>\{\{ section.settings.'+field.id+' \}\}</'+elc+'>\{\% endif %\}\n';
+							if (['heading', 'subheading', 'description'].includes(field.id)) {
+								vars_s += '\tassign '+field.id+' = section.settings.'+field.id+'\n';
+								echo_s += '\t\{\% if '+field.id+' != blank %\}<'+elo+'>\{\{ '+field.id+' \}\}</'+elc+'>\{\% endif %\}\n';
+							} else {
+								echo_s += '\t\{\% if section.settings.'+field.id+' != blank %\}<'+elo+'>\{\{ section.settings.'+field.id+' \}\}</'+elc+'>\{\% endif %\}\n';
+							}
 						}
 					break;
 				}
 			});
 			if(vars_s) {
-				if (vars_s.endsWith('\n\t')) {
-					vars_s = vars_s.slice(0, -2);
+				if (vars_s.endsWith('\n')) {
+					vars_s = vars_s.slice(0, -1);
 				}
-				if(hasContainer) {
-					resTxt += '\t\t\{\%- liquid\n\t'+vars_s+'\n\t\t%\}\n';
-				}else{
-					resTxt += '\t\{\%- liquid\n\t'+vars_s+'\n\t%\}\n';
-				}
+				resTxt += '\{\%- liquid\n'+vars_s+'\n-%\}\n';
+			}
+			if (hasClass) {
+				resTxt += '\{\%- capture css_class -%\}\n\t\{\%- for class in classes -%\}\{\{ class | handleize | prepend: \' \' \}\}\{\%- endfor -%\}\n\{\%- endcapture -%\}\n';
+			}
+			let bgAttr = '';
+			if (hasBg) {
+				bgAttr = ' style="background-image:url(\'\{\{ bg | image_url: width: 1920 \}\}\');"'
+			} else if (hasBackground) {
+				bgAttr = ' style="background-image:url(\'\{\{ background | image_url: width: 1920 \}\}\');"'
+			}
+			resTxt += '<div class="section-wrap'+(hasPadding?' sec-\{\{ section.id }\}-pad':'')+(hasClass?'\{\% if css_class != blank %\}\{\{ css_class }\}\{\% endif %\}':'')+'"'+bgAttr+'>\n';
+			if(hasContainer) {
+				resTxt += '\t<div class="\{\{ section.settings.container \}\}">\n';
 			}
 			if(echo_s) {
 				resTxt += echo_s;
