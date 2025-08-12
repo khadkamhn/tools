@@ -16,8 +16,13 @@ social:
     - https://unsplash.com/@khadkamhn
 
 sass:
-  sass_dir: _src
   style: compressed
+  load_paths:
+    - node_modules/bootstrap/scss
+    - _src
 
 include:
   - _pages
+  
+plugins:
+  - jekyll-seo-tag

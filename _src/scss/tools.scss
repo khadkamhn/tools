@@ -4,37 +4,33 @@
  * https://mohankhadka.com.np/
  */
 
-// MK Variable
-@import "scss/mk-colors";
-@import "scss/mk-variables";
-
+// BS Functions
 @import "../node_modules/bootstrap/scss/functions";
+
+// MK Variable
+@import "mk-colors";
+@import "mk-variables";
+
+// BS Required
 @import "../node_modules/bootstrap/scss/variables";
 @import "../node_modules/bootstrap/scss/variables-dark";
 @import "../node_modules/bootstrap/scss/maps";
 @import "../node_modules/bootstrap/scss/mixins";
-@import "../node_modules/bootstrap/scss/utilities";
-
-// Layout & components
 @import "../node_modules/bootstrap/scss/root";
+
+// BS Optional
 @import "../node_modules/bootstrap/scss/reboot";
 @import "../node_modules/bootstrap/scss/type";
-//@import "../node_modules/bootstrap/scss/images";
 @import "../node_modules/bootstrap/scss/containers";
 @import "../node_modules/bootstrap/scss/grid";
-//@import "../node_modules/bootstrap/scss/tables";
 @import "../node_modules/bootstrap/scss/forms";
 @import "../node_modules/bootstrap/scss/buttons";
 @import "../node_modules/bootstrap/scss/transitions";
 @import "../node_modules/bootstrap/scss/dropdown";
 @import "../node_modules/bootstrap/scss/button-group";
-//@import "../node_modules/bootstrap/scss/nav";
-//@import "../node_modules/bootstrap/scss/navbar";
 @import "../node_modules/bootstrap/scss/card";
-//@import "../node_modules/bootstrap/scss/accordion";
 @import "../node_modules/bootstrap/scss/breadcrumb";
 @import "../node_modules/bootstrap/scss/pagination";
-//@import "../node_modules/bootstrap/scss/badge";
 @import "../node_modules/bootstrap/scss/alert";
 @import "../node_modules/bootstrap/scss/progress";
 @import "../node_modules/bootstrap/scss/list-group";
@@ -42,55 +38,127 @@
 @import "../node_modules/bootstrap/scss/toasts";
 @import "../node_modules/bootstrap/scss/modal";
 @import "../node_modules/bootstrap/scss/tooltip";
-//@import "../node_modules/bootstrap/scss/popover";
-//@import "../node_modules/bootstrap/scss/carousel";
-//@import "../node_modules/bootstrap/scss/spinners";
-//@import "../node_modules/bootstrap/scss/offcanvas";
-//@import "../node_modules/bootstrap/scss/placeholders";
-
-// Helpers
 @import "../node_modules/bootstrap/scss/helpers";
-
-// Utilities
+@import "../node_modules/bootstrap/scss/utilities";
 @import "../node_modules/bootstrap/scss/utilities/api";
 
-//Animation
-@import "../node_modules/animate-sass/animate";
+// Vendor - Animate
+@import "../../node_modules/animate-sass/animate";
 
+// Vendor - Rangeslider
+@import "../range-slider/range-slider";
+
+// Vendor - Coloris
+@import "../coloris/coloris";
+
+// MK Mixins
+@import "mk-mixins";
+
+// MK Base
+@import "mk-global";
+@import "mk-forms";
+
+// MK Header
+@import "mk-header";
+
+// MK Pages
+@import "mk-page-home";
+@import "mk-page-date";
+@import "mk-page-slugify";
+@import "mk-page-shadow";
+@import "mk-page-font";
+@import "mk-page-password";
+@import "mk-page-unicode";
+@import "mk-page-url-encoder";
+@import "mk-page-magento";
+@import "mk-page-shopify";
+
+// MK Footer
+@import "mk-footer";
+
+// MK Responsive
+@import "mk-responsive";
+
+// MK Theme
+@import "mk-theme";
+/*
+// MK Variable
+@use "mk-colors" as *;
+@use "mk-variables" as *;
+
+@use "../../node_modules/bootstrap/scss/functions";
+@use "../../node_modules/bootstrap/scss/variables";
+@use "../../node_modules/bootstrap/scss/mixins";
+@use "../../node_modules/bootstrap/scss/variables-dark";
+@use "../../node_modules/bootstrap/scss/maps";
+@use "../../node_modules/bootstrap/scss/utilities";
+@use "../../node_modules/bootstrap/scss/utilities/api";
+
+
+// Layout & components
+@use "../../node_modules/bootstrap/scss/root";
+@use "../../node_modules/bootstrap/scss/reboot";
+@use "../../node_modules/bootstrap/scss/type";
+@use "../../node_modules/bootstrap/scss/containers";
+@use "../../node_modules/bootstrap/scss/grid";
+@use "../../node_modules/bootstrap/scss/forms";
+@use "../../node_modules/bootstrap/scss/buttons";
+@use "../../node_modules/bootstrap/scss/transitions";
+@use "../../node_modules/bootstrap/scss/dropdown";
+@use "../../node_modules/bootstrap/scss/button-group";
+@use "../../node_modules/bootstrap/scss/card";
+@use "../../node_modules/bootstrap/scss/breadcrumb";
+@use "../../node_modules/bootstrap/scss/pagination";
+@use "../../node_modules/bootstrap/scss/alert";
+@use "../../node_modules/bootstrap/scss/progress";
+@use "../../node_modules/bootstrap/scss/list-group";
+@use "../../node_modules/bootstrap/scss/close";
+@use "../../node_modules/bootstrap/scss/toasts";
+@use "../../node_modules/bootstrap/scss/modal";
+@use "../../node_modules/bootstrap/scss/tooltip";
+
+// Helpers
+@use "../../node_modules/bootstrap/scss/helpers";
+
+// Utilities
+@use "../../node_modules/bootstrap/scss/utilities/api";
+
+//Animation
+//@use "../../node_modules/animate-sass/animate";
 
 // Range Slider
-@import "range-slider/range-slider";
+@use "../range-slider/range-slider";
 
 // Coloris
-@import "coloris/coloris";
+@use "../coloris/coloris";
 
 // Mixins
-@import "scss/mk-mixins";
+@use "mk-mixins";
 
 // Base
-@import "scss/mk-global";
-@import "scss/mk-forms";
+@use "mk-global";
+@use "mk-forms";
 
 // Header
-@import "scss/mk-header";
+@use "mk-header";
 
 // Pages
-@import "scss/mk-page-home";
-@import "scss/mk-page-date";
-@import "scss/mk-page-slugify";
-@import "scss/mk-page-shadow";
-@import "scss/mk-page-font";
-@import "scss/mk-page-password";
-@import "scss/mk-page-unicode";
-@import "scss/mk-page-url-encoder";
-@import "scss/mk-page-magento";
-@import "scss/mk-page-shopify";
+@use "mk-page-home";
+@use "mk-page-date";
+@use "mk-page-slugify";
+@use "mk-page-shadow";
+@use "mk-page-font";
+@use "mk-page-password";
+@use "mk-page-unicode";
+@use "mk-page-url-encoder";
+@use "mk-page-magento";
+@use "mk-page-shopify";
 
 // Footer
-@import "scss/mk-footer";
+@use "mk-footer";
 
 // Responsive
-@import "scss/mk-responsive";
+@use "mk-responsive";
 
 // Theme
-@import "scss/mk-theme";
+@use "mk-theme";*/
