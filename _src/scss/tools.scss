@@ -73,6 +73,7 @@
 @import "mk-page-url-encoder";
 @import "mk-page-magento";
 @import "mk-page-shopify";
+@import "mk-page-aspect-ratio";
 
 // MK Footer
 @import "mk-footer";
@@ -82,84 +83,3 @@
 
 // MK Theme
 @import "mk-theme";
-/*
-// MK Variable
-@use "mk-colors" as *;
-@use "mk-variables" as *;
-
-@use "../../node_modules/bootstrap/scss/functions";
-@use "../../node_modules/bootstrap/scss/variables";
-@use "../../node_modules/bootstrap/scss/mixins";
-@use "../../node_modules/bootstrap/scss/variables-dark";
-@use "../../node_modules/bootstrap/scss/maps";
-@use "../../node_modules/bootstrap/scss/utilities";
-@use "../../node_modules/bootstrap/scss/utilities/api";
-
-
-// Layout & components
-@use "../../node_modules/bootstrap/scss/root";
-@use "../../node_modules/bootstrap/scss/reboot";
-@use "../../node_modules/bootstrap/scss/type";
-@use "../../node_modules/bootstrap/scss/containers";
-@use "../../node_modules/bootstrap/scss/grid";
-@use "../../node_modules/bootstrap/scss/forms";
-@use "../../node_modules/bootstrap/scss/buttons";
-@use "../../node_modules/bootstrap/scss/transitions";
-@use "../../node_modules/bootstrap/scss/dropdown";
-@use "../../node_modules/bootstrap/scss/button-group";
-@use "../../node_modules/bootstrap/scss/card";
-@use "../../node_modules/bootstrap/scss/breadcrumb";
-@use "../../node_modules/bootstrap/scss/pagination";
-@use "../../node_modules/bootstrap/scss/alert";
-@use "../../node_modules/bootstrap/scss/progress";
-@use "../../node_modules/bootstrap/scss/list-group";
-@use "../../node_modules/bootstrap/scss/close";
-@use "../../node_modules/bootstrap/scss/toasts";
-@use "../../node_modules/bootstrap/scss/modal";
-@use "../../node_modules/bootstrap/scss/tooltip";
-
-// Helpers
-@use "../../node_modules/bootstrap/scss/helpers";
-
-// Utilities
-@use "../../node_modules/bootstrap/scss/utilities/api";
-
-//Animation
-//@use "../../node_modules/animate-sass/animate";
-
-// Range Slider
-@use "../range-slider/range-slider";
-
-// Coloris
-@use "../coloris/coloris";
-
-// Mixins
-@use "mk-mixins";
-
-// Base
-@use "mk-global";
-@use "mk-forms";
-
-// Header
-@use "mk-header";
-
-// Pages
-@use "mk-page-home";
-@use "mk-page-date";
-@use "mk-page-slugify";
-@use "mk-page-shadow";
-@use "mk-page-font";
-@use "mk-page-password";
-@use "mk-page-unicode";
-@use "mk-page-url-encoder";
-@use "mk-page-magento";
-@use "mk-page-shopify";
-
-// Footer
-@use "mk-footer";
-
-// Responsive
-@use "mk-responsive";
-
-// Theme
-@use "mk-theme";*/

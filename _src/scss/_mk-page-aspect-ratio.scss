@@ -1,0 +1,7 @@
+.page-aspect-ratio {
+	.card {
+		@include media-breakpoint-up(md) {
+			height: 100%;
+		}
+	}
+}

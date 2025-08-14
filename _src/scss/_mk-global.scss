@@ -204,3 +204,9 @@ blockquote {
 	border-bottom-left-radius: 0;
 	border: 1px solid var(--bs-border-color);
 }
+
+// Animate
+.animated {
+	@include animate-prefixer(animation-duration, calc( #{$base-duration} ) );
+	@include animate-prefixer(animation-fill-mode, $base-fill-mode);
+}
