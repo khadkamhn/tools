@@ -2,7 +2,7 @@
 layout: default
 title: "Shopify"
 permalink: /shopify/
-scripts: ["/assets/js/sortable.min.js","/assets/js/popper.min.js","/assets/js/tippy-bundle.umd.min.js"]
+scripts: ["/assets/js/sortable.min.js"]
 ---
 
 <form class="form" method="post">

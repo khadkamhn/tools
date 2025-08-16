@@ -4,4 +4,28 @@
 			height: 100%;
 		}
 	}
+	.result-preview {
+		background-position: center;
+		background-repeat: no-repeat;
+		&.has-img {
+			span {
+				display: none;
+			}
+		}
+		&.no-img {
+			background-image: none!important;
+		}
+		&.img-contain {
+			background-size: contain;
+		}
+		&.img-cover {
+			background-size: cover;
+		}
+	}
+	.has-preview-config {
+		.form-check {
+			min-height: 10px;
+			margin-bottom: 0;
+		}
+	}
 }

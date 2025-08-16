@@ -14,7 +14,7 @@ inline_styles:
 	}"
 ---
 
-<form action="#" method="post">
+<form class="form" action="#" method="post">
 	<div class="row">
 		<div class="col-md-6">
 			<div class="card mt-3">
@@ -94,7 +94,7 @@ inline_styles:
 						<li>Input the original dimensions (<code>Width<sub>1</sub></code> and <code>Height<sub>1</sub></code>) in the left fields.</li>
 						<li>Enter either a new <code>Width<sub>2</sub></code> or <code>Height<sub>2</sub></code> on the right to automatically calculate the other.</li>
 					</ol>
-					<p class="mb-2"><em>Some reference from <a href="https://andrew.hedges.name/experiments/aspect_ratio/" target="_blank">https://andrew.hedges.name/experiments/aspect_ratio/</a></em></p>
+					<p class="mb-2"><em>Inspire from <a href="https://andrew.hedges.name/experiments/aspect_ratio/" target="_blank">https://andrew.hedges.name/experiments/aspect_ratio/</a></em></p>
 				</div>
 			</div>
 		</div>
@@ -102,7 +102,7 @@ inline_styles:
 			<div class="card mt-3">
 				<div class="card-header d-flex justify-content-between align-items-center">
 					<span>Preview Info / Formula</span>
-					<span class="material-icons" data-action="info">info</span>
+					<span class="material-icons" data-action="info" title="Ratios Table">info_outline</span>
 				</div>
 				<div class="card-body">
 					<div class="row">
@@ -111,10 +111,28 @@ inline_styles:
 							<div class="result-preview m-auto d-flex align-items-center justify-content-center no-img"></div>
 							<hr>
 							<div class="mb-3">
-								<div class="form-check form-switch">
-									<input id="preview" class="form-check-input" type="checkbox" name="preview">
-									<label for="preview" class="form-check-label">Preview image with sample</label>
+								<div class="has-preview-config d-flex flex-nowrap align-items-center justify-content-between gap-2">
+									<div class="form-check form-switch">
+										<input id="preview" class="form-check-input" type="checkbox" name="preview">
+										<label for="preview" class="form-check-label">Show Image</label>
+									</div>
+									<div class="d-flex flex-nowrap">
+										<input type="radio" class="btn-check" name="placement" id="imgContain" autocomplete="off" checked>
+										<label class="btn btn-sm" for="imgContain" title="Contain">Contain</label>
+
+										<input type="radio" class="btn-check" name="placement" id="imgCropped" autocomplete="off">
+										<label class="btn btn-sm" for="imgCropped" title="Cropped">Cropped</label>
+									</div>
 								</div>
+							</div>
+							<div class="mb-3">
+								<input id="urlPath" type="text" class="form-control" name="urlPath" placeholder="/c/sample/preview.svg">
+								<div class="form-text">Paste any online URL to see sample preview</div>
+							</div>
+							<div class="mb-3 text-center">or</div>
+							<div class="mb-3">
+								<input id="sampleFile" class="form-control" type="file" name="sampleFile" accept="image/*">
+								<div class="form-text">Upload any image to see sample preview</div>
 							</div>
 						</div>
 						<div class="col-md-6">
@@ -460,7 +478,22 @@ function flash(el) {
 	}
 }
 
-document.addEventListener('DOMContentLoaded', function () {
+function checkPadding(uploadedWidth, uploadedHeight, targetWidth, targetHeight) {
+	const uploadedRatio = uploadedWidth / uploadedHeight;
+	const targetRatio = targetWidth / targetHeight;
+
+	if (Math.abs(uploadedRatio - targetRatio) < 0.01) {
+		return "Perfect fit. No gaps.";
+	}
+
+	if (uploadedRatio < targetRatio) {
+		return "Gap will appear on left/right (image is too tall)";
+	} else {
+		return "Gap will appear on top/bottom (image is too wide)";
+	}
+}
+
+document.addEventListener('DOMContentLoaded', () => {
 	const w1 = document.querySelector('[name="w1"]');
 	const h1 = document.querySelector('[name="h1"]');
 	const w2 = document.querySelector('[name="w2"]');
@@ -469,14 +502,18 @@ document.addEventListener('DOMContentLoaded', function () {
 	const ratios = document.querySelector('[name="ratios"]');
 	const round = document.querySelector('[name="round"]');
 	const preview = document.querySelector('[name="preview"]');
+	const previewResult = document.querySelector('.result-preview');
+	const urlPath = document.querySelector('[name="urlPath"]');
+	const sampleFile = document.querySelector('[name="sampleFile"]');
+	const placement = document.querySelectorAll('[name="placement"]');
 
 	applyPreset(ratios, w1, h1);
 	calculateRatio(w1, h1);
 
 	inputs.forEach( (input) => {
-		input.addEventListener('input', function (e) {
+		input.addEventListener('input', (e) => {
 			lastTarget = e.target;
-			this.value = this.value.replace(/\D/g, '');
+			e.target.value = e.target.value.replace(/\D/g, '');
 			let w1v = parseFloat(w1.value);
 			let h1v = parseFloat(h1.value);
 			let w2v = parseFloat(w2.value);
@@ -507,12 +544,12 @@ document.addEventListener('DOMContentLoaded', function () {
 		});
 	});
 
-	ratios.addEventListener('input', function () {
+	ratios.addEventListener('input', () => {
 		applyPreset(ratios, w1, h1);
 		calculateRatio(w1, h1);
 	});
 
-	round.addEventListener('input', function () {
+	round.addEventListener('input', () => {
 		if (lastTarget) {
 			lastTarget.dispatchEvent(new Event('input', { bubbles: true }));
 		}
@@ -527,7 +564,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		h2.value = '';
 	});
 
-	preview.addEventListener('input', function (e) {
+	preview.addEventListener('input', (e) => {
 		const ratioPreview = document.querySelector('.result-preview');
 		if (e.target.checked) {
 			ratioPreview.classList.remove('no-img');
@@ -537,8 +574,49 @@ document.addEventListener('DOMContentLoaded', function () {
 			ratioPreview.classList.add('no-img');
 		}
 	});
+
+	urlPath.addEventListener('input', (e) => {
+		const img = new Image();
+		const imgUrl = e.target.value;
+		img.onload = () => {
+			const width = img.width;
+			const height = img.height;
+			previewResult.style.backgroundImage = `url('${imgUrl}')`;
+		};
+		img.src = imgUrl;
+	});
+
+	sampleFile.addEventListener('input', (e) => {
+		const img = new Image();
+		const file = e.target.files[0];
+		if (!file) return;
+
+		if (!file.type.startsWith('image/')) {
+			mk.toastr({head:{text:'Opps!'},body:'The input file must be image!'},'danger');
+			e.target.value = '';
+			return;
+		}
+		const imageUrl = URL.createObjectURL(file);
+		img.onload = () => {
+			const width = img.width;
+			const height = img.height;
+			URL.revokeObjectURL(imageUrl);
+		};
+		previewResult.style.backgroundImage = `url('${imageUrl}')`;
+	});
+
+	placement.forEach( (input) => {
+		input.addEventListener('input', (e) => {
+			const imgPos = document.querySelector('[name="placement"]:checked');
+			if (imgPos) {
+				previewResult.classList.remove('img-contain', 'img-cover');
+				previewResult.classList.add(imgPos.id=='imgContain'?'img-contain':'img-cover');
+			}
+		});
+	});
+
 });
-window.addEventListener('load', function () {
+window.addEventListener('load', () => {
 	mk.alert('<h5>Page Under Construction</h5><p>This page is still in progress. It will be ready and fully functional soon!</p>');
 });
 </script>

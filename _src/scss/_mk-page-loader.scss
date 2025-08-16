@@ -1,0 +1,30 @@
+.mk-page-loader {
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 1000;
+	position: fixed;
+	color: var(--bs-link-color-rgb);
+	background-color: var(--bs-body-bg);
+	svg {
+		top: 50%;
+		left: 50%;
+		height: 62px;
+		position: absolute;
+		margin-top: -31px;
+		transform: translateX(-50%);
+		transition: all .3s ease-in-out 0s;
+	}
+	&.mk-page-loaded {
+		opacity: 1;
+		transition: opacity .3s ease-in-out 0s;
+		svg {
+			top: 41px;
+		}
+	}
+	&.mk-page-hidden {
+		opacity: 0;
+		visibility: hidden;
+	}
+}
