@@ -638,6 +638,9 @@ document.addEventListener('DOMContentLoaded', () => {
 		});
 	});
 
+	if (baseUrl) {
+		urlPath.setAttribute('placeholder',`${baseUrl}${urlPath.getAttribute('placeholder')}`);
+	}
 	urlPath.addEventListener('input', (e) => {
 		const img = new Image();
 		const imgUrl = e.target.value;
