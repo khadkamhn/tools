@@ -17,38 +17,54 @@ html {
 				}
 			}
 		}
-		.text-bg-light {
-			color: var(--bs-body-color)!important;
-		}
-		.box-item {
-			&.z0 {
-				border-color: transparent;
+		.page-unicode-nepali {
+			.key {
+				background-color: $grey-900;
 			}
-			&:hover {
-				&:after {
-					color: $white;
+			.pinky {
+				color: $pink-A700;
+				border-color: $pink-A200;
+				&.active {
+					color: $pink-A400;
+					border-color: $pink-A700;
+					background-color: $pink-A100;
 				}
 			}
-		}
-		.box-item,
-		blockquote,
-		[data-copy],
-		.box-shadow-result,
-		.bg-white, .text-bg-light,
-		.keyboard-ref .ref-tbl {
-			background-color: var(--bs-secondary-bg)!important;
-		}
-		.page-unicode-nepali {
-			.ref-ie {
-				background-color: var(--bs-dark);
+			.ring {
+				color: $deep-orange-A700;
+				border-color: $deep-orange-A200;
+				&.active {
+					color: $deep-orange-A400;
+					border-color: $deep-orange-A700;
+					background-color: $deep-orange-A100;
+				}
 			}
-			[data-copy] {
-				background-color: var(--bs-body-bg)!important;
+			.middle {
+				color: $orange-A700;
+				border-color: $orange-A200;
+				&.active {
+					color: $orange-A400;
+					border-color: $orange-A700;
+					background-color: $orange-A100;
+				}
 			}
-		}
-		.card-header {
-			[data-copy] {
-				background-color: transparent!important;
+			.pointer1st {
+				color: $yellow-A700;
+				border-color: $yellow-A200;
+				&.active {
+					color: $yellow-A400;
+					border-color: $yellow-A700;
+					background-color: $yellow-A100;
+				}
+			}
+			.pointer2nd {
+				color: $green-A700;
+				border-color: $green-A200;
+				&.active {
+					color: $green-A400;
+					border-color: $green-A700;
+					background-color: $green-A100;
+				}
 			}
 		}
 	}

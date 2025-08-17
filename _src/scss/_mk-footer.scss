@@ -5,6 +5,7 @@
 		margin: 0 2px;
 		font-size: 18px;
 		color: $red-400;
+		cursor: default;
 		display: inline-block;
 		@include animate-prefixer(animation-duration, calc( #{$base-duration*0.15} ) );
 		@include animate-prefixer(animation-fill-mode, $base-fill-mode);

@@ -11,7 +11,7 @@ scripts: ["/assets/js/sortable.min.js"]
 			<div class="card mt-3 card-section">
 				<div class="card-header d-flex justify-content-between align-items-center">
 					<span>Section</span>
-					<span class="material-icons" data-show="preset" title="Predefined Sets">apps</span>
+					<span class="material-symbols-outlined" data-show="preset" title="Predefined Sets">list_alt</span>
 				</div>
 				<div class="card-body">
 					<div class="row section-wrap">
@@ -74,8 +74,8 @@ scripts: ["/assets/js/sortable.min.js"]
 				<div class="card-header d-flex justify-content-between align-items-center">
 					<span>Liquid</span>
 					<span>
-						<span class="material-icons me-3" data-copy="json" title="Copy to clipboard">content_copy</span>
-						<span class="material-icons" data-action="download" title="Click to Download">download</span>
+						<span class="material-symbols-outlined me-3" data-copy="json" title="Copy to clipboard">content_copy</span>
+						<span class="material-symbols-outlined" data-action="download" title="Click to Download">download</span>
 					</span>
 				</div>
 				<div class="card-body p-0">
@@ -164,13 +164,13 @@ function getField(type, which) {
 		+'<span class="input-group-text">Option</span>'
 		+'<input type="text" class="form-control" name="option-label" placeholder="Label" title="Label">'
 		+'<input type="text" class="form-control" name="option-value" placeholder="Value" title="Value">'
-		+'<button class="btn btn-outline-danger" type="button" data-delete="option"><i class="material-icons">delete</i></button>'
+		+'<button class="btn btn-outline-danger" type="button" data-delete="option"><i class="material-symbols-outlined">delete</i></button>'
 		+'</div>';
 		return htm;
 	}
 	if(type=='block') {
 		htm += '<div class="card mb-2 active">'
-		+'<div class="card-header d-flex justify-content-between align-items-center"><div class="name">Block <span class="card-label ms-1"></span></div><div class="item-action"><i class="material-icons me-2" data-collapse="card" title="Expand/Collapse">expand_less</i><i class="material-icons" data-delete="item" title="Delete">delete</i></div></div>'
+		+'<div class="card-header d-flex justify-content-between align-items-center"><div class="name">Block <span class="card-label ms-1"></span></div><div class="item-action"><i class="material-symbols-outlined me-2" data-collapse="card" title="Expand/Collapse">keyboard_arrow_up</i><i class="material-symbols-outlined" data-delete="item" title="Delete">delete</i></div></div>'
 		+'<div class="card-body">'
 		+'<div class="row">'
 		+'<div class="col-md-6 col-lg-4"><div class="mb-2">'
@@ -198,7 +198,7 @@ function getField(type, which) {
 	if(type=='header') {
 		htm +='<div class="item mb-2 active" data-type="'+type+'" data-which="'+which+'">'
 		+'<div class="item-head d-flex justify-content-between align-items-center">'
-		+'<div><span class="item-name">Header</span><span class="item-label ms-1"></span></div><div class="item-action"><i class="material-icons me-2" data-collapse="item" title="Expand/Collapse">expand_less</i><i class="material-icons" data-delete="item" title="Delete">delete</i></div>'
+		+'<div><span class="item-name">Header</span><span class="item-label ms-1"></span></div><div class="item-action"><i class="material-symbols-outlined me-2" data-collapse="item" title="Expand/Collapse">keyboard_arrow_up</i><i class="material-symbols-outlined" data-delete="item" title="Delete">delete</i></div>'
 		+'</div>'
 		+'<div class="item-body"><div class="row">'
 
@@ -221,7 +221,7 @@ function getField(type, which) {
 
 	htm +='<div class="item mb-2 active" data-type="'+type+'" data-which="'+which+'">'
 	+'<div class="item-head d-flex justify-content-between align-items-center">'
-	+'<div><span class="item-name">'+fieldTypes[type]+'</span><span class="item-label ms-1"></span></div><div class="item-action"><i class="material-icons me-2" data-collapse="item" title="Expand/Collapse">expand_less</i><i class="material-icons" data-delete="item" title="Delete">delete</i></div>'
+	+'<div><span class="item-name">'+fieldTypes[type]+'</span><span class="item-label ms-1"></span></div><div class="item-action"><i class="material-symbols-outlined me-2" data-collapse="item" title="Expand/Collapse">keyboard_arrow_up</i><i class="material-symbols-outlined" data-delete="item" title="Delete">delete</i></div>'
 	+'</div>'
 	+'<div class="item-body"><div class="row">'
 
@@ -870,10 +870,10 @@ document.addEventListener('DOMContentLoaded', function () {
 				if(itemWrap) {
 					if(itemWrap.classList.contains('active')) {
 						itemWrap.classList.remove('active');
-						e.target.textContent = 'expand_more';
+						e.target.textContent = 'keyboard_arrow_down';
 					}else{
 						itemWrap.classList.add('active');
-						e.target.textContent = 'expand_less';
+						e.target.textContent = 'keyboard_arrow_up';
 					}
 					fixResize();
 				}
@@ -1014,7 +1014,7 @@ document.addEventListener('DOMContentLoaded', function () {
 				var ct = document.createElement('div');
 				ct.innerHTML = getField('header','section');
 				ct.querySelector('.item').classList.remove('active');
-				ct.querySelector('[data-collapse="item"]').innerHTML = 'expand_more';
+				ct.querySelector('[data-collapse="item"]').innerHTML = 'keyboard_arrow_down';
 				ct.querySelector('[name="content"]').setAttribute('value','Content');
 				wrp.insertAdjacentHTML('beforeend', ct.innerHTML);
 			}
@@ -1023,7 +1023,7 @@ document.addEventListener('DOMContentLoaded', function () {
 				hg.innerHTML = getField('text','section');
 				hg.querySelector('.item').classList.remove('active');
 				hg.querySelector('.item').setAttribute('data-preset',true);
-				hg.querySelector('[data-collapse="item"]').innerHTML = 'expand_more';
+				hg.querySelector('[data-collapse="item"]').innerHTML = 'keyboard_arrow_down';
 				hg.querySelector('[name="label"]').setAttribute('value','Heading');
 				hg.querySelector('[name="identifier"]').setAttribute('value','heading');
 				hg.querySelector('[name="identifier"]').setAttribute('lock','true');
@@ -1034,7 +1034,7 @@ document.addEventListener('DOMContentLoaded', function () {
 				sg.innerHTML = getField('text','section');
 				sg.querySelector('.item').classList.remove('active');
 				sg.querySelector('.item').setAttribute('data-preset',true);
-				sg.querySelector('[data-collapse="item"]').innerHTML = 'expand_more';
+				sg.querySelector('[data-collapse="item"]').innerHTML = 'keyboard_arrow_down';
 				sg.querySelector('[name="label"]').setAttribute('value','Sub Heading');
 				sg.querySelector('[name="identifier"]').setAttribute('value','subheading');
 				sg.querySelector('[name="identifier"]').setAttribute('lock','true');
@@ -1045,7 +1045,7 @@ document.addEventListener('DOMContentLoaded', function () {
 				dn.innerHTML = getField('textarea','section');
 				dn.querySelector('.item').classList.remove('active');
 				dn.querySelector('.item').setAttribute('data-preset',true);
-				dn.querySelector('[data-collapse="item"]').innerHTML = 'expand_more';
+				dn.querySelector('[data-collapse="item"]').innerHTML = 'keyboard_arrow_down';
 				dn.querySelector('[name="label"]').setAttribute('value','Description');
 				dn.querySelector('[name="identifier"]').setAttribute('value','description');
 				dn.querySelector('[name="identifier"]').setAttribute('lock','true');
@@ -1055,7 +1055,7 @@ document.addEventListener('DOMContentLoaded', function () {
 				var hd = document.createElement('div');
 				hd.innerHTML = getField('header','section');
 				hd.querySelector('.item').classList.remove('active');
-				hd.querySelector('[data-collapse="item"]').innerHTML = 'expand_more';
+				hd.querySelector('[data-collapse="item"]').innerHTML = 'keyboard_arrow_down';
 				hd.querySelector('[name="content"]').setAttribute('value','Layout');
 				wrp.insertAdjacentHTML('beforeend', hd.innerHTML);
 			}
@@ -1064,7 +1064,7 @@ document.addEventListener('DOMContentLoaded', function () {
 				cl.innerHTML = getField('text','section');
 				cl.querySelector('.item').classList.remove('active');
 				cl.querySelector('.item').setAttribute('data-preset',true);
-				cl.querySelector('[data-collapse="item"]').innerHTML = 'expand_more';
+				cl.querySelector('[data-collapse="item"]').innerHTML = 'keyboard_arrow_down';
 				cl.querySelector('[name="label"]').setAttribute('value','Extra Class');
 				cl.querySelector('[name="identifier"]').setAttribute('value','extra_class');
 				cl.querySelector('[name="identifier"]').setAttribute('lock','true');
@@ -1081,7 +1081,7 @@ document.addEventListener('DOMContentLoaded', function () {
 				cn.innerHTML = getField('select','section');
 				cn.querySelector('.item').classList.remove('active');
 				cn.querySelector('.item').setAttribute('data-preset',true);
-				cn.querySelector('[data-collapse="item"]').innerHTML = 'expand_more';
+				cn.querySelector('[data-collapse="item"]').innerHTML = 'keyboard_arrow_down';
 				cn.querySelector('[name="label"]').setAttribute('value','Container');
 				cn.querySelector('[name="identifier"]').setAttribute('value','container');
 				cn.querySelector('[name="identifier"]').setAttribute('lock','true');
@@ -1094,7 +1094,7 @@ document.addEventListener('DOMContentLoaded', function () {
 				pt.innerHTML = getField('range','section');
 				pt.querySelector('.item').classList.remove('active');
 				pt.querySelector('.item').setAttribute('data-preset',true);
-				pt.querySelector('[data-collapse="item"]').innerHTML = 'expand_more';
+				pt.querySelector('[data-collapse="item"]').innerHTML = 'keyboard_arrow_down';
 				pt.querySelector('[name="label"]').setAttribute('value','Padding Top');
 				pt.querySelector('[name="identifier"]').setAttribute('value','padding_top')
 				pt.querySelector('[name="identifier"]').setAttribute('lock','true');
@@ -1108,7 +1108,7 @@ document.addEventListener('DOMContentLoaded', function () {
 				pb.innerHTML = getField('range','section');
 				pb.querySelector('.item').classList.remove('active');
 				pb.querySelector('.item').setAttribute('data-preset',true);
-				pb.querySelector('[data-collapse="item"]').innerHTML = 'expand_more';
+				pb.querySelector('[data-collapse="item"]').innerHTML = 'keyboard_arrow_down';
 				pb.querySelector('[name="label"]').setAttribute('value','Padding Bottom');
 				pb.querySelector('[name="identifier"]').setAttribute('value','padding_bottom')
 				pb.querySelector('[name="identifier"]').setAttribute('lock','true');

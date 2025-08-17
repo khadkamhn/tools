@@ -27,5 +27,17 @@
 			min-height: 10px;
 			margin-bottom: 0;
 		}
+		.btn {
+			svg {
+				width: 24px;
+				height: 24px;
+				line-height: inherit;
+			}
+			&.ico-y[for=imgContain] {
+				span {
+					transform: rotate(90deg);
+				}
+			}
+		}
 	}
 }

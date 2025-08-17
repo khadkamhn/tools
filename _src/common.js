@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
 					document.body.appendChild(confirmWrap);
 				}
 
-				var modalHTML = '<div><div class="mk-confirm" style="z-index:99999"><div class="modal-backdrop show"></div><div class="modal d-block"><div class="modal-dialog"><div class="modal-content"><div class="modal-body"></div><div class="modal-footer"><button type="button" class="btn btn-def btn-okay">Okay</button><button type="button" class="btn btn-def btn-cancel">Cancel</button></div></div></div></div></div></div>';
+				var modalHTML = '<div class="mk-confirm" style="z-index:99999"><div class="modal-backdrop show"></div><div class="modal d-block"><div class="modal-dialog"><div class="modal-content"><div class="modal-body"></div><div class="modal-footer"><button type="button" class="btn btn-def btn-okay">Okay</button><button type="button" class="btn btn-def btn-cancel">Cancel</button></div></div></div></div></div>';
 				
 				var wrapperDiv = document.createElement('div');
 				wrapperDiv.innerHTML = modalHTML;
@@ -44,12 +44,24 @@ document.addEventListener('DOMContentLoaded', function() {
 				modalFooter.classList.add('justify-content-between');
 
 				var modalButtons = wrapperDiv.querySelectorAll('.btn');
-				modalButtons.forEach(function(button) {
-					button.style.width = '100%';
-					button.style.margin = 0;
-					button.style.borderRadius = 0;
-					//button.style.border = '1px solid #ccc';
-					button.style.padding = '12px';
+				modalButtons.forEach( (btn) => {
+					const index = Array.from(modalButtons).indexOf(btn);
+					btn.style.width = '100%';
+					btn.style.margin = 0;
+					//btn.style.border = '1px solid #ccc';
+					btn.style.padding = '12px';
+					switch(index) {
+						case 0:
+							btn.style.borderTopLeftRadius = 0;
+							btn.style.borderTopRightRadius = 0;
+							btn.style.borderBottomRightRadius = 0;
+						break;
+						case 1:
+							btn.style.borderTopLeftRadius = 0;
+							btn.style.borderTopRightRadius = 0;
+							btn.style.borderBottomLeftRadius = 0;
+						break;
+					}
 				});
 
 				var modalDialog = wrapperDiv.querySelector('.modal-dialog');
@@ -57,6 +69,8 @@ document.addEventListener('DOMContentLoaded', function() {
 				modalDialog.style.transform = 'scale(0.5)';
 				modalDialog.style.transition = 'all .2s cubic-bezier(.8,.5,.2,1.4)';
 				modalDialog.style.opacity = 0;
+				modalDialog.style.marginLeft = 'auto';
+				modalDialog.style.marginRight = 'auto';
 
 				wrapperDiv.querySelector('.modal-content').style.overflow = 'hidden';
 
@@ -64,6 +78,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 				if (alert == true) {
 					wrapperDiv.querySelector('.btn-cancel').remove();
+					wrapperDiv.querySelector('.btn-okay').style.borderBottomRightRadius = '';
 				}
 				if (loader == true) {
 					wrapperDiv.querySelector('.btn-okay').remove();
@@ -74,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function() {
 				document.querySelector('.mk-confirm-wrap').appendChild(wrapperDiv.firstChild);
 				document.documentElement.style.overflow = 'hidden';
 
-				/*document.querySelector('.mk-confirm').addEventListener('click', function(e) {
+				/*document.querySelector('.mk-confirm').addEventListener('click', (e) => {
 					e.preventDefault();
 					if (e.target.classList.contains('btn-okay')) {
 						if(okay)okay(true);
@@ -84,15 +99,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
 					var dialog = e.target.closest('.mk-confirm').querySelector('.modal-dialog');
 					dialog.style.transform = 'scale(0.5)';
-					dialog.addEventListener('transitionend', function() {
+					dialog.addEventListener('transitionend', () => {
 						e.target.closest('.mk-confirm').remove();
 					});
 
 					document.documentElement.style.overflow = '';
 					return false;
 				});*/
-				document.querySelectorAll('.mk-confirm').forEach((mk_confirm)=>{
-					mk_confirm.addEventListener('click', function(e) {
+				document.querySelectorAll('.mk-confirm').forEach( (mk_confirm) => {
+					mk_confirm.addEventListener('click', (e) => {
 						e.preventDefault();
 						if (e.target.classList.contains('btn-okay')) {
 							if(okay)okay(mk_confirm);
@@ -102,7 +117,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 						var dialog = e.target.closest('.mk-confirm').querySelector('.modal-dialog');
 						dialog.style.transform = 'scale(0.5)';
-						dialog.addEventListener('transitionend', function() {
+						dialog.addEventListener('transitionend', () => {
 							e.target.closest('.mk-confirm').remove();
 						});
 
@@ -111,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function() {
 					});
 				});
 
-				setTimeout(function() {
+				setTimeout( () => {
 					document.getElementById(id).querySelector('.modal-dialog').style.transform = 'scale(1)';
 					document.getElementById(id).querySelector('.modal-dialog').style.opacity = 1;
 					if(document.getElementById(id).querySelector('.btn-okay')) {
@@ -123,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function() {
 						e.stopPropagation();
 					}
 				});*/
-				document.querySelectorAll('.mk-confirm .modal').forEach((mk_modal)=>{
+				document.querySelectorAll('.mk-confirm .modal').forEach( (mk_modal) => {
 					mk_modal.addEventListener('click', function(e) {
 						if(!e.target.classList.contains('btn')) {
 							e.stopPropagation();
@@ -138,7 +153,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			}
 		},
 		alert: function(text, okay) {
-			mk.confirm(text, function(action) {
+			mk.confirm(text, (action) => {
 				if (action && okay) okay(action);
 			}, false, true);
 		},
@@ -358,7 +373,53 @@ document.addEventListener('DOMContentLoaded', function() {
 						}
 					});
 				});*/
-			} catch (err) {}
+				// Widget
+				const linkLimit = 9;
+				const links = document.querySelectorAll('.link-item a,.mk-item a');
+				links.forEach( (link) => {
+					link.addEventListener('click', (e) => {
+						const id = link.dataset.linkId;
+						let recent = JSON.parse(mk.store.get('recent_links') || '[]');
+						recent = recent.filter(i => i !== id); // remove if exists
+						recent.unshift(id); // add to front
+						if (recent.length > linkLimit) recent = recent.slice(0, linkLimit); // limit
+						mk.store.set('recent_links', JSON.stringify(recent));
+
+						let counts = JSON.parse(mk.store.get('link_counts') || '{}');
+						counts[id] = (counts[id] || 0) + 1;
+						mk.store.set('link_counts', JSON.stringify(counts));
+					});
+				});
+				function getLinkById(id) {
+					return allLinks.find(link => link.slug.replace(/^\/|\/$/g, '') === id);
+				}
+				function renderLinks() {
+					const mkRecent = document.querySelector('.mk-recent');
+					const mkPopular = document.querySelector('.mk-popular');
+					const recent = JSON.parse(mk.store.get('recent_links') || '[]');
+					const counts = JSON.parse(mk.store.get('link_counts') || '{}');
+
+					const recentLinks = recent.slice(0, linkLimit).map(id => {
+						const link = getLinkById(id);
+						return link ? `<div class="mk-item"><a class="mk-link" href="${link.slug}"><span class="material-symbols-outlined">${link.icon}</span><span class="text-label">${link.name}</span></a></div>`:'';
+					}).join('');
+					if (recentLinks) {
+						mkRecent.innerHTML = recentLinks;
+					}
+
+					const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, linkLimit);
+					const popularLinks = sorted.map(([id, count]) => {
+						const link = getLinkById(id);
+						return link ? `<div class="mk-item"><a class="mk-link" href="${link.slug}"><span class="material-symbols-outlined">${link.icon}</span><span class="text-label">${link.name}</span><span class="visually-hidden">(${count})</span></a></div>`: '';
+					}).join('');
+					if (popularLinks) {						
+						mkPopular.innerHTML = popularLinks;
+					}
+				}
+				renderLinks();
+			} catch (err) {
+				console.error(err);
+			}
 		},
 		theme: {
 			init: function() {
@@ -366,7 +427,7 @@ document.addEventListener('DOMContentLoaded', function() {
 					const theme = this.get();
 
 					function applyTheme(theme) {
-						const btnIcon = document.querySelector('.mk-theme .dropdown-toggle .material-icons');
+						const btnIcon = document.querySelector('.mk-theme .dropdown-toggle .icon');
 						let effectiveTheme = theme;
 						if (theme === 'auto') {
 							effectiveTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';

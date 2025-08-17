@@ -6,8 +6,8 @@ permalink: /date-converter/
 
 <div class="date-convert">
 	<div class="d-flex justify-content-center">
-		<a class="btn-convert btn m-3 btn-primary" href="#convert=AD">BS to AD</a>
-		<a class="btn-convert btn m-3 btn-secondary" href="#convert=BS">AD to BS</a>
+		<a class="btn-convert btn m-3 btn-primary d-flex align-items-center" href="#convert=AD">BS <span class="material-symbols-outlined fs-6 mx-1">arrow_forward</span> AD</a>
+		<a class="btn-convert btn m-3 d-flex align-items-center" href="#convert=BS">AD <span class="material-symbols-outlined fs-6 mx-1">arrow_forward</span> BS</a>
 	</div>
 	<form action="#" method="post">
 		<div class="row justify-content-center">
@@ -27,7 +27,7 @@ permalink: /date-converter/
 				<div class="day"></div>
 			</div>
 		</div>
-		<button type="button" class="btn btn-switch btn-primary" title="Swap or Switch"><span class="material-icons">swap_horiz</span></button>
+		<button type="button" class="btn btn-switch btn-primary" title="Swap or Switch"><span class="material-symbols-outlined">swap_horiz</span></button>
 		<div class="result-item text-center">
 			<div class="result-right">
 				<div class="alt-year"></div>
@@ -36,6 +36,11 @@ permalink: /date-converter/
 				<div class="alt-day"></div>
 			</div>
 		</div>
+	</div>
+	<div class="generation">
+		<hr class="mt-5">
+		<div class="alert alert-info p-2 mt-4 text-center">Would you like to find out which generation you belong to based on the date you selected?</div>
+		<button type="button" class="btn btn-primary btn-sm" data-info>Discover Your Generation</button>
 	</div>
 </div>
 <script>
@@ -65,14 +70,16 @@ function makeActiveButton() {
 
 	if (btn && btnActive) {
 		const allButtons = document.querySelectorAll('.date-convert [href^="#convert="]');
-		allButtons.forEach(button => {
-			button.classList.remove('btn-primary', 'btn-secondary');
-			button.classList.add('btn-secondary');
+		allButtons.forEach( (button) => {
+			//button.classList.remove('btn-primary', 'btn-secondary');
+			//button.classList.add('btn-secondary');
+			button.classList.remove('btn-primary');
 		});
-		btn.classList.remove('btn-primary', 'btn-secondary');
-		btn.classList.add('btn-secondary');
+		//btn.classList.remove('btn-primary', 'btn-secondary');
+		//btn.classList.add('btn-secondary');
 
-		btnActive.classList.remove('btn-primary', 'btn-secondary');
+		//btnActive.classList.remove('btn-primary', 'btn-secondary');
+		//btnActive.classList.add('btn-primary');
 		btnActive.classList.add('btn-primary');
 	}
 }
@@ -105,7 +112,7 @@ function loadAltResult() {
 	resAltDay.innerHTML = resDate.l;
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
 	const cal = window.cal;
 	const currentDate = new Date();
 	let date = '';
@@ -247,8 +254,8 @@ document.addEventListener('DOMContentLoaded', function() {
 		}
 	}
 	loadData();
-	document.querySelectorAll('.date-convert select').forEach(function(input) {
-		input.addEventListener('change',function(event) {
+	document.querySelectorAll('.date-convert select').forEach( (input) => {
+		input.addEventListener('change', (e) => {
 			let result = document.querySelector('.result');
 			let convert = getHashParameters().convert;
 			result.classList.remove('out-ad','out-bs');
@@ -308,13 +315,13 @@ document.addEventListener('DOMContentLoaded', function() {
 		});
 	});
 	loadAltResult();
-	window.addEventListener('hashchange', function() {
+	window.addEventListener('hashchange', () => {
 		makeActiveButton();
 		loadAltResult();
 	});
-	document.querySelectorAll('.date-convert .btn-convert').forEach( function(btn) {
-		btn.addEventListener('click',function() {
-			let convert = getHashParameters(this.getAttribute('href')).convert;
+	document.querySelectorAll('.date-convert .btn-convert').forEach( (btn) => {
+		btn.addEventListener('click', () => {
+			let convert = getHashParameters(btn.getAttribute('href')).convert;
 			setHashParameters({convert:convert});
 			loadForm();
 			loadData();
@@ -322,7 +329,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			loadAltResult();
 		});
 	});
-	document.querySelector('.date-convert .btn-switch').addEventListener('click',function() {
+	document.querySelector('.date-convert .btn-switch').addEventListener('click', () => {
 		let convert = getHashParameters().convert;
 		const result = document.querySelector('.result');
 
@@ -362,6 +369,72 @@ document.addEventListener('DOMContentLoaded', function() {
 		loadData(dateObj);
 		makeActiveButton();
 		loadAltResult();
+	});
+
+	document.querySelector('[data-info]').addEventListener('click', () => {
+		const showTable = false;
+		let choosenYear = '', table = '', genName = 'Unknown Generation', genRange = '', genTraits = '';
+		const generations = [
+			{
+				name: "Silent Generation",
+				years: "1928 – 1945",
+				start: 1928,
+				end: 1945,
+				traits: "Disciplined, traditional, loyal"
+			},
+			{
+				name: "Baby Boomers",
+				years: "1946 – 1964",
+				start: 1946,
+				end: 1964,
+				traits: "Optimistic, hard-working, competitive"
+			},
+			{
+				name: "Generation X",
+				years: "1965 – 1980",
+				start: 1965,
+				end: 1980,
+				traits: "Independent, resourceful, skeptical"
+			},
+			{
+				name: "Millennials (Gen Y)",
+				years: "1981 – 1996",
+				start: 1981,
+				end: 1996,
+				traits: "Tech-savvy, ambitious, value-driven"
+			},
+			{
+				name: "Generation Z",
+				years: "1997 – 2012",
+				start: 1997,
+				end: 2012,
+				traits: "Digital natives, creative, diverse"
+			},
+			{
+				name: "Generation Alpha",
+				years: "2013 – 2025",
+				start: 2013,
+				end: 2025,
+				traits: "Highly connected, adaptive, future-focused"
+			}
+		];
+		const result = document.querySelector('.result');
+		if (result.classList.contains('out-ad')) {
+			choosenYear = result.querySelector('.year').textContent;
+		} else {
+			choosenYear = result.querySelector('.alt-year').textContent;
+		}
+		table += '<table class="table table-sm table-striped table-hover">';
+		generations.forEach((gen, index) => {
+			if (choosenYear >= gen.start && choosenYear <= gen.end) {
+				genName = gen.name;
+				genTraits = `<p class="small text-center"><em>${gen.traits}</em></p>`;
+				genRange = `<h6 class="small text-center text-muted">${gen.start} - ${gen.end}</h6>`;
+			}
+			table += `<tr id="gen-row-${index}"><td>${gen.name}</td><td>${gen.years}</td><td>${gen.traits}</td></tr>`
+		});
+		table += '</table>';
+		mk.alert(`<h4>Generation Info</h4><div class="my-2"><i class="material-symbols-outlined">info</i></div><p class="fs-6 mb-1">You belong to <strong>${genName}</strong>${(genRange ?? genRange) || ''}${(genTraits ?? genTraits) || ''}${(showTable ?? table) || ''}`);
 	});
 });
 </script>

@@ -47,7 +47,7 @@ inline_styles:
 		<div class="row">
 			<div class="col-md-6 mb-3">
 				<label class="input-label">Code</label>
-				<textarea class="form-control" name="result" cols="60" rows="10"></textarea>
+				<textarea class="form-control font-monospace" name="result" cols="60" rows="10" readonly></textarea>
 			</div>
 			<div class="col-md-6 mb-3">
 				<label class="input-label">Preview</label>
@@ -57,21 +57,22 @@ inline_styles:
 			</div>
 		</div>
 	</form>
-	<div class="alert bg-white code-copy">
-		<div class="d-flex justify-content-between align-items-center"><strong>CSS background:</strong><span class="material-icons" data-copy="css">content_copy</span></div>
+	<div class="alert border bg-body">
+		<div class="d-flex justify-content-between align-items-center"><strong>CSS background:</strong><span class="material-symbols-outlined" data-copy="css" title="Copy to Clipboard">content_copy</span></div>
 		<code class="font-monospace"><pre class="with-css p-2"></pre></code>
-		<div class="d-flex justify-content-between align-items-center"><strong>Image Tag:</strong><span class="material-icons" data-copy="img">content_copy</span></div>
+		<hr>
+		<div class="d-flex justify-content-between align-items-center"><strong>Image Tag:</strong><span class="material-symbols-outlined" data-copy="img" title="Copy to Clipboard">content_copy</span></div>
 		<code class="font-monospace"><pre class="with-img p-2 m-0"></pre></code>
 	</div>
 	<div class="text-center">
 		<div class="mt-3 alert d-inline-block bg-gray">
-			<button class="btn btn-primary" data-download><i class="material-icons align-middle">download</i> Download .png file</button>
+			<button class="btn btn-primary" data-download><i class="material-symbols-outlined align-middle">download</i> Download .png file</button>
 		</div>
 	</div>
 </div>
 <script>
 function htmlEntitiesEncode(text) {
-	return text.replace(/[\u00A0-\u9999<>\&]/gim, function(i) {
+	return text.replace(/[\u00A0-\u9999<>\&]/gim, (i) => {
 		return '&#'+i.charCodeAt(0)+';';
 	});
 }
@@ -91,7 +92,7 @@ function hexToRGBA(h,a=1) {
 	return "rgba("+ +r + "," + +g + "," + +b + ","+a+")";
 }
 let png = document.getElementById('png'), ctx = png.getContext('2d');
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function() {
 	const makeCanvas = function() {
 		let canvas = document.querySelector('canvas'),
 			color = document.querySelector('[name="background"]').value,
@@ -111,9 +112,9 @@ document.addEventListener('DOMContentLoaded', function () {
 		document.querySelector('.with-img').innerHTML = htmlEntitiesEncode('<img src="'+canvas.toDataURL('image/png')+'" width="'+width+'" height="'+height+'" alt="Base64">');
 	}
 	makeCanvas();
-	document.querySelectorAll('form input').forEach(function(input) {
+	document.querySelectorAll('form input').forEach( (input) => {
 		input.addEventListener(('change','input'),function() {
-			const inputType = this.getAttribute('type');
+			const inputType = input.getAttribute('type');
 			if (inputType=='number' && input.value.length > 4) {
 				input.value = input.value.slice(0, 4);
 			}
@@ -133,21 +134,21 @@ document.addEventListener('DOMContentLoaded', function () {
 			//console.log(data);
 		}
 	});
-	document.querySelectorAll('.code-copy .material-icons').forEach(function(copy) {
+	document.querySelectorAll('[data-copy]').forEach( (copy) => {
 		copy.addEventListener('click',function() {
-			const whichCopy = this.getAttribute('data-copy');
+			const whichCopy = copy.getAttribute('data-copy');
 			let base64Data = '';
 			if(whichCopy == 'css') {
-				base64Data = this.closest('.alert').querySelector('.with-css').textContent;
+				base64Data = copy.closest('.alert').querySelector('.with-css').textContent;
 			} else if(whichCopy == 'img') {
-				base64Data = this.closest('.alert').querySelector('.with-img').textContent;
+				base64Data = copy.closest('.alert').querySelector('.with-img').textContent;
 			}
 			if(base64Data) {
 				mk.copyToClipboard(base64Data);
 			}
 		});
 	});
-	document.querySelector('[data-download]').addEventListener('click',function() {
+	document.querySelector('[data-download]').addEventListener('click', () => {
 		const base64Data = document.querySelector('[name="result"]').value,
 			width = document.querySelector('[name="width"]').value,
 			height = document.querySelector('[name="height"]').value;

@@ -37,7 +37,7 @@
 				&:after {
 					border-width: 10rem;
 				}
-				.material-icons {
+				.material-icons, .material-symbols-outlined {
 					@include animate-prefixer(animation-duration, calc( #{$base-duration} ) );
 					@include animate-prefixer(animation-fill-mode, $base-fill-mode);
 					@include animate-prefixer(animation-name, bounceIn);
@@ -54,7 +54,7 @@
 				}
 			}
 		}
-		.material-icons {
+		.material-icons, .material-symbols-outlined {
 			font-size: 32px;
 		}
 		.h3, .h6 {

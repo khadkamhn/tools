@@ -11,7 +11,7 @@
 			padding: 5px 10px;
 		}
 		&-action {
-			.material-icons {
+			i {
 				font-size: 16px;
 				cursor: pointer;
 				vertical-align: middle;
@@ -45,7 +45,7 @@
 			cursor: move;
 		}
 		.input-group .btn {
-			.material-icons {
+			i {
 				font-size: 16px;
 				vertical-align: middle;
 			}
@@ -53,8 +53,8 @@
 	}
 	.card {
 		&-header {
-			.material-icons {
-				font-size: 16px;
+			[data-show], [data-copy], [data-action] {
+				font-size: 24px;
 				cursor: pointer;
 				vertical-align: middle;
 			}

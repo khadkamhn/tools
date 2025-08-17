@@ -10,7 +10,7 @@ scripts: "/assets/js/fontkit.min.js"
 		<div class="row justify-content-center">
 			<div class="col-md-4">
 				<div class="mb-3">
-					<input class="form-control" type="file" name="font">
+					<input class="form-control" type="file" name="font" accept=".ttf,.otf,.woff,.woff2,.eot">
 				</div>
 			</div>
 			<div class="col-md-8">
@@ -49,13 +49,13 @@ scripts: "/assets/js/fontkit.min.js"
 				</div>
 			</div>
 		</div>
-		<div class="card text-bg-light mb-3">
-			<div class="card-header">
+		<div class="card mb-3">
+			<div class="card-header d-flex justify-content-between align-items-center">
 				<h5 class="card-title mb-0 fw-normal">Font Family <strong class="font-active-name"></strong></h5>
+				<span class="material-symbols-outlined" data-copy="css" title="Copy to Clipboard">content_copy</span>
 			</div>
-			<div class="card-body">
-				<span class="material-icons" data-copy="css">content_copy</span>
-				<div class="css-code font-monospace"></div>
+			<div class="card-body p-0">
+				<div class="css-code font-monospace p-2"></div>
 			</div>
 			<div class="card-footer text-body-secondary">
 				<div><strong>Note:</strong> If you belive that the <code>font-family</code>, <code>font-weight</code> and <code>font-style</code> appear incorrectly, kindly change it from the dropdown.</div>
@@ -220,16 +220,20 @@ function fontInputChange() {
 	cssCode.innerHTML = newCssCode;
 }
 
-window.addEventListener("DOMContentLoaded", function () {
+document.addEventListener('DOMContentLoaded', () => {
 	fontInputFile.addEventListener("change", convertFontFile, false);
 	displayFontInfo(" ", " ");
 	fontInputFamily.addEventListener("input", fontInputChange);
 	fontInputWeight.addEventListener("change", fontInputChange);
 	fontInputStyle.addEventListener("change", fontInputChange);
-	document.querySelector('[data-copy]').addEventListener('click',function() {
-		let base64Data = this.closest('.card-body').querySelector('.css-code').textContent;
-		if(base64Data) {
-			mk.copyToClipboard(base64Data);
+	document.querySelector('[data-copy]').addEventListener('click', function() {
+		if (fontActiveName.textContent?.trim() === '') {
+			mk.toastr({head:{text:'Opps!'},body:'No font file is selected or converted yet!'},'danger');
+		} else {
+			let base64Data = this.closest('.card').querySelector('.css-code').textContent;
+			if (base64Data) {
+				mk.copyToClipboard(base64Data);
+			}
 		}
 	});
 });

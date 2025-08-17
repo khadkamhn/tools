@@ -82,6 +82,7 @@ a {
 	.btn {
 		&, &:hover, &:focus {
 			border: 1px solid var(--bs-border-color);
+			border-radius: var(--bs-modal-border-radius);
 		}
 		&:active, &:focus {
 			border-color: $input-focus-border-color;
@@ -120,8 +121,8 @@ a {
 blockquote {
 	margin: 1.5em 10px;
 	padding: 1em 10px 0.1em;
-	background-color: #f9f9f9;
-	border-left: 6px solid #ccc;
+	border-left: 6px solid rgba(0,0,0,.3);
+	background-color: rgba(0,0,0,.15);
 	quotes: "\201C" "\201D" "\2018" "\2019";
 }
 
@@ -180,4 +181,13 @@ blockquote {
 .animated {
 	@include animate-prefixer(animation-duration, calc( #{$base-duration} ) );
 	@include animate-prefixer(animation-fill-mode, $base-fill-mode);
+}
+
+// Material Icons
+.material-symbols-outlined {
+	font-variation-settings:
+	'FILL' 0,
+	'wght' 200,
+	'GRAD' 0,
+	'opsz' 24
 }

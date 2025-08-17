@@ -62,7 +62,7 @@ inline_styles:
 										<option value="standalone">standalone</option>
 										<option value="fullscreen">fullscreen</option>
 									</select>
-									<button class="btn btn-primary btn-sm" type="button" data-info><span class="material-icons align-middle">info_outline</span></button>
+									<button class="btn btn-primary btn-sm" type="button" data-info><span class="material-symbols-outlined align-middle">info</span></button>
 								</div>
 							</div>
 						</div>
@@ -87,7 +87,7 @@ inline_styles:
 						<div class="col-md-6">
 							<div class="mb-3">
 								<label class="form-label" for="iconFile">Logo</label>
-								<input class="form-control" type="file" id="iconFile" name="logo">
+								<input class="form-control" type="file" id="iconFile" name="logo" accept="image/*">
 								<div class="form-text">For perfect icons, make sure your logo is in prefectly square resolution. i.e. 512x512 or 1024x1024</div>
 							</div>
 						</div>
@@ -127,7 +127,7 @@ inline_styles:
 	<div class="card mt-3">
 		<div class="card-header d-flex justify-content-between align-items-center">
 			<span>HTML Code</span>
-			<span class="material-icons" data-copy="html-code" title="Click to Clipboard">content_copy</span>
+			<span class="material-symbols-outlined" data-copy="html-code" title="Click to Clipboard">content_copy</span>
 		</div>
 		<div class="card-body">
 			<code class="mb-0"><pre class="mb-0 html-code"></pre></code>
@@ -138,7 +138,7 @@ inline_styles:
 	</div>
 	<div class="text-center">
 		<div class="mt-3 alert d-inline-block bg-gray">
-			<button class="btn btn-primary" data-download><i class="material-icons align-middle">download</i> Generate &amp; Download</button>
+			<button class="btn btn-primary" data-download><i class="material-symbols-outlined align-middle">download</i> Generate &amp; Download</button>
 		</div>
 	</div>
 </form>
@@ -222,7 +222,7 @@ function generateIcons() {
 					document.body.appendChild(imgWrap);
 					if(size === 32 || size === 64 || size === 180) {
 						//imgSample.querySelector('[data-size="'+size+'"]').setAttribute('src',dataURL);
-						imgSample.innerHTML += '<div class="d-inline-block me-3 mb-3"><div class="img"><img src="'+dataURL+'" data-size="'+size+'"></div><div class="title">'+size+'x'+size+'</div></div>';
+						imgSample.innerHTML += '<div class="d-inline-block me-3 mb-3"><div class="img"><img class="border" src="'+dataURL+'" data-size="'+size+'"></div><div class="title mt-1">'+size+'x'+size+'</div></div>';
 					}
 				});
 				generateCode();

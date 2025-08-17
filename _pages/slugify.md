@@ -38,7 +38,7 @@ permalink: /slugify/
 		</div>
 	</div>
 	<div class="text-center">
-		<div class="mt-4 alert alert-slug d-inline-block bg-white d-none"><code class="slug-text font-monospace"></code><span class="char-count text-white" title="Slug length"></span></div>
+		<div class="mt-4 alert alert-slug d-inline-block border bg-body d-none"><code class="slug-text font-monospace"></code><span class="char-count text-white" title="Slug length"></span></div>
 	</div>
 </div>
 <script>

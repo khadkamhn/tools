@@ -6,11 +6,11 @@ scripts: "/assets/js/range-slider.min.js"
 ---
 
 <form action="#" method="post">
-	<div class="result p-3 bg-white my-3">
+	<div class="result p-3 border bg-body my-3">
 		<div class="password"></div>
 		<div class="actions d-flex flex-column justify-content-center">
-			<span class="material-icons" data-action="refresh">refresh</span>
-			<span class="material-icons" data-copy="password">content_copy</span>
+			<span class="material-symbols-outlined" data-action="refresh" title="Regenerate">refresh</span>
+			<span class="material-symbols-outlined" data-copy="password" title="Copy to Clipboard">content_copy</span>
 		</div>
 	</div>
 	<div class="strength my-5">

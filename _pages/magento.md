@@ -4,7 +4,7 @@ title: "Magento"
 permalink: /magento/
 ---
 
-<div class="alert text-bg-dark">
+<div class="alert border">
 	<div class="putty pre"><code>$ <span data-copy="cmd">php -d memory_limit=-1 -d opcache.enable_cli=0 bin/magento maintenance:enable</span> <span class="php-list"></span></code>
 		<code>$ <span data-copy="cmd">php -d memory_limit=-1 -d opcache.enable_cli=0 ~/composer.phar install</span> <span class="php-list"></span></code>
 		<code>$ <span data-copy="cmd">php -d memory_limit=-1 -d opcache.enable_cli=0 bin/magento setup:upgrade</span> <span class="php-list"></span></code>
@@ -61,7 +61,8 @@ permalink: /magento/
 						<option value="ea-php72">ea-php72</option>
 						<option value="ea-php73">ea-php73</option>
 						<option value="ea-php74">ea-php74</option>
-						<option value="ea-php81" selected>ea-php81</option>
+						<option value="ea-php81">ea-php81</option>
+						<option value="ea-php82" selected>ea-php82</option>
 					</select>
 				</div>
 			</div>
@@ -73,7 +74,7 @@ permalink: /magento/
 			</div>
 		</div>
 		<div class="card">
-			<div class="card-header d-flex justify-content-between align-items-center bg-primary text-white"><span>Magento command cli</span> <span class="material-icons" data-copy="cli" title="Click to Clipboard">content_copy</span></div>
+			<div class="card-header d-flex justify-content-between align-items-center"><span>Magento command cli</span> <span class="material-symbols-outlined" data-copy="cli" title="Click to Clipboard">content_copy</span></div>
 			<div class="card-body"><pre class="result pre mb-0">No command generated yet.</pre></div>
 			<div class="card-footer">Note: This command can be use to reset the admin password as well.</div>
 		</div>
@@ -234,10 +235,11 @@ document.addEventListener('DOMContentLoaded', function () {
 		'73': 'ea-php73',
 		'74': 'ea-php74',
 		'81': 'ea-php81',
+		'82': 'ea-php82',
 	};
 	let phpCopy = '';
 	Object.entries(php).forEach(function([key, value]) {
-		phpCopy += '<span class="php php'+key+'" version="'+value+'" data-copy><i class="material-icons">content_copy</i> php'+key+'</span>';
+		phpCopy += '<span class="php php'+key+'" version="'+value+'" data-copy><i class="material-symbols-outlined">php</i> '+key+'</span>';
 	});
 	document.querySelectorAll('.php-list').forEach((list)=>{
 		list.innerHTML = phpCopy;
@@ -257,6 +259,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			}
 			if(code) {
 				mk.copyToClipboard(code);
+			} else {
+				mk.toastr({head:{text:'Opps!'},body:'There is nothing to copy to the clipboard.'},'danger');
 			}
 		});
 	});

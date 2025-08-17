@@ -17,7 +17,7 @@ inline_styles:
 			<div class="card mt-3">
 				<div class="card-header d-flex justify-content-between align-items-center">
 					<span>JSON Source</span>
-					<span class="material-icons" data-copy="json-source" title="Click to Clipboard">content_copy</span>
+					<span class="material-symbols-outlined" data-copy="json-source" title="Click to Clipboard">content_copy</span>
 				</div>
 				<div class="card-body p-0">
 					<textarea class="json-source form-control border-0 font-monospace" spellcheck="false"></textarea>
@@ -28,7 +28,7 @@ inline_styles:
 			<div class="card mt-3">
 				<div class="card-header d-flex justify-content-between align-items-center">
 					<span>JSON Formatted</span>
-					<span class="material-icons" data-copy="json-formated" title="Click to Clipboard">content_copy</span>
+					<span class="material-symbols-outlined" data-copy="json-formated" title="Click to Clipboard">content_copy</span>
 				</div>
 				<div class="card-body p-0">
 					<textarea class="json-formatted form-control border-0 font-monospace" spellcheck="false"></textarea>

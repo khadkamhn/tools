@@ -4,6 +4,7 @@ title: "HTML Alphabet"
 permalink: /html-alphabet/
 inline_styles:
   - ".result-wrap {
+	min-height: 52px;
 	position: relative;
 	padding-right: 40px;
   }
@@ -11,7 +12,7 @@ inline_styles:
 	padding-right: 40px;
 	word-break: break-all;
   }
-  .result-wrap .material-icons {
+  .result-wrap [data-copy] {
 	top: 15px;
 	right: 15px;
 	position: absolute;
@@ -25,9 +26,9 @@ inline_styles:
 	</div>
 	<div class="mb-3">
 		<div class="form-label">HTML encoded text</div>
-		<div class="result-wrap bg-white p-3">
+		<div class="result-wrap bg-body border p-3">
 			<div class="result"></div>
-			<span class="material-icons" data-copy>content_copy</span>
+			<span class="material-symbols-outlined" title="Copy to Clipboard" data-copy>content_copy</span>
 		</div>
 	</div>
 </form>
@@ -50,7 +51,11 @@ document.addEventListener('DOMContentLoaded', function () {
 	});
 	document.querySelector('[data-copy]').addEventListener('click',function() {
 		let html = document.querySelector('.result').textContent;
-		mk.copyToClipboard(html);
+		if (html) {
+			mk.copyToClipboard(html);
+		} else {
+			mk.toastr({head:{text:'Opps!'},body:'There is nothing to copy to the clipboard.'},'danger');
+		}
 	});
 });
 </script>

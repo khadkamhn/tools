@@ -4,10 +4,10 @@
 	margin: 1rem;
 	cursor: pointer;
 	overflow: hidden;
-	background: $white;
 	position: relative;
 	border-radius: 2px;
 	display: inline-block;
+	background-color: var(--bs-body-bg);
 	transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 	&.z0 {
 		@include mk-shadow(z0);
@@ -44,25 +44,23 @@
 			@include mk-shadow(z5,2);
 		}
 	}
-	&:after {
+	span {
 		top: 50%;
 		left: 50%;
 		width: 24px;
 		height: 24px;
 		display: none;
-		content: '\e14d';
 		line-height: 1;
 		font-size: 24px;
-		color: $grey-800;
+		color: $grey-600;
 		margin-top: -12px;
 		margin-left: -12px;
 		position: absolute;
 		border-radius: 50%;
-		font-family: 'Material Icons';
 		transition: all .3s ease-in-out 0s;
 	}
 	&:hover {
-		&:after {
+		span {
 			display: block;
 			@include animate-prefixer(animation-duration, calc( #{$base-duration} ) );
 			@include animate-prefixer(animation-fill-mode, $base-fill-mode);
@@ -76,18 +74,16 @@
 	margin: auto;
 	margin-top: 30px;
 	margin-bottom: 30px;
-	background-color: $primary;
 	transition: box-shadow 0.3s ease-in-out;
 	&-result {
 		padding: 15px;
 		white-space: pre;
 		position: relative;
 		padding-right: 45px;
-		background-color: $white;
 		.css-code {
 			white-space: nowrap;
 		}
-		.material-icons {
+		[data-copy="shadow"] {
 			top: 50%;
 			right: 10px;
 			cursor: pointer;

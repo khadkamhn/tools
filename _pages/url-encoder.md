@@ -22,7 +22,7 @@ permalink: /url-encoder/
 			<div class="card mt-3">
 				<div class="card-header d-flex justify-content-between align-items-center">
 					<span>SVG Source</span>
-					<span class="material-icons" data-copy="svg-source" title="Click to Clipboard">content_copy</span>
+					<span class="material-symbols-outlined" data-copy="svg-source" title="Click to Clipboard">content_copy</span>
 				</div>
 				<div class="card-body p-0">
 					<textarea class="svg-source form-control border-0 font-monospace" spellcheck="false"></textarea>
@@ -33,7 +33,7 @@ permalink: /url-encoder/
 			<div class="card mt-3">
 				<div class="card-header d-flex justify-content-between align-items-center">
 					<span>SVG Encoded</span>
-					<span class="material-icons" data-copy="svg-encoded" title="Click to Clipboard">content_copy</span>
+					<span class="material-symbols-outlined" data-copy="svg-encoded" title="Click to Clipboard">content_copy</span>
 				</div>
 				<div class="card-body p-0">
 					<textarea class="svg-encoded form-control border-0 font-monospace" spellcheck="false"></textarea>
@@ -44,7 +44,7 @@ permalink: /url-encoder/
 			<div class="card mt-3">
 				<div class="card-header d-flex justify-content-between align-items-center">
 					<span>CSS Background</span>
-					<span class="material-icons" data-copy="svg-css" title="Click to Clipboard">content_copy</span>
+					<span class="material-symbols-outlined" data-copy="svg-css" title="Click to Clipboard">content_copy</span>
 				</div>
 				<div class="card-body p-0">
 					<div class="form-control border-0 font-monospace"><code class="svg-background"></code></div>
@@ -190,16 +190,18 @@ document.addEventListener('DOMContentLoaded', function () {
 	document.querySelectorAll('[name="quote"]').forEach(function(inp) {
 		inp.addEventListener(('change'),encodeSVG);
 	});
-	document.querySelectorAll('[data-copy]').forEach(function(btn) {
-		btn.addEventListener('click', function() {
-			var text = '', card = this.closest('.card');
-			if(card.querySelector('textarea.form-control')) {
+	document.querySelectorAll('[data-copy]').forEach( (btn) => {
+		btn.addEventListener('click', () => {
+			var text = '', card = btn.closest('.card');
+			if (card.querySelector('textarea.form-control')) {
 				text = card.querySelector('textarea.form-control').value;
-			}else if(card.querySelector('div.form-control')) {
+			} else if(card.querySelector('div.form-control')) {
 				text = card.querySelector('div.form-control').textContent;
 			}
-			if(text != '') {
+			if (text) {
 				mk.copyToClipboard(text);
+			} else {
+				mk.toastr({head:{text:'Opps!'},body:'There is nothing to copy to the clipboard.'},'danger');
 			}
 		});
 	});

@@ -6,6 +6,24 @@
 		"title": "A Nepali or English date conversion"
 	},
 	{
+		"name": "Unicode",
+		"icon": "keyboard_alt",
+		"slug": "/unicode-nepali/",
+		"title": "A tool to convert from english to devanagari unicode"
+	},
+	{
+		"name": "Password",
+		"icon": "password",
+		"slug": "/password-generator/",
+		"title": "A strong password generator to secure your account"
+	},
+	{
+		"name": "hr",
+		"icon": "hr",
+		"slug": "hr",
+		"title": "Line break"
+	},
+	{
 		"name": "Slugify",
 		"icon": "link",
 		"slug": "/slugify/",
@@ -25,21 +43,27 @@
 	},
 	{
 		"name": "Shadow",
-		"icon": "highlight_alt",
+		"icon": "ink_selection",
 		"slug": "/shadow-generator/",
 		"title": "CSS box-shadow custom or pre-defined"
 	},
 	{
-		"name": "Password",
-		"icon": "password",
-		"slug": "/password-generator/",
-		"title": "A strong password generator to secure your account"
+		"name": "URL Encoder",
+		"icon": "frame_source",
+		"slug": "/url-encoder/",
+		"title": "Make any SVG code into URL readable or ready for CSS"
 	},
 	{
 		"name": "hr",
 		"icon": "hr",
 		"slug": "hr",
 		"title": "Line break"
+	},
+	{
+		"name": "Aspect Ratio",
+		"icon": "aspect_ratio",
+		"slug": "/aspect-ratio/",
+		"title": "Calculate the ratio based on width and height"
 	},
 	{
 		"name": "Base64 PNG",
@@ -54,12 +78,6 @@
 		"title": "A base64 font generator from ttf or woff"
 	},
 	{
-		"name": "Unicode",
-		"icon": "keyboard_alt",
-		"slug": "/unicode-nepali/",
-		"title": "A tool to convert from english to devanagari unicode"
-	},
-	{
 		"name": "HTML Character",
 		"icon": "integration_instructions",
 		"slug": "/html-character/",
@@ -72,12 +90,6 @@
 		"title": "Convert special alphabet to html entities"
 	},
 	{
-		"name": "URL Encoder",
-		"icon": "source",
-		"slug": "/url-encoder/",
-		"title": "Make any SVG code into URL readable or ready for CSS"
-	},
-	{
 		"name": "hr",
 		"icon": "hr",
 		"slug": "hr",
@@ -85,25 +97,25 @@
 	},
 	{
 		"name": "WordPress",
-		"icon": "text_snippet",
+		"icon": "topic",
 		"slug": "/wordpress/",
 		"title": "Generate a mysql query to configure initial settings before development"
 	},
 	{
 		"name": "Magento",
-		"icon": "text_snippet",
+		"icon": "topic",
 		"slug": "/magento/",
 		"title": "Reference of command list and some general information"
 	},
 	{
 		"name": "Shopify",
-		"icon": "text_snippet",
+		"icon": "topic",
 		"slug": "/shopify/",
 		"title": "Reference of section, snippets and some useful information"
 	},
 	{
 		"name": "XAMPP",
-		"icon": "text_snippet",
+		"icon": "topic",
 		"slug": "/xampp/",
 		"title": "Reference of virtual host, multi directory and different php version usage"
 	}

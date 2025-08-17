@@ -96,7 +96,7 @@ permalink: /wordpress/
 			</div>
 		</div>
 		<div class="card">
-			<div class="card-header d-flex justify-content-between align-items-center bg-primary text-white"><span>MySQL Query</span> <span class="material-icons" data-copy="query" title="Click to Clipboard">content_copy</span></div>
+			<div class="card-header d-flex justify-content-between align-items-center"><span>MySQL Query</span> <span class="material-symbols-outlined" data-copy="query" title="Click to Clipboard">content_copy</span></div>
 			<div class="card-body"><pre class="result pre mb-0">No query generated yet.</pre></div>
 			<div class="card-footer"><button type="button" class="btn btn-warning" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" name="generate-mysql-alt">Alternative with Efficent way</button></div>
 		</div>

@@ -10,11 +10,17 @@ inline_styles:
 	.input-wrap {
 		position: relative;
 	}
-	[data-copy] {
+	[data-action] {
 		top: 6px;
 		right: 6px;
 		position: absolute;
-		background-color: #fff;
+		background-color: var(--bg-bg-body);
+	}
+	[data-copy] {
+		top: 35px;
+		right: 6px;
+		position: absolute;
+		background-color: var(--bg-bg-body);
 	}"
 ---
 
@@ -26,12 +32,13 @@ inline_styles:
 		<label class="btn" for="traditional">Traditional</label>
 	</div>
 	<div class="mb-3 input-wrap">
-		<span class="material-icons" data-copy="unicode">content_copy</span>
+		<span class="material-symbols-outlined" data-copy="unicode" title="Copy to Clipboard">content_copy</span>
+		<span class="material-symbols-outlined" data-action="reset" title="Reset">refresh</span>
 		<textarea id="unicode" class="form-control unicode-typing" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" rows="6"></textarea>
 	</div>
 </form>
 <div class="keyboard d-flex flex-column align-items-center"></div>
-<div class="keyboard-ref"></div>
+<div class="p-2 mb-3"><div class="keyboard-ref border"></div></div>
 <script>
 function keyboardLayout(layout=null) {
 	let data, keyRef = '', keyboard = document.querySelector('.keyboard'), keyRefElm = document.querySelector('.keyboard-ref');
@@ -250,13 +257,18 @@ document.addEventListener('DOMContentLoaded', function () {
 			}
 		});
 	});
-	document.querySelector('[data-copy="unicode"]').addEventListener('click',function() {
-		let text = document.querySelector('.unicode-typing').value;
+	document.querySelector('[data-copy="unicode"]').addEventListener('click', () => {
+		const text = document.querySelector('.unicode-typing').value;
 		if(text) {
 			mk.copyToClipboard(text);
 		} else {
 			mk.toastr({head:{text:'Warning'},body:'There is no text available to copy!'},'warning');
 		}
+	});
+	document.querySelector('[data-action="reset"]').addEventListener('click', () => {
+		const unicodeTyping = document.querySelector('.unicode-typing');
+		unicodeTyping.value = '';
+		unicodeTyping.focus();
 	});
 });
 </script>

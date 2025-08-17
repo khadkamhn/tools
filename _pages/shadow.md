@@ -9,10 +9,10 @@ scripts: "/assets/js/range-slider.min.js"
 	<form class="container" action="#" method="post">
 		<div class="row align-items-center">
 			<div class="col-md-6">
-				<div class="box-shadow"></div>
+				<div class="box-shadow bg-body"></div>
 			</div>
 			<div class="col-md-6">
-				<div class="box-shadow-result font-monospace"><code>.box-shadow {<br>&#9;<span class="css-code"></span><br>}</code><span class="material-icons">content_copy</span></div>
+				<div class="box-shadow-result border bg-body font-monospace"><code>.box-shadow {<br>&#9;<span class="css-code"></span><br>}</code><span class="material-symbols-outlined" data-copy="shadow" title="Copy to Clipboard">content_copy</span></div>
 			</div>
 		</div>
 		<div class="box-tune-wrap row justify-content-center">
@@ -41,27 +41,27 @@ scripts: "/assets/js/range-slider.min.js"
 </div>
 <div class="main-title mt-3">Preset 1</div>
 <div class="d-md-flex g-3 justify-content-center text-center">
-	<div class="box-item z0" data-shadow="border:1px solid #eee;"></div>
-	<div class="box-item z1" data-shadow="box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);"></div>
-	<div class="box-item z2" data-shadow="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);"></div>
-	<div class="box-item z3" data-shadow="box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);"></div>
-	<div class="box-item z4" data-shadow="box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);"></div>
-	<div class="box-item z5" data-shadow="box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);"></div>
+	<div title="Copy shadow z0" class="box-item z0 border" data-shadow="border:1px solid #eee;"><span class="material-symbols-outlined">content_copy</span></div>
+	<div title="Copy shadow z1" class="box-item z1" data-shadow="box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);"><span class="material-symbols-outlined">content_copy</span></div>
+	<div title="Copy shadow z2" class="box-item z2" data-shadow="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);"><span class="material-symbols-outlined">content_copy</span></div>
+	<div title="Copy shadow z3" class="box-item z3" data-shadow="box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);"><span class="material-symbols-outlined">content_copy</span></div>
+	<div title="Copy shadow z4" class="box-item z4" data-shadow="box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);"><span class="material-symbols-outlined">content_copy</span></div>
+	<div title="Copy shadow z5" class="box-item z5" data-shadow="box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);"><span class="material-symbols-outlined">content_copy</span></div>
 </div>
 <div class="main-title mt-2">Preset 2</div>
 <div class="d-md-flex g-3 justify-content-center text-center">
-	<div class="box-item ref2 z0" data-shadow="border:1px solid #eee;"></div>
-	<div class="box-item ref2 z1" data-shadow="box-shadow: 0 2px 10px 0 rgba(0,0,0,.16), 0 2px 5px 0 rgba(0,0,0,.26);"></div>
-	<div class="box-item ref2 z2" data-shadow="box-shadow: 0 6px 20px 0 rgba(0,0,0,.19), 0 8px 17px 0 rgba(0,0,0,.2);"></div>
-	<div class="box-item ref2 z3" data-shadow="box-shadow: 0 17px 50px 0 rgba(0,0,0,.19), 0 12px 15px 0 rgba(0,0,0,.24);"></div>
-	<div class="box-item ref2 z4" data-shadow="box-shadow: 0 25px 55px 0 rgba(0,0,0,.21), 0 16px 28px 0 rgba(0,0,0,.22);"></div>
-	<div class="box-item ref2 z5" data-shadow="box-shadow: 0 40px 77px 0 rgba(0,0,0,.22), 0 27px 24px 0 rgba(0,0,0,.2);"></div>
+	<div title="Copy shadow z0" class="box-item ref2 z0 border" data-shadow="border:1px solid #eee;"><span class="material-symbols-outlined">content_copy</span></div>
+	<div title="Copy shadow z1" class="box-item ref2 z1" data-shadow="box-shadow: 0 2px 10px 0 rgba(0,0,0,.16), 0 2px 5px 0 rgba(0,0,0,.26);"><span class="material-symbols-outlined">content_copy</span></div>
+	<div title="Copy shadow z2" class="box-item ref2 z2" data-shadow="box-shadow: 0 6px 20px 0 rgba(0,0,0,.19), 0 8px 17px 0 rgba(0,0,0,.2);"><span class="material-symbols-outlined">content_copy</span></div>
+	<div title="Copy shadow z3" class="box-item ref2 z3" data-shadow="box-shadow: 0 17px 50px 0 rgba(0,0,0,.19), 0 12px 15px 0 rgba(0,0,0,.24);"><span class="material-symbols-outlined">content_copy</span></div>
+	<div title="Copy shadow z4" class="box-item ref2 z4" data-shadow="box-shadow: 0 25px 55px 0 rgba(0,0,0,.21), 0 16px 28px 0 rgba(0,0,0,.22);"><span class="material-symbols-outlined">content_copy</span></div>
+	<div title="Copy shadow z5" class="box-item ref2 z5" data-shadow="box-shadow: 0 40px 77px 0 rgba(0,0,0,.22), 0 27px 24px 0 rgba(0,0,0,.2);"><span class="material-symbols-outlined">content_copy</span></div>
 </div>
 <div class="text-center">
 	<div class="mt-3 alert d-inline-block text-bg-info text-white">Click on the box to copy the CSS shadow.</div>
 </div>
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', () => {
 	let box = document.querySelector('.box-shadow');
 	let horizontalOffset = document.querySelector('[name="horizontalOffset"]');
 	let verticalOffset = document.querySelector('[name="verticalOffset"]');
@@ -81,9 +81,9 @@ document.addEventListener('DOMContentLoaded', function () {
 	shadowColor.addEventListener('input', updateBoxShadow);
 	updateBoxShadow();
 
-	document.querySelectorAll('.box-item').forEach(function (item, index) {
-		item.addEventListener('click', function () {
-			let shadow = this.getAttribute('data-shadow');
+	document.querySelectorAll('.box-item').forEach( (item, index) => {
+		item.addEventListener('click', () => {
+			let shadow = item.getAttribute('data-shadow');
 			mk.copyToClipboard(shadow);
 			mk.toastr({head:{text:'Clipboard copied!'},body: '<p>The style of the box-shadow (' + (parseInt(index) + 1) + ') has been copied!</p>'},'success');
 		});
@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		}
 	});
 
-	document.querySelector('.box-shadow-result .material-icons').addEventListener('click',function() {
+	document.querySelector('.box-shadow-result [data-copy="shadow"]').addEventListener('click', () => {
 		let css = '.box-shadow {\n\t'+this.closest('.box-shadow-result').querySelector('.css-code').textContent+'\n}';
 		mk.copyToClipboard(css);
 	});

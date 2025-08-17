@@ -20,7 +20,7 @@ inline_styles:
 			<div class="card mt-3">
 				<div class="card-header d-flex justify-content-between align-items-center">
 					<span>Input / Calculator</span>
-					<span class="material-icons" data-action="reset" title="Reset">refresh</span>
+					<span class="material-symbols-outlined" data-action="reset" title="Reset">refresh</span>
 				</div>
 				<div class="card-body">
 					<div class="row">
@@ -102,13 +102,13 @@ inline_styles:
 			<div class="card mt-3">
 				<div class="card-header d-flex justify-content-between align-items-center">
 					<span>Preview Info / Formula</span>
-					<span class="material-icons" data-action="info" title="Ratios Table">info_outline</span>
+					<span class="material-symbols-outlined" data-action="info" title="Ratios Table">info</span>
 				</div>
 				<div class="card-body">
 					<div class="row">
 						<div class="col-md-6">
 							<div class="h6 text-center">Sample Preview</div>
-							<div class="result-preview m-auto d-flex align-items-center justify-content-center no-img"></div>
+							<div class="result-preview m-auto d-flex align-items-center justify-content-center no-img img-contain"></div>
 							<hr>
 							<div class="mb-3">
 								<div class="has-preview-config d-flex flex-nowrap align-items-center justify-content-between gap-2">
@@ -116,17 +116,21 @@ inline_styles:
 										<input id="preview" class="form-check-input" type="checkbox" name="preview">
 										<label for="preview" class="form-check-label">Show Image</label>
 									</div>
-									<div class="d-flex flex-nowrap">
+									<div class="d-flex flex-nowrap align-items-center">
 										<input type="radio" class="btn-check" name="placement" id="imgContain" autocomplete="off" checked>
-										<label class="btn btn-sm" for="imgContain" title="Contain">Contain</label>
+										<label class="btn btn-sm d-flex align-items-center" for="imgContain" title="Contain">
+											<span class="material-symbols-outlined">width_full</span>
+										</label>
 
 										<input type="radio" class="btn-check" name="placement" id="imgCropped" autocomplete="off">
-										<label class="btn btn-sm" for="imgCropped" title="Cropped">Cropped</label>
+										<label class="btn btn-sm d-flex align-items-center" for="imgCropped" title="Cropped">
+											<span class="material-symbols-outlined">aspect_ratio</span>
+										</label>
 									</div>
 								</div>
 							</div>
 							<div class="mb-3">
-								<input id="urlPath" type="text" class="form-control" name="urlPath" placeholder="/c/sample/preview.svg">
+								<input id="urlPath" type="text" class="form-control" name="urlPath" placeholder="/assets/img/sample.jpg">
 								<div class="form-text">Paste any online URL to see sample preview</div>
 							</div>
 							<div class="mb-3 text-center">or</div>
@@ -246,24 +250,24 @@ function calculateRatio(w, h) {
 	const resultHTML = `
 		<table class="table table-striped table-hover border">
 			<tr>
-				<td>Aspect Ratio <span class="small">actual</span></td>
-				<td>${simplifiedRatioText} or ${actualRatioText}</td>
+				<td class="w-50">Aspect Ratio <span class="small">actual</span></td>
+				<td class="text-end">${simplifiedRatioText} or ${actualRatioText}</td>
 			</tr>
 			<tr>
-				<td>Aspect Ratio <span class="small">nearest standard</span></td>
-				<td>${nearestStandard}</td>
+				<td class="w-50">Aspect Ratio <span class="small">nearest standard</span></td>
+				<td class="text-end">${nearestStandard}</td>
 			</tr>
 			<tr>
-				<td>Width</td>
-				<td>${width}${unitText}</td>
+				<td class="w-50">Width</td>
+				<td class="text-end">${width}${unitText}</td>
 			</tr>
 			<tr>
-				<td>Height</td>
-				<td>${height}${unitText}</td>
+				<td class="w-50">Height</td>
+				<td class="text-end">${height}${unitText}</td>
 			</tr>
 			<tr>
-				<td>Diagonal</td>
-				<td>${diagonal}${unitText}</td>
+				<td class="w-50">Diagonal</td>
+				<td class="text-end">${diagonal}${unitText}</td>
 			</tr>
 		</table>
 	`;
@@ -283,6 +287,7 @@ function calculateRatio(w, h) {
 	}
 	resultPreview.style.height = sampleHeight+'px';
 	resultPreview.style.width = sampleWidth+'px';
+	placementPadding(width, height);
 }
 
 const moreRatio = `
@@ -478,18 +483,67 @@ function flash(el) {
 	}
 }
 
-function checkPadding(uploadedWidth, uploadedHeight, targetWidth, targetHeight) {
+function placementPadding(targetWidth, targetHeight, uploadedWidth, uploadedHeight) {
+	if (!targetWidth && !targetHeight) {
+		return false;
+	}
+	let iconClass = '', icon = '', title = '';
+	const resultPreview = document.querySelector('.result-preview');
+	if (!uploadedWidth) {
+		uploadedWidth = resultPreview.getAttribute('data-img-width') ?? '';
+	}
+	if (!uploadedHeight) {
+		uploadedHeight = resultPreview.getAttribute('data-img-height') ?? '';
+	}
+	if (!uploadedWidth && !uploadedHeight) {
+		return false;
+	}
 	const uploadedRatio = uploadedWidth / uploadedHeight;
 	const targetRatio = targetWidth / targetHeight;
 
 	if (Math.abs(uploadedRatio - targetRatio) < 0.01) {
-		return "Perfect fit. No gaps.";
-	}
-
-	if (uploadedRatio < targetRatio) {
-		return "Gap will appear on left/right (image is too tall)";
+		title = 'Contain: Perfect fit';
+		iconClass = 'ico-0'; // Perfect fit
+		//icon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20,4H4c-1.1,0-2,.9-2,2v12c0,1.1.9,2,2,2h16c1.1,0,2-.9,2-2V6c0-1.1-.9-2-2-2Z"/></svg>';
+		icon = 'width_full';
+	} else if (uploadedRatio < targetRatio) {
+		title = 'Contain: left/right gap';
+		iconClass = 'ico-x'; // Image is too tall/narrow → gaps on left/right
+		//icon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><g><rect fill="none" y="0" width="24" height="24"/><rect fill="none" y="0" width="24" height="24"/></g><path d="M20,4H4c-1.1,0-2,.9-2,2v12c0,1.1.9,2,2,2h16c1.1,0,2-.9,2-2V6c0-1.1-.9-2-2-2ZM4,6h4v12h-4V6ZM20,18h-4V6h4v12Z"/></svg>';
+		icon = 'width_normal';
 	} else {
-		return "Gap will appear on top/bottom (image is too wide)";
+		title = 'Contain: top/bottom gap';
+		iconClass = 'ico-y'; // Image is too wide/short → gaps on top/bottom
+		//icon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><g><rect fill="none" y="0" width="24" height="24"/><rect fill="none" y="0" width="24" height="24"/></g><path d="M20,4H4c-1.1,0-2,.9-2,2v12c0,1.1.9,2,2,2h16c1.1,0,2-.9,2-2V6c0-1.1-.9-2-2-2ZM4,10v-4h16v4H4ZM4,18v-4h16v4H4Z"/></svg>';
+		icon = 'width_normal';
+	}
+	document.querySelectorAll('.has-preview-config .btn').forEach((btn) => {
+		const hasIcon = btn.querySelector('.has-icon');
+		const iconFit = btn.closest('label').getAttribute('for') === 'imgContain';
+		btn.classList.remove('ico-0','ico-x','ico-y');
+		btn.classList.add(iconClass);
+		if (iconFit && icon) {
+			//hasIcon.innerHTML = icon;
+			btn.querySelector('span').textContent = icon;
+			if (btn._tippy) {
+				btn._tippy.setContent(title);
+			}
+		}
+	});
+}
+
+async function isValidImgUrl(url) {
+	try {
+		const response = await fetch(url, {
+			method: 'HEAD',
+			mode: 'cors'
+		});
+
+		const contentType = response.headers.get('Content-Type') || '';
+
+		return contentType.startsWith('image/');
+	} catch (error) {
+		return false;
 	}
 }
 
@@ -569,10 +623,19 @@ document.addEventListener('DOMContentLoaded', () => {
 		if (e.target.checked) {
 			ratioPreview.classList.remove('no-img');
 			ratioPreview.classList.add('has-img');
+			if (!sampleFile.value) {
+				urlPath.value = urlPath.getAttribute('placeholder');
+				if (e.isTrusted) {
+					urlPath.dispatchEvent(new Event('input', { bubbles: true }));
+				}
+			}
 		} else {
 			ratioPreview.classList.remove('has-img');
 			ratioPreview.classList.add('no-img');
 		}
+		placement.forEach( (input) => {
+			input.dispatchEvent(new Event('input', { bubbles: true }));
+		});
 	});
 
 	urlPath.addEventListener('input', (e) => {
@@ -581,9 +644,23 @@ document.addEventListener('DOMContentLoaded', () => {
 		img.onload = () => {
 			const width = img.width;
 			const height = img.height;
+			previewResult.setAttribute('data-img-height',height);
+			previewResult.setAttribute('data-img-width',width);
+			placementPadding(w1.value, h1.value);
 			previewResult.style.backgroundImage = `url('${imgUrl}')`;
+			sampleFile.value = '';
+			preview.checked = true;
+			preview.dispatchEvent(new Event('input', { bubbles: true }));
 		};
-		img.src = imgUrl;
+		isValidImgUrl(imgUrl).then(isValid => {
+			if (isValid) {
+				img.src = imgUrl;
+			} else {
+				if (imgUrl != urlPath.getAttribute('placeholder')) {
+					mk.toastr({head:{text:'Opps!'},body:'The URL must be valid image!'},'danger');
+				}
+			}
+		});
 	});
 
 	sampleFile.addEventListener('input', (e) => {
@@ -592,7 +669,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		if (!file) return;
 
 		if (!file.type.startsWith('image/')) {
-			mk.toastr({head:{text:'Opps!'},body:'The input file must be image!'},'danger');
+			mk.toastr({head:{text:'Opps!'},body:'The input file must be valid image!'},'danger');
 			e.target.value = '';
 			return;
 		}
@@ -600,9 +677,16 @@ document.addEventListener('DOMContentLoaded', () => {
 		img.onload = () => {
 			const width = img.width;
 			const height = img.height;
-			URL.revokeObjectURL(imageUrl);
+			previewResult.setAttribute('data-img-height',height);
+			previewResult.setAttribute('data-img-width',width);
+			placementPadding(w1.value, h1.value);
+			//URL.revokeObjectURL(imageUrl);
 		};
+		img.src = imageUrl;
 		previewResult.style.backgroundImage = `url('${imageUrl}')`;
+		urlPath.value = '';
+		preview.checked = true;
+		preview.dispatchEvent(new Event('input', { bubbles: true }));
 	});
 
 	placement.forEach( (input) => {
@@ -617,6 +701,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 window.addEventListener('load', () => {
-	mk.alert('<h5>Page Under Construction</h5><p>This page is still in progress. It will be ready and fully functional soon!</p>');
+	//mk.alert('<h5>Page Under Construction</h5><p>This page is still in progress. It will be ready and fully functional soon!</p>');
 });
 </script>

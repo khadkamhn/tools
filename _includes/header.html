@@ -6,9 +6,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 {%- seo -%}
 {%- include mainfest.html -%}
-<link rel="dns-prefetch" href="//fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+{% assign sorted_material_icons = site.data.material_symbols | sort: "icon" | map: "icon" | join: "," %}
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names={{ sorted_material_icons }}" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="stylesheet" href="{{ "/assets/css/tools.css" | relative_url }}">
 {%- if page.stylesheets -%}
 	{%- for stylesheet in page.stylesheets -%}<link rel="stylesheet" href="{{ stylesheet | relative_url }}">{%- endfor -%}
@@ -19,7 +21,7 @@
 {%- if page.scripts -%}
 	{%- for script in page.scripts -%}<script src="{{ script | relative_url }}" defer></script>{%- endfor -%}
 {%- endif -%}
-<script>var baseUrl = "{{ site.baseurl }}";</script>
+<script>var baseUrl = "{{ site.baseurl }}";var allLinks = {{ site.data.links | jsonify }};</script>
 </head>
 {%- assign pageUrl = page.url | split: "/" | last | remove: ".html" -%}
 <body class="d-flex flex-column h-100 page-{% if pageUrl %}{{ pageUrl }}{% endif %}{% if page.title == nil %}home{% endif %}">
@@ -30,26 +32,40 @@
 				<a href="{{ site.baseurl }}"><span>{%- include logo.html -%}</span></a>
 			</div>
 		</div>
+		<div class="mk-widget dropdown d-inline-block">
+			<button class="btn btn-link text-decoration-none px-0 px-lg-2 py-2 dropdown-toggle d-flex align-items-center" type="button" data-bs-toggle="dropdown">
+				<span class="icon material-symbols-outlined">apps</span>
+			</button>
+			<div class="dropdown-menu dropdown-menu-end">
+				<div class="overflow-y-auto" style="max-height:400px">
+					<h6 class="dropdown-header">Frequently used links</h6>
+					<div class="mk-popular d-flex flex-wrap"><div class="p-3 text-muted small">There are no frequently used links available.</div></div>
+					<hr class="dropdown-divider">
+					<h6 class="dropdown-header">Recently used links</h6>
+					<div class="mk-recent d-flex flex-wrap"><div class="p-3 text-muted small">There are no recently used links available.</div></div>
+				</div>
+			</div>
+		</div>
 		<div class="mk-theme dropdown d-inline-block">
-			<button class="btn btn-link text-decoration-none px-0 px-lg-2 py-2 dropdown-toggle d-flex align-items-center" type="button" data-bs-toggle="dropdown" title="Theme Mode" data-placement="left">
-				<span class="material-icons">contrast</span>
+			<button class="btn btn-link text-decoration-none px-0 px-lg-2 py-2 dropdown-toggle d-flex align-items-center" type="button" data-bs-toggle="dropdown">
+				<span class="icon material-symbols-outlined">contrast</span>
 			</button>
 			<ul class="dropdown-menu dropdown-menu-end">
 				<li>
 					<button type="button" class="dropdown-item d-flex align-items-center" data-mk-theme="light">
-						<span class="material-icons">light_mode</span>
+						<span class="material-symbols-outlined">light_mode</span>
 						<span class="ms-2">Light</span>
 					</button>
 				</li>
 				<li>
 					<button type="button" class="dropdown-item d-flex align-items-center" data-mk-theme="dark">
-						<span class="material-icons">dark_mode</span>
+						<span class="material-symbols-outlined">dark_mode</span>
 						<span class="ms-2">Dark</span>
 					</button>
 				</li>
 				<li>
 					<button type="button" class="dropdown-item d-flex align-items-center" data-mk-theme="auto">
-						<span class="material-icons">contrast</span>
+						<span class="material-symbols-outlined">contrast</span>
 						<span class="ms-2">Auto</span>
 					</button>
 				</li>

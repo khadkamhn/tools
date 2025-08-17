@@ -19,15 +19,19 @@
 		margin-right: 5px;
 		display: inline-block;
 		background-color: #0f0;
+		color: var(--bs-black);
 		>i {
-			font-size: 10px;
+			line-height: 0;
+			font-size: 24px;
 			letter-spacing: -4px;
 			vertical-align: middle;
 		}
 	}
 }
-.text-bg-dark {
-	.putty code {
-		color: #bbb;
+[data-bs-theme="dark"] {
+	.alert {
+		.putty code {
+			color: #bbb;
+		}
 	}
 }
