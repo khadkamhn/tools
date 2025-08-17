@@ -16,6 +16,7 @@ social:
     - https://unsplash.com/@khadkamhn
 
 sass:
+  sourcemap: never
   style: compressed
   load_paths:
     - node_modules/bootstrap/scss

@@ -6,7 +6,7 @@
 		"start": "webpack serve --mode development --open",
 		"dev": "webpack --watch --mode development",
 		"build": "webpack --mode production",
-		"build:scss": "sass _src/tools.scss assets/css/tools.css"
+		"build:scss": "sass --load-path=node_modules --style=compressed --no-source-map _src/scss/tools.scss:assets/css/tools.css"
 	},
 	"keywords": [],
 	"author": "Mohan Khadka",
