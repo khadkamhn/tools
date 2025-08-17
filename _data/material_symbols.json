@@ -31,4 +31,9 @@
 	{ "icon": "keyboard_arrow_up", },
 	{ "icon": "delete", },
 	{ "icon": "list_alt", },
+	{ "icon": "backspace", },
+	{ "icon": "keyboard_tab", },
+	{ "icon": "keyboard_return", },
+	{ "icon": "space_bar", },
+	{ "icon": "keyboard_capslock", },
 ]
